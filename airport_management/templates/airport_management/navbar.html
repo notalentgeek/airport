@@ -1,0 +1,49 @@
+{% load static %}
+<link href="{% static 'airport_management/navbar.css' %}" rel="stylesheet" type="text/css" />
+
+<div class="container-fluid">
+  <nav class="navbar navbar-default">
+
+    <!-- Header and burger button for mobile view. -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">...</a>
+      <button aria-expanded="false" class="collapsed navbar-toggle"
+        data-target="#main_menu" data-toggle="collapse" type="button">
+        <span class="sr-only">toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Main menu, mainly used for login, logout, and register. -->
+    <div class="collapse navbar-collapse" id="main_menu">
+      <form class="navbar-form navbar-right">
+        <div id="main_menu_container">
+
+          <!-- Form's text input. -->
+          <div id="main_menu_form_input">
+            <input class="form-control" type="text" name="username"
+              placeholder="user name">
+            <input class="form-control" type="password" name="password"
+              placeholder="password">
+          </div>
+
+          <!-- Form's buttons. -->
+          <div id="main_menu_form_buttons_container">
+            <div class="main_menu_form_button">
+              <input class="btn btn-block btn-success" type="submit"
+                value="login">
+            </div>
+            <div class="main_menu_form_button">
+              <input class="btn btn-block btn-primary" type="submit"
+                value="register">
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+  </nav>
+</div>

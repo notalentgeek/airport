@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {% load static %}
+
+  <link href="{% static 'airport_management/bower_components/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+
+  <!-- Loads navigation bar. -->
+  {% include "airport_management/navbar.html" %}
+
+  <script src="{% static 'airport_management/bower_components/jquery/dist/jquery.js' %}"></script>
+  <script src="{% static 'airport_management/bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
+
+</body>
+</html>
