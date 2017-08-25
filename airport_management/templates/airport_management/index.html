@@ -12,6 +12,8 @@
   <link href="{% static 'airport_management/navbar.css' %}" rel="stylesheet"
     type="text/css" />
   <script src="{% static 'airport_management/bower_components/angular/angular.js' %}"></script>
+  <script src="{% static 'airport_management/bower_components/jquery/dist/jquery.js' %}"></script>
+  <script src="{% static 'airport_management/bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
 
 </head>
 <body ng-app="airport_management">
@@ -22,8 +24,6 @@
   <!-- Contents. -->
   {% include "airport_management/airplane_ticker.html" %}
 
-  <script src="{% static 'airport_management/bower_components/jquery/dist/jquery.js' %}"></script>
-  <script src="{% static 'airport_management/bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
   <script src="{% static 'airport_management/main.js' %}"></script>
   <script src="{% static 'airport_management/navbar.js' %}"></script>
 

@@ -28,7 +28,7 @@ app.controller("login_register_form", function ($scope, $http) {
 
       // Make sure the `username` is not empty.
       if ($scope.username_input) {
-        // Set the button style to processing.
+        // Set the button style to processing, while the HTTP request is going.
         register_button.classList.remove("btn-primary");
         register_button.classList.remove("btn-danger");
         register_button.classList.add("btn-primary");
@@ -98,3 +98,12 @@ var user_button = (function () {
     }
   }
 })();
+
+// Modal for wrong password.
+var password_input = document.getElementById("password_input");
+
+if (password_input !== null) {
+  if (string_to_bool(password_input.getAttribute("param"))) {
+    $("#wrong_password_modal").modal("show");
+  }
+}

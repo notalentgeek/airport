@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <div class="container-fluid">
   <nav class="navbar navbar-default">
 
@@ -47,8 +46,25 @@
                   name="username" param="{% url 'airport_management:check_user_existence' %}"
                   placeholder="user name" ng-change="check_user_existence()"
                   ng-model="username_input" />
-                <input class="form-control" type="password" name="password"
-                  placeholder="password" />
+
+                <!--
+                Adding wrong password modal trigger with these codes. The
+                template received error message from the Django server. The
+                difference between the `if` and `else` is the attribute
+                `param="{{ wrong_password }}"` which later triggered in nav.js.
+                -->
+                {% if messages %}
+                  {% for message in messages %}
+                    {% with wrong_password=message %}
+                      <input class="form-control" id="password_input"
+                        type="password" name="password"
+                        param="{{ wrong_password }}" placeholder="password" />
+                    {% endwith %}
+                  {% endfor %}
+                {% else %}
+                  <input class="form-control" id="password_input"
+                    type="password" name="password" placeholder="password" />
+                {% endif %}
               </div>
 
               <!-- Form's buttons. -->
@@ -72,4 +88,22 @@
       </div>
     </div>
   </nav>
+</div>
+
+<!-- Modal page if user inserted unmatched password. -->
+<div class="fade modal" id="wrong_password_modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal" type="button">&times;</button>
+        <h4 class="modal-title">error!</h4>
+      </div>
+      <div class="modal-body">
+        wrong username and password combination
+      </div>
+    </div>
+
+  </div>
 </div>

@@ -56,6 +56,17 @@
 #user_button {
   flex: 1;
 }
+#wrong_password_modal .modal-header {
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  background-color: #D9534F;
+  border-bottom:1px solid #EEEEEE;
+  padding:9px 15px;
+}
 form.navbar-form {
   border: none;
 }

@@ -4,6 +4,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib import messages
 
 AIRPORT_MANAGER_GROUP = "airport_manager"
 
@@ -13,19 +14,25 @@ def check_user_existence(request):
     return HttpResponse(User.objects.filter(username=username).exists())
 
 def index(request):
-    return render(request,
-        "airport_management/index.html", { "user": request.user })
+    return render(request, "airport_management/index.html", {
+        "user": request.user })
 
 def login_airport_manager(request):
     user = authenticate(
         username=request.POST["username"],
         password=request.POST["password"]
     )
+
+    # For correct and wrong password.
     if user is not None:
         if user.is_active:
             login(request, user)
-
-    return HttpResponseRedirect(reverse("airport_management:index"))
+            return HttpResponseRedirect(reverse("airport_management:index"))
+    else:
+        messages.error(request, "wrong_password")
+        return HttpResponseRedirect(reverse("airport_management:index"))
+        #return render(request, "airport_management/index.html", {
+        #    "user": request.user, "wrong_password": True })
 
 def login_or_register_airport_manager(request):
     if request.POST["submit_button"] == "login":
