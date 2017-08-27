@@ -8,13 +8,14 @@ from datetime import timedelta
 
 logger = get_task_logger(__name__)
 
+#@periodic_task(run_every=timedelta(seconds=1))
 @periodic_task(run_every=crontab(minute="*/15"))
 def flight_api_pull():
     flights = get_public_flight_api()
 
     for flight in flights:
         if flight["direction"] == "A":
-            arrival = Arrival()
+            arrival = get_or_create(Arrival, flight["id"])
             arrival = input_to_database_for_arrivaldeparture(arrival, flight)
 
             arrival.sch_arrival_local_datetime =\
@@ -26,13 +27,27 @@ def flight_api_pull():
 
             arrival.save()
         elif flight["direction"] == "D":
-            departure = Departure()
+            departure = get_or_create(Departure, flight["id"])
             departure = input_to_database_for_arrivaldeparture(departure,
                 flight)
             departure.save()
 
-    logger.info("hello world")
 
+"""
+Function to get an element from the primary key (`pk`), but if there is none
+create a new instance of its model.
+"""
+def get_or_create(model, pk_value):
+    get_model = model.objects.filter(pk=pk_value)
+    if get_model.exists():
+        """
+        Only get the first element. Although filtering using `pk` will always
+        return an element.
+        """
+        return get_model[0]
+    else:
+        # Assign newly created model.
+        return model()
 
 def input_to_database_for_arrivaldeparture(arrivaldeparture, flight):
     arrivaldeparture.id = flight["id"]

@@ -49,19 +49,18 @@ class Arrival(ArrivalDeparture):
     real_arrival_local_datetime = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return "{} from {} to {}, {}".format(
+        return "{} from {}, {}".format(
             self.flight_code,
-            self.origin_airport,
-            self.destined_airport,
+            self.airport,
             self.sch_arrival_local_datetime
         )
 
 class Departure(ArrivalDeparture):
     def __str__(self):
-        return "{} from {} to {}, {}".format(
+        return "{} to {}, {}".format(
             self.flight_code,
-            self.origin_airport,
-            self.destined_airport
+            self.airport,
+            self.sch_departure_datetime
         )
 
 class AirTrafficController(models.Model):
