@@ -9,10 +9,10 @@ echo "set the base directory into ${BASEDIR}" &&
 
 # Make other scripts to be executable.
 chmod +x "${BASEDIR}/reset.sh" &&
-chmod +x "${BASEDIR}/makemigrations_and_migrate.sh" &&
+chmod +x "${BASEDIR}/mm.sh" &&
 
 # Reset.
-"${BASEDIR}/reset.sh"
+"${BASEDIR}/reset.sh" &&
 "${BASEDIR}/mm.sh"
 # Migrate.
 

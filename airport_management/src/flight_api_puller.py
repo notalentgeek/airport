@@ -1,6 +1,11 @@
-from .date_and_time import get_day_from_datetime
 from datetime import datetime
+from pytz import timezone
 import requests, sys
+
+if __name__ == "__main__":
+    from date_and_time import get_day_from_datetime
+else:
+    from .date_and_time import get_day_from_datetime
 
 def get_public_flight_api():
     """
@@ -27,53 +32,28 @@ def get_public_flight_api():
         print(error)
         return None
 
-    return_dictionary_list = []
 
     if response.status_code == 200:
+        return_dictionary_list = []
         flights = response.json()
+
         for flight in flights["flights"]:
-            return_dictionary = {}
-
-            # All model for both arrival and departure.
-            json_id = flight["id"]
-            arrival_or_departure = flight["flightDirection"]
-            carrier = flight ["prefixICAO"]
-            flight_code = flight["flightName"]
-            sch_departure_date = flight["scheduleDate"]
-            sch_departure_time = flight["scheduleTime"]
-            sch_departure_date_time = "{}T{}".format(sch_departure_date,
-                sch_departure_time)
-            sch_departure_date_time_datetime = datetime.strptime(
-                sch_departure_date_time,
-                "%Y-%m-%dT%H:%M:%S"
+            return_dictionary = {};
+            return_dictionary = make_dictionary_for_arrivaldeparture(
+                return_dictionary,
+                flight
             )
-            day = get_day_from_datetime(sch_departure_date_time_datetime)
-            airport = flight["route"]["destinations"][0]
 
-            return_dictionary["json_id"] = json_id
-            return_dictionary["arrival_or_departure"] = arrival_or_departure
-            return_dictionary["carrier"] = carrier
-            return_dictionary["flight_code"] = flight_code
-            return_dictionary["airport"] = airport
-            return_dictionary["sch_departure_date_time_datetime"] =\
-                sch_departure_date_time_datetime
-            return_dictionary["day"] = day
+            if flight["flightDirection"] == "A":
 
-            if arrival_or_departure == "A":
-                # Arrival specific fields.
-                expected_arrival_local_date_time = flight["estimatedLandingTime"]
-                real_arrival_local_date_time = flight["actualLandingTime"]
-                arrived = False
+                return_dictionary["sch_arrival_local_datetime"] =\
+                    flight["estimatedLandingTime"]
 
-                return_dictionary["expected_arrival_local_date_time"] =\
-                    expected_arrival_local_date_time
-
-                if (real_arrival_local_date_time != None):
-                    arrived = True
-                    return_dictionary["real_arrival_local_date_time"] =\
-                        real_arrival_local_date_time
-
-                return_dictionary["arrived"] = arrived
+                real_arrival_local_datetime = flight["actualLandingTime"]
+                if real_arrival_local_datetime !=  "None" or\
+                    real_arrival_local_datetime !=  None:
+                    return_dictionary["real_arrival_local_datetime"] =\
+                        real_arrival_local_datetime
 
             return_dictionary_list.append(return_dictionary)
 
@@ -82,3 +62,32 @@ def get_public_flight_api():
         print("something went wrong, http response code {}\n{}".format(
             response.status_code, response.text))
         return None
+
+def make_dictionary_for_arrivaldeparture(dictionary, flight):
+    dictionary["id"] = flight["id"]
+    dictionary["direction"] = flight["flightDirection"]
+    dictionary["carrier"] = flight["prefixICAO"]
+    dictionary["flight_code"] = flight["mainFlight"]
+
+    sch_departure_date = flight["scheduleDate"]
+    sch_departure_time = flight["scheduleTime"]
+    sch_departue_timezone = timezone("Europe/Amsterdam")
+    sch_departure_datetime = "{}T{}".format(sch_departure_date,
+        sch_departure_time)
+    dictionary["sch_departure_datetime"] = sch_departue_timezone.localize(
+        datetime.strptime(
+            sch_departure_datetime,
+            "%Y-%m-%dT%H:%M:%S"
+        )
+    )
+
+    dictionary["day"] = get_day_from_datetime(
+        dictionary["sch_departure_datetime"])
+
+    dictionary["airport"] =\
+        flight["route"]["destinations"][0]
+
+    return dictionary
+
+if __name__ == "__main__":
+    print(get_public_flight_api())

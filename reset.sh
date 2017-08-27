@@ -20,3 +20,6 @@ echo "delete the django migrations directory at\
     ${BASEDIR}/airport_management/migrations"
 rm -R "${BASEDIR}/airport_management/__pycache__"
 echo "delete the python's cache at ${BASEDIR}/airport_management/__pycache__"
+rm -R "${BASEDIR}/airport_management/src/__pycache__"
+echo "delete the python's cache at\
+    ${BASEDIR}/airport_management/src/__pycache__"

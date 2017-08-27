@@ -2,8 +2,6 @@
 
 #!/bin/sh
 
-echo "hello world"
-
 # Get this script current directory.
 BASEDIR=$(dirname $0) &&
 echo "set the base directory into ${BASEDIR}"
