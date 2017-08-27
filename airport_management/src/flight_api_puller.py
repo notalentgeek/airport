@@ -38,6 +38,7 @@ def get_public_flight_api():
         flights = response.json()
 
         for flight in flights["flights"]:
+
             return_dictionary = {};
             return_dictionary = make_dictionary_for_arrivaldeparture(
                 return_dictionary,
@@ -57,6 +58,7 @@ def get_public_flight_api():
 
             return_dictionary_list.append(return_dictionary)
 
+
         return return_dictionary_list
     else:
         print("something went wrong, http response code {}\n{}".format(
@@ -71,6 +73,11 @@ def make_dictionary_for_arrivaldeparture(dictionary, flight):
 
     sch_departure_date = flight["scheduleDate"]
     sch_departure_time = flight["scheduleTime"]
+
+    #print("="*50)
+    #print("{}: {}".format("sch_departure_date", sch_departure_date))
+    #print("{}: {}".format("sch_departure_time", sch_departure_time))
+
     sch_departue_timezone = timezone("Europe/Amsterdam")
     sch_departure_datetime = "{}T{}".format(sch_departure_date,
         sch_departure_time)
@@ -81,6 +88,10 @@ def make_dictionary_for_arrivaldeparture(dictionary, flight):
         )
     )
 
+    #print("{}: {}".format(dictionary["sch_departure_datetime"],
+    #    dictionary["sch_departure_datetime"]))
+    #print("="*50)
+
     dictionary["day"] = get_day_from_datetime(
         dictionary["sch_departure_datetime"])
 
@@ -90,4 +101,4 @@ def make_dictionary_for_arrivaldeparture(dictionary, flight):
     return dictionary
 
 if __name__ == "__main__":
-    print(get_public_flight_api())
+    get_public_flight_api()

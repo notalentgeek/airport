@@ -9,6 +9,7 @@ from datetime import timedelta
 logger = get_task_logger(__name__)
 
 #@periodic_task(run_every=timedelta(seconds=1))
+#@periodic_task(run_every=timedelta(seconds=5))
 @periodic_task(run_every=crontab(minute="*/15"))
 def flight_api_pull():
     flights = get_public_flight_api()
