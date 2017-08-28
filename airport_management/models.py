@@ -11,9 +11,6 @@ class Lane(models.Model):
 
 class ArrivalDepartureFlight(models.Model):
     ########## Non-null-able fields. ##########
-    # The airplane brand name.
-    carrier = models.CharField(max_length=20)
-
     # The airplane code.
     flight_code = models.CharField(max_length=10)
 
@@ -30,6 +27,9 @@ class ArrivalDepartureFlight(models.Model):
     sch_local_datetime = models.DateTimeField()
 
     ########## Null-able fields. ##########
+    # The airplane brand name.
+    carrier = models.CharField(max_length=20, null=True)
+
     #Lane used for arriving/departing.
     lane = models.OneToOneField("Lane", null=True, on_delete=models.CASCADE,
         related_name="%(class)s_lane")
