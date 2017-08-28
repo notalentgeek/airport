@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from pytz import timezone
 import requests, sys
 
@@ -38,26 +38,13 @@ def get_public_flight_api():
         flights = response.json()
 
         for flight in flights["flights"]:
-
             return_dictionary = {};
             return_dictionary = make_dictionary_for_arrivaldeparture(
                 return_dictionary,
                 flight
             )
 
-            if flight["flightDirection"] == "A":
-
-                return_dictionary["sch_arrival_local_datetime"] =\
-                    flight["estimatedLandingTime"]
-
-                real_arrival_local_datetime = flight["actualLandingTime"]
-                if real_arrival_local_datetime !=  "None" or\
-                    real_arrival_local_datetime !=  None:
-                    return_dictionary["real_arrival_local_datetime"] =\
-                        real_arrival_local_datetime
-
             return_dictionary_list.append(return_dictionary)
-
 
         return return_dictionary_list
     else:
@@ -65,40 +52,45 @@ def get_public_flight_api():
             response.status_code, response.text))
         return None
 
-def make_dictionary_for_arrivaldeparture(dictionary, flight):
+def make_dictionary_for_arrivaldeparture(dictionary, flight, altered_hours=5):
     dictionary["id"] = flight["id"]
     dictionary["direction"] = flight["flightDirection"]
     dictionary["carrier"] = flight["prefixICAO"]
     dictionary["flight_code"] = flight["mainFlight"]
+    dictionary["airport"] = flight["route"]["destinations"][0]
 
-    sch_departure_date = flight["scheduleDate"]
-    sch_departure_time = flight["scheduleTime"]
+    sch_local_date = flight["scheduleDate"]
+    sch_local_time = flight["scheduleTime"]
 
-    #print("="*50)
-    #print("{}: {}".format("sch_departure_date", sch_departure_date))
-    #print("{}: {}".format("sch_departure_time", sch_departure_time))
-
-    sch_departue_timezone = timezone("Europe/Amsterdam")
-    sch_departure_datetime = "{}T{}".format(sch_departure_date,
-        sch_departure_time)
-    dictionary["sch_departure_datetime"] = sch_departue_timezone.localize(
+    sch_local_tz = timezone("Europe/Amsterdam")
+    sch_local_datetime = "{}T{}".format(sch_local_date,
+        sch_local_time)
+    sch_local_datetime_original = sch_local_tz.localize(
         datetime.strptime(
-            sch_departure_datetime,
+            sch_local_datetime,
             "%Y-%m-%dT%H:%M:%S"
         )
     )
 
-    #print("{}: {}".format(dictionary["sch_departure_datetime"],
-    #    dictionary["sch_departure_datetime"]))
-    #print("="*50)
+    """
+    The API data pulled from the Schipol API is too late. When the API taken
+    the corresponding flight is already arrived/departed. Hence, to simulate the
+    airport management "game" I put additional `altered_hours` into the original
+    data taken from the Schipol API.
+    """
+    sch_local_datetime_altered = sch_local_datetime_original +\
+        timedelta(hours=altered_hours)
+
+    print("="*50)
+    print("{} - {}".format(sch_local_datetime_original,
+        sch_local_datetime_altered))
+
+    dictionary["sch_local_datetime"] = sch_local_datetime_altered
 
     dictionary["day"] = get_day_from_datetime(
-        dictionary["sch_departure_datetime"])
-
-    dictionary["airport"] =\
-        flight["route"]["destinations"][0]
+        dictionary["sch_local_datetime"])
 
     return dictionary
 
 if __name__ == "__main__":
-    get_public_flight_api()
+    print(get_public_flight_api())

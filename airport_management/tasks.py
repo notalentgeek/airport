@@ -1,4 +1,4 @@
-from .models import Arrival, Departure
+from .models import ArrivalFlight, DepartureFlight
 from .src.flight_api_puller import get_public_flight_api
 from celery.decorators import periodic_task
 from celery.task.schedules import crontab
@@ -9,30 +9,17 @@ from datetime import timedelta
 logger = get_task_logger(__name__)
 
 #@periodic_task(run_every=timedelta(seconds=1))
-#@periodic_task(run_every=timedelta(seconds=5))
-@periodic_task(run_every=crontab(minute="*/15"))
+@periodic_task(run_every=timedelta(seconds=5))
+#@periodic_task(run_every=crontab(minute="*/15"))
 def flight_api_pull():
     flights = get_public_flight_api()
 
     for flight in flights:
+        flight_id = flight["id"]
         if flight["direction"] == "A":
-            arrival = get_or_create(Arrival, flight["id"])
-            arrival = input_to_database_for_arrivaldeparture(arrival, flight)
-
-            arrival.sch_arrival_local_datetime =\
-                flight["sch_arrival_local_datetime"]
-
-            if "real_arrival_local_datetime" in flight:
-                arrival.real_arrival_local_datetime =\
-                    flight["real_arrival_local_datetime"]
-
-            arrival.save()
+            get_input_save(ArrivalFlight, flight)
         elif flight["direction"] == "D":
-            departure = get_or_create(Departure, flight["id"])
-            departure = input_to_database_for_arrivaldeparture(departure,
-                flight)
-            departure.save()
-
+            get_input_save(DepartureFlight, flight)
 
 """
 Function to get an element from the primary key (`pk`), but if there is none
@@ -50,13 +37,23 @@ def get_or_create(model, pk_value):
         # Assign newly created model.
         return model()
 
-def input_to_database_for_arrivaldeparture(arrivaldeparture, flight):
-    arrivaldeparture.id = flight["id"]
-    arrivaldeparture.direction = flight["direction"]
-    arrivaldeparture.carrier = flight["carrier"]
-    arrivaldeparture.flight_code = flight["flight_code"]
-    arrivaldeparture.sch_departure_datetime = flight["sch_departure_datetime"]
-    arrivaldeparture.day = flight["day"]
-    arrivaldeparture.airport = flight["airport"]
+# Function to get the flight document, input or update new value, then save it.
+def get_input_save(arrivaldeparture_flight, flight):
+    model = get_or_create(arrivaldeparture_flight, flight["id"])
+    model = input_to_model_for_arrivaldeparture_flight(model,
+        flight)
+    model.save()
+    return model
 
-    return arrivaldeparture
+def input_to_model_for_arrivaldeparture_flight(arrivaldeparture_flight,
+    flight):
+    arrivaldeparture_flight.id = flight["id"]
+    arrivaldeparture_flight.direction = flight["direction"]
+    arrivaldeparture_flight.carrier = flight["carrier"]
+    arrivaldeparture_flight.flight_code = flight["flight_code"]
+    arrivaldeparture_flight.airport = flight["airport"]
+    arrivaldeparture_flight.sch_local_datetime =\
+        flight["sch_local_datetime"]
+    arrivaldeparture_flight.day = flight["day"]
+
+    return arrivaldeparture_flight

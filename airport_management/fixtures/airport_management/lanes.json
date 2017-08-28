@@ -1,0 +1,44 @@
+[
+{
+    "model": "airport_management.lane",
+    "pk": 1,
+    "fields": {
+        "name": "18R/36L"
+    }
+},
+{
+    "model": "airport_management.lane",
+    "pk": 2,
+    "fields": {
+        "name": "06/24"
+    }
+},
+{
+    "model": "airport_management.lane",
+    "pk": 3,
+    "fields": {
+        "name": "09/27"
+    }
+},
+{
+    "model": "airport_management.lane",
+    "pk": 4,
+    "fields": {
+        "name": "18L/36"
+    }
+},
+{
+    "model": "airport_management.lane",
+    "pk": 5,
+    "fields": {
+        "name": "18C/36C"
+    }
+},
+{
+    "model": "airport_management.lane",
+    "pk": 6,
+    "fields": {
+        "name": "04/22"
+    }
+}
+]

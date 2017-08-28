@@ -8,12 +8,15 @@ BASEDIR=$(dirname $0) &&
 echo "set the base directory into ${BASEDIR}" &&
 
 # Make other scripts to be executable.
-chmod +x "${BASEDIR}/reset.sh" &&
+chmod +x "${BASEDIR}/r.sh" &&
 chmod +x "${BASEDIR}/mm.sh" &&
+chmod +x "${BASEDIR}/f.sh" &&
 
 # Reset.
-"${BASEDIR}/reset.sh" &&
-"${BASEDIR}/mm.sh"
+"${BASEDIR}/r.sh" &&
 # Migrate.
+"${BASEDIR}/mm.sh" &&
+# Load fixtures.
+"${BASEDIR}/f.sh"
 
 $SHELL
