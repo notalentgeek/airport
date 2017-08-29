@@ -1,94 +1,97 @@
 {% load static %}
+<nav class="navbar navbar-default">
 
-<div class="container-fluid">
-  <nav class="navbar navbar-default">
+  <!-- Header and burger button for mobile view. -->
+  <div class="navbar-header">
+    <a class="navbar-brand" href="#" id="title">airport management</a>
+    <button aria-expanded="false" class="collapsed navbar-toggle"
+      data-target="#main_menu" data-toggle="collapse" type="button">
+      <span class="sr-only">toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
 
-    <!-- Header and burger button for mobile view. -->
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#" id="title">airport management</a>
-      <button aria-expanded="false" class="collapsed navbar-toggle"
-        data-target="#main_menu" data-toggle="collapse" type="button">
-        <span class="sr-only">toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+  <!-- Main menu, mainly used for login, logout, and register. -->
+  <div class="collapse navbar-collapse" id="main_menu">
+    <div class="navbar-left">
+      <ul class="nav navbar-nav">
+        <li><a href="#" id="atc_form_button">atc form</a></li>
+      </ul>
     </div>
 
-    <!-- Main menu, mainly used for login, logout, and register. -->
-    <div class="collapse navbar-collapse" id="main_menu">
-      <div class="navbar-right">
+    <div class="navbar-right">
 
-        {% if user.is_authenticated and not user.is_superuser %}
+      {% if user.is_authenticated and not user.is_superuser %}
 
-          <form action="{% url 'airport_management:logout_airport_manager' %}"
-            class="navbar-form" id="logout_form" method="POST">
+        <form action="{% url 'airport_management:logout_airport_manager' %}"
+          class="navbar-form" id="logout_form" method="POST">
+          {% csrf_token %}
+          <div id="logout_form_button_container">
+            <input class="btn btn-block btn-success" id="user_button"
+              param="{{ user.username }}" type="submit"
+              value="hello! {{ user.username }}" />
+          </div>
+        </form>
+
+      {% else %}
+
+        <form action="{% url 'airport_management:login_or_register_airport_manager' %}"
+          class="navbar-form" method="POST"
+          ng-controller="login_register_form">
+          <div id="main_menu_container">
+
             {% csrf_token %}
-            <div id="logout_form_button_container">
-              <input class="btn btn-block btn-success" id="user_button"
-                param="{{ user.username }}" type="submit"
-                value="hello! {{ user.username }}" />
+
+            <!-- Form's text input. -->
+            <div id="main_menu_form_input">
+              <input class="form-control" id="username_input" type="text"
+                name="username" param="{% url 'airport_management:check_user_existence' %}"
+                placeholder="user name" ng-change="check_user_existence()"
+                ng-model="username_input" />
+
+              <!--
+              Adding wrong password modal trigger with these codes. The
+              template received error message from the Django server. The
+              difference between the `if` and `else` is the attribute
+              `param="{{ wrong_password }}"` which later triggered in nav.js.
+              -->
+              {% if messages %}
+                {% for message in messages %}
+                  {% with wrong_password=message %}
+                    <input class="form-control" id="password_input"
+                      type="password" name="password"
+                      param="{{ wrong_password }}" placeholder="password" />
+                  {% endwith %}
+                {% endfor %}
+              {% else %}
+                <input class="form-control" id="password_input"
+                  type="password" name="password" placeholder="password" />
+              {% endif %}
             </div>
-          </form>
 
-        {% else %}
-
-          <form action="{% url 'airport_management:login_or_register_airport_manager' %}"
-            class="navbar-form" method="POST"
-            ng-controller="login_register_form">
-            <div id="main_menu_container">
-
-              {% csrf_token %}
-
-              <!-- Form's text input. -->
-              <div id="main_menu_form_input">
-                <input class="form-control" id="username_input" type="text"
-                  name="username" param="{% url 'airport_management:check_user_existence' %}"
-                  placeholder="user name" ng-change="check_user_existence()"
-                  ng-model="username_input" />
-
-                <!--
-                Adding wrong password modal trigger with these codes. The
-                template received error message from the Django server. The
-                difference between the `if` and `else` is the attribute
-                `param="{{ wrong_password }}"` which later triggered in nav.js.
-                -->
-                {% if messages %}
-                  {% for message in messages %}
-                    {% with wrong_password=message %}
-                      <input class="form-control" id="password_input"
-                        type="password" name="password"
-                        param="{{ wrong_password }}" placeholder="password" />
-                    {% endwith %}
-                  {% endfor %}
-                {% else %}
-                  <input class="form-control" id="password_input"
-                    type="password" name="password" placeholder="password" />
-                {% endif %}
+            <!-- Form's buttons. -->
+            <div id="main_menu_form_buttons_container">
+              <div class="main_menu_form_button">
+                <input class="btn btn-block btn-success" name="submit_button"
+                  type="submit" value="login" />
               </div>
-
-              <!-- Form's buttons. -->
-              <div id="main_menu_form_buttons_container">
-                <div class="main_menu_form_button">
-                  <input class="btn btn-block btn-success" name="submit_button"
-                    type="submit" value="login" />
-                </div>
-                <div class="main_menu_form_button">
-                  <input class="btn btn-block btn-primary" id="register_button"
-                    name="submit_button" type="submit" value="register"
-                    ng-disabled="disabled" />
-                </div>
+              <div class="main_menu_form_button">
+                <input class="btn btn-block btn-primary" id="register_button"
+                  name="submit_button" type="submit" value="register"
+                  ng-disabled="disabled" />
               </div>
-
             </div>
-          </form>
 
-        {% endif %}
+          </div>
+        </form>
 
-      </div>
+      {% endif %}
+
     </div>
-  </nav>
-</div>
+  </div>
+</nav>
 
 <!-- Modal page if user inserted unmatched password. -->
 <div class="fade modal" id="wrong_password_modal" role="dialog">

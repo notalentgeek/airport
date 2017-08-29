@@ -9,6 +9,8 @@
 
   <link href="{% static 'airport_management/bower_components/bootstrap/dist/css/bootstrap.css' %}"
     rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/main.css' %}" rel="stylesheet"
+    type="text/css" />
   <link href="{% static 'airport_management/navbar.css' %}" rel="stylesheet"
     type="text/css" />
   <script src="{% static 'airport_management/bower_components/angular/angular.js' %}"></script>
@@ -17,12 +19,20 @@
 
 </head>
 <body ng-app="airport_management">
+  <div class="container-fluid" style="display: flex; flex-flow: column;
+    height: 100%; padding-bottom: 10px;">
 
-  <!-- Loads navigation bar. -->
-  {% include "airport_management/navbar.html" %}
+    <div>
+      <!-- Loads navigation bar. -->
+      {% include "airport_management/navbar.html" %}
+    </div>
 
-  <!-- Contents. -->
-  {% include "airport_management/airplane_ticker.html" %}
+    <div style="flex: 1;">
+      <!-- Contents. -->
+      {% include "airport_management/airplane_ticker.html" %}
+    </div>
+
+  </div>
 
   <script src="{% static 'airport_management/main.js' %}"></script>
   <script src="{% static 'airport_management/navbar.js' %}"></script>

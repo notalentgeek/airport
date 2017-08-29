@@ -1,17 +1,3 @@
-/*
-Adding fix to the title "ellipse" when the view port is below 855 pixels but
-still above 769 pixels (before the burger button shows)
-*/
-window.addEventListener("resize", function () {
-  if (document.documentElement.clientWidth < 855 &&
-    document.documentElement.clientWidth > 769) {
-    document.getElementById("title").innerHTML = "airport...";
-  }
-  else {
-    document.getElementById("title").innerHTML = "airport management";
-  }
-});
-
 // Angular controller to check if the `username` empty or has been registered.
 app.controller("login_register_form", function ($scope, $http) {
   // Generally, disabled the register button until proper `username` is inputed.
@@ -61,6 +47,41 @@ app.controller("login_register_form", function ($scope, $http) {
   }
 });
 
+// Function to automatically resize navigation bar components.
+var auto_resize_navbar = function (){
+  if (document.documentElement.clientWidth < 935 &&
+    document.documentElement.clientWidth >= 840) {
+    document.getElementById("title").innerHTML = "airport...";
+    document.getElementById("atc_form_button").innerHTML = "atc form";
+  }
+  else if (document.documentElement.clientWidth < 840 &&
+    document.documentElement.clientWidth >= 790) {
+    document.getElementById("title").innerHTML = "...";
+    document.getElementById("atc_form_button").innerHTML = "atc form";
+  }
+  else if (document.documentElement.clientWidth < 790 &&
+    document.documentElement.clientWidth >= 768) {
+    document.getElementById("title").innerHTML = "";
+    document.getElementById("atc_form_button").innerHTML = "atc...";
+  }
+  else {
+    document.getElementById("title").innerHTML = "airport management";
+    document.getElementById("atc_form_button").innerHTML = "atc form";
+  }
+};
+
+// Check if wrong password UI is exists. If so, show wrong password modal.
+var check_wrong_password_modal = (function () {
+  // Modal for wrong password.
+  var password_input = document.getElementById("password_input");
+
+  if (password_input !== null) {
+    if (string_to_bool(password_input.getAttribute("param"))) {
+      $("#wrong_password_modal").modal("show");
+    }
+  }
+})();
+
 /*
 Adjust the logout button for touch and non-touch browser. This is necessary
 because the log out button has a hover event.
@@ -99,11 +120,13 @@ var user_button = (function () {
   }
 })();
 
-// Modal for wrong password.
-var password_input = document.getElementById("password_input");
+// Adjust the string in the navigation bar.
+window.onload = auto_resize_navbar();
 
-if (password_input !== null) {
-  if (string_to_bool(password_input.getAttribute("param"))) {
-    $("#wrong_password_modal").modal("show");
-  }
-}
+/*
+Adding fix to the title "ellipse" when the view port is below 855 pixels but
+still above 769 pixels (before the burger button shows)
+*/
+window.addEventListener("resize", function () {
+  auto_resize_navbar();
+});

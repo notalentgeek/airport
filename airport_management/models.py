@@ -37,8 +37,10 @@ class ArrivalDepartureFlight(models.Model):
     """
     Real arrival/departure time. If the value of this field is not `None` or
     `null` then this flight is already arrived/departed.
+
+    This field is currently not being used.
     """
-    real_local_time = models.DateTimeField(null=True)
+    #real_local_time = models.DateTimeField(null=True)
 
     # Current air traffic controller (ATC).
     online_atc = models.ForeignKey("AirTrafficController", null=True,
@@ -49,7 +51,7 @@ class ArrivalDepartureFlight(models.Model):
         on_delete=models.CASCADE, related_name="%(class)s_past_atcs")
 
     # Whether the flight has proper communications with online ATC.
-    proper_atc = models.BooleanField(default=False)
+    proper_atc = models.NullBooleanField(null=True)
 
     def __str__(self):
         return "{} from {} airport, {}".format(

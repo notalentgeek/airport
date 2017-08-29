@@ -1,0 +1,50 @@
+<div style="display: flex; flex-direction: column; height: 100%;">
+
+  {% if user.is_authenticated and not user.is_superuser %}
+    <div style="display: flex; flex: 1; flex-direction: row; height: 100%;
+      margin-bottom: 5px;">
+      <div style="flex: 7; text-align: center;">flight informations</div>
+      <div style="flex: 1; height: 100%;">
+        <button class="btn btn-block btn-success" style="height: 100%;">
+          submit
+        </button>
+      </div>
+      <div style="flex: 1; height: 100%;">
+        <button class="btn btn-block btn-warning" style="height: 100%;">
+          go to
+          <br />
+          current flight
+        </button>
+      </div>
+      <div style="flex: 1; height: 100%;">
+        <button class="btn btn-block btn-primary" style="height: 100%;">
+          go to
+          <br />
+          next flight
+        </button>
+      </div>
+    </div>
+  {% endif %}
+
+  <div style="display: flex; flex: 5; flex-direction: row; height: 100%; margin-top: 5px;">
+    <div style="display: flex; flex: 1; flex-direction: column; height: 100%;
+      margin-right: 10px;">
+      <div style="flex: 1; text-align: center;">arrival table</div>
+      <div style="display: flex; flex-direction: row;">
+        <input class="btn btn-block btn-primary" style="flex: 1;" value="previous" />
+        <div style="flex: 4; text-align: center;">pagination buttons</div>
+        <input class="btn btn-block btn-primary" style="flex: 1;" value="next" />
+      </div>
+    </div>
+
+    <div style="display: flex; flex: 1; flex-direction: column; height: 100%;
+      margin-left: 10px;">
+      <div style="flex: 1; text-align: center;">departure table</div>
+      <div style="display: flex; flex-direction: row;">
+        <input class="btn btn-block btn-primary" style="flex: 1;" value="previous" />
+        <div style="flex: 4; text-align: center;">pagination buttons</div>
+        <input class="btn btn-block btn-primary" style="flex: 1;" value="next" />
+      </div>
+    </div>
+  </div>
+</div>
