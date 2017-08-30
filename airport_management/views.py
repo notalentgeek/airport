@@ -1,10 +1,12 @@
+from .models import ArrivalFlight, DepartureFlight
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, User
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.contrib import messages
+from django.core.paginator import Paginator
 
 AIRPORT_MANAGER_GROUP = "airport_manager"
 
@@ -14,8 +16,14 @@ def check_user_existence(request):
     return HttpResponse(User.objects.filter(username=username).exists())
 
 def index(request):
+    # Split the flight objects into 100 documents each with `Pagination`.
+    arrival_flights_paginator = Paginator(ArrivalFlight.objects.all(), 100)
+    arrival_flights = arrival_flights_paginator.page(1)
+
     return render(request, "airport_management/index.html", {
-        "user": request.user })
+        "arrival_flights": arrival_flights,
+        "user": request.user
+    })
 
 def login_airport_manager(request):
     user = authenticate(
@@ -35,9 +43,9 @@ def login_airport_manager(request):
         #    "user": request.user, "wrong_password": True })
 
 def login_or_register_airport_manager(request):
-    if request.POST["submit_button"] == "login":
+    if request.POST["submit-button"] == "login":
         return login_airport_manager(request)
-    elif request.POST["submit_button"] == "register":
+    elif request.POST["submit-button"] == "register":
         return register_airport_manager(request)
 
     return HttpResponseRedirect(reverse("airport_management:index"))

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djcelery',
+    'djng',
     'airport_management.apps.AirportManagementConfig'
 ]
 

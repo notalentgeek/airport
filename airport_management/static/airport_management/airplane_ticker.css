@@ -1,0 +1,120 @@
+@media not screen and (max-width: 767px) {
+  #flight-management-panel {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    height: 100%;
+    margin-bottom: 5px;
+  }
+  #pagination-main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  #table-arrivaldeparture-main {
+    display: flex;
+    flex-direction: row;
+    flex: 5;
+    height: 100%;
+    margin-top: 5px;
+  }
+  .flight-management-button {
+    height: 100%;
+    width: 100px;
+    flex: 1;
+    margin-top: 0 !important; /* Why `!important` is necessary? */
+  }
+  .flight-management-button-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    height: 100%;
+  }
+  .flight-management-title {
+    flex: 7;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 767px) {
+  #flight-management-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 500px;
+    margin-bottom: 5px;
+  }
+  #pagination-main {
+    display: flex;
+    flex-direction: column;
+    height: 1500px;
+  }
+  #table-arrivaldeparture-main {
+    display: flex;
+    flex-direction: column;
+    flex: 5;
+    height: 100%;
+    margin-top: 5px;
+  }
+  .flight-management-button {
+    height: 100%;
+    margin-top: 0 !important; /* Why `!important` is necessary? */
+  }
+  .flight-management-button-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    height: 100%;
+  }
+  .flight-management-title {
+    flex: 2;
+    text-align: center;
+  }
+}
+.table-arrivaldeparture {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+.table-arrivaldeparture.arrival-table {
+  margin-right: 5px;
+}
+.table-arrivaldeparture.departure-table {
+  margin-left;
+}
+.table-arrivaldeparture-title {
+  flex: 1;
+  text-align: center;
+}
+.table-arrivaldeparture-container {
+  display: flex;
+  flex-direction: row;
+}
+#pagination-arrival,
+#pagination-departure {
+  height: 40px;
+  margin-bottom: 0;
+  padding-right: 0;
+  width: 100%;
+}
+#pagination-arrival>li,
+#pagination-departure>li {
+  width: 10%;
+}
+#pagination-arrival>li>span, #pagination-arrival>li>a,
+#pagination-departure>li>span, #pagination-departure>li>a {
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+  width: 100%;
+}
+.pagination-dynamic-width>span.clickable.ellipse>input {
+  width: 100%;
+}
+.pagination-dynamic-width>span.clickable.ellipse>input::-webkit-outer-spin-button,
+.pagination-dynamic-width>span.clickable.ellipse>input::-webkit-inner-spin-button {
+  /*display: none; /* Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* Apparently some margin are still there even though it is
+                hidden. */
+}

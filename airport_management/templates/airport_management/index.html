@@ -6,35 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   {% load static %}
+  {% load djng_tags %}
 
-  <link href="{% static 'airport_management/bower_components/bootstrap/dist/css/bootstrap.css' %}"
-    rel="stylesheet" type="text/css" />
-  <link href="{% static 'airport_management/main.css' %}" rel="stylesheet"
-    type="text/css" />
-  <link href="{% static 'airport_management/navbar.css' %}" rel="stylesheet"
-    type="text/css" />
+  <link href="{% static 'airport_management/bower_components/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/flaviumatis-simple-pagination/simplePagination.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/airplane_ticker.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/main.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/navbar.css' %}" rel="stylesheet" type="text/css" />
   <script src="{% static 'airport_management/bower_components/angular/angular.js' %}"></script>
+  <script src="{% static 'airport_management/bower_components/angular-sanitize/angular-sanitize.js' %}"></script>
   <script src="{% static 'airport_management/bower_components/jquery/dist/jquery.js' %}"></script>
   <script src="{% static 'airport_management/bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
+  <script src="{% static 'airport_management/flaviumatis-simple-pagination/jquery.simplePagination.js' %}"></script>
 
 </head>
 <body ng-app="airport_management">
-  <div class="container-fluid" style="display: flex; flex-flow: column;
-    height: 100%; padding-bottom: 10px;">
-
+  <div class="container-fluid" id="main-container">
     <div>
       <!-- Loads navigation bar. -->
       {% include "airport_management/navbar.html" %}
     </div>
 
-    <div style="flex: 1;">
+    <div id="main-contents">
       <!-- Contents. -->
       {% include "airport_management/airplane_ticker.html" %}
     </div>
-
   </div>
 
   <script src="{% static 'airport_management/main.js' %}"></script>
+  <script src="{% static 'airport_management/airplane_ticker.js' %}"></script>
   <script src="{% static 'airport_management/navbar.js' %}"></script>
 
 </body>

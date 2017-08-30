@@ -1,4 +1,17 @@
+#main-container {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    padding-bottom: 10px;
+}
+#main-contents {
+    flex: 1;
+}
 body, html {
   height:100%;
   width:100%;
+}
+/* For debug purpose only. */
+div {
+  border: 1px none red;
 }

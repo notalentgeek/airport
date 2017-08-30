@@ -22,4 +22,4 @@ function is_touch_device () {
 }
 
 // Initiating AngularJS application.
-var app = angular.module("airport_management", []);
+var app = angular.module("airport_management", ["ngSanitize"]);
