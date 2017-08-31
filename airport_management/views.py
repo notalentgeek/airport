@@ -19,6 +19,20 @@ def index(request):
     # Split the flight objects into 100 documents each with `Pagination`.
     arrival_flights_paginator = Paginator(ArrivalFlight.objects.all(), 100)
     arrival_flights = arrival_flights_paginator.page(1)
+    arrival_flights_pagination_page = request.GET.get("arrival-page", 1)
+
+    # I want to know how many documents are there in `ArrivalFlight`.
+    #print(arrival_flights)
+    #print(arrival_flights.object_list)
+    #print(ArrivalFlight.objects.all())
+    #print(type(arrival_flights))
+    #print(type(ArrivalFlight.objects.all()))
+    # Return 100 documents.
+    print(len(arrival_flights.object_list))
+    # Return all documents.
+    print(ArrivalFlight.objects.all().count())
+    # Arrival pagination.
+    print(arrival_flights_pagination_page);
 
     return render(request, "airport_management/index.html", {
         "arrival_flights": arrival_flights,
