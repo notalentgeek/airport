@@ -3,7 +3,7 @@
     border: none;
   }
   #logout-form {
-    min-width: 150px;
+    width: 315px;
   }
   #main-menu-container {
     display: flex;

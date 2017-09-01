@@ -148,6 +148,14 @@ var user_button = (function () {
 
     // Transfer variable value from DjangoTemplates.
     var user_name = user_button.getAttribute("param");
+    user_name_12 = user_name.substring(0, 12 != -1 ? 12 : user_name.length);
+    user_name = user_name.length > 12 ?  user_name_12 + "..." : user_name;
+
+    /*
+    Change the default `user_name` display, in case the `user_name` is
+    longer than 12 characters!
+    */
+    user_button.setAttribute("value", "hello! " + user_name);
 
     // Adjust button for touch screen device.
     if (is_touch_device()) {
@@ -159,16 +167,16 @@ var user_button = (function () {
     // Non-touch screen display.
     else {
       user_button.addEventListener("mouseover", function () {
-        user_button.classList.remove("btn-success");
+          user_button.classList.remove("btn-success");
         user_button.classList.add("btn-danger");
         user_button.setAttribute("value", "logout?");
-        user_button.style.width = user_button_width + "px";
+        user_button.style.width = "285px";
       });
       user_button.addEventListener("mouseout", function () {
         user_button.classList.remove("btn-danger");
         user_button.classList.add("btn-success");
         user_button.setAttribute("value", "hello! " + user_name);
-        user_button.style.width = user_button_width + "px";
+        user_button.style.width = "285px";
       });
     }
   }
