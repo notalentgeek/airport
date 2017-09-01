@@ -1,0 +1,34 @@
+<thead>
+  <tr>
+    <th>flight code</th>
+    <th class="td-hide-for-small-width">carrier</th>
+    <th class="td-hide-for-small-width">airport</th>
+    <th class="td-hide-for-small-width">day</th>
+    <th>operation</th>
+    <th>lane</th>
+    <th>online atc</th>
+    <th>proper?</th>
+  </tr>
+</thead>
+<tbody>
+
+  {% for data in data_list %}
+    <tr>
+      <td>{{ data.flight_code }}</td>
+      <td class="td-hide-for-small-width">
+        {{ data.carrier }}
+      </td>
+      <td class="td-hide-for-small-width">
+        {{ data.airport }}
+      </td>
+      <td class="td-hide-for-small-width">
+        {{ data.day }}
+      </td>
+      <td>{{ data.sch_local_datetime }}</td>
+      <td>{{ data.lane }}</td>
+      <td>{{ data.online_atc }}</td>
+      <td>{{ data.proper_atc }}</td>
+    </tr>
+  {% endfor %}
+
+</tbody>

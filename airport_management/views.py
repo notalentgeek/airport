@@ -2,11 +2,15 @@ from .models import ArrivalFlight, DepartureFlight
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, User
+from django.core import serializers
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.template import RequestContext
+from django.template.loader import get_template
 from django.urls import reverse
-from django.core.paginator import Paginator
+from json import dumps
 
 AIRPORT_MANAGER_GROUP = "airport_manager"
 
@@ -18,24 +22,32 @@ def check_user_existence(request):
 def index(request):
     # Split the flight objects into 100 documents each with `Pagination`.
     arrival_flights_paginator = Paginator(ArrivalFlight.objects.all(), 100)
-    arrival_flights = arrival_flights_paginator.page(1)
-    arrival_flights_pagination_page = request.GET.get("arrival-page", 1)
+    arrival_flights_paginator_page_1 =\
+        arrival_flights_paginator.page(1).object_list
+    departure_flights_paginator = Paginator(DepartureFlight.objects.all(), 100)
+    departure_flights_paginator_page_1 =\
+        departure_flights_paginator.page(1).object_list
 
-    # I want to know how many documents are there in `ArrivalFlight`.
-    #print(arrival_flights)
-    #print(arrival_flights.object_list)
-    #print(ArrivalFlight.objects.all())
-    #print(type(arrival_flights))
-    #print(type(ArrivalFlight.objects.all()))
-    # Return 100 documents.
-    print(len(arrival_flights.object_list))
-    # Return all documents.
-    print(ArrivalFlight.objects.all().count())
-    # Arrival pagination.
-    print(arrival_flights_pagination_page);
+    # Repeat table properties.
+    properties = [
+        {
+            "data": arrival_flights_paginator_page_1,
+            "id_main": "arrival-table", # For CSS purposes.
+            "id_pagination": "pagination-arrival",
+            "num_pages": arrival_flights_paginator.num_pages,
+            "title": "arrival flights"
+        },
+        {
+            "data": departure_flights_paginator_page_1,
+            "id_main": "departure-table", # For CSS purposes.
+            "id_pagination": "pagination-departure",
+            "num_pages": departure_flights_paginator.num_pages,
+            "title": "departure flights"
+        }
+    ];
 
     return render(request, "airport_management/index.html", {
-        "arrival_flights": arrival_flights,
+        "properties": properties,
         "user": request.user
     })
 
@@ -80,7 +92,36 @@ def register_airport_manager(request):
         print(error)
     return HttpResponseRedirect(reverse("airport_management:index"))
 
+def request_table_pagination(request):
+    page = request.GET.get("page", "")
+    which_pagination = request.GET.get("which_pagination", "")
+
+    # Closure.
+    def request_table_pagination_(object_all):
+        flights_paginator = Paginator(object_all, 100)
+        flights_paginator_page =\
+            flights_paginator.page(page).object_list
+
+        template = get_template("airport_management/paginated-table.html")
+        html = template.render({ "data_list": flights_paginator_page },
+            request)
+
+        dictionary = {
+            "html": html,
+            "num_pages": flights_paginator.num_pages
+        }
+
+        return HttpResponse(dumps(dictionary))
+
+    if which_pagination == "1":
+        return request_table_pagination_(ArrivalFlight.objects.all())
+    elif which_pagination == "2":
+        return request_table_pagination_(DepartureFlight.objects.all())
+
+    return HttpResponse()
+
 # Decorator function.
+# Not used anymore, since there is only one type of user.
 def airport_manager_login_required(function):
     def wrap(request, *args, **kwargs):
         if request.user.is_authenticated() and\

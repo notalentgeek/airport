@@ -1,7 +1,4 @@
 @media not screen and (max-width: 767px) {
-  #atc-form-button {
-    text-align: center;
-  }
   #login-register-form {
     border: none;
   }
@@ -36,7 +33,8 @@
   }
 }
 @media screen and (max-width: 767px) {
-  #atc-form-button {
+  #atc-form-button,
+  #atc-list-button {
     padding-bottom: 0;
     padding-top: 0;
     text-align: center;

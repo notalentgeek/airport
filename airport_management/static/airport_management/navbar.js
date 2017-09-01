@@ -7,9 +7,8 @@ app.controller("login_register_form", function ($scope, $http) {
   var username_input = document.getElementById("username-input");
 
   if (register_button !== null && username_input !== null) {
-    var url = username_input.getAttribute("param");
-
     $scope.check_user_existence = function () {
+      var url = username_input.getAttribute("param");
       $scope.disabled = true;
 
       // Make sure the `username` is not empty.
@@ -27,19 +26,29 @@ app.controller("login_register_form", function ($scope, $http) {
         }).then(function(data){
           $scope.disabled = string_to_bool(data.data);
 
-          // If the `username` found then change the button color to red.
-          if ($scope.disabled) {
-            register_button.classList.remove("btn-primary");
-            register_button.classList.remove("btn-danger");
-            register_button.classList.add("btn-danger");
-            register_button.setAttribute("value", "username exists");
+          if (data.status === 200){
+            // If the `username` found then change the button color to red.
+            if ($scope.disabled) {
+              register_button.classList.remove("btn-primary");
+              register_button.classList.remove("btn-danger");
+              register_button.classList.add("btn-danger");
+              register_button.setAttribute("value", "username exists");
+            }
+            // If the `username` is new, enable the registration button.
+            else {
+              register_button.classList.remove("btn-primary");
+              register_button.classList.remove("btn-danger");
+              register_button.classList.add("btn-primary");
+              register_button.setAttribute("value", "register");
+            }
           }
-          // If the `username` is new, enable the registration button.
+          // In case of unresponsive server.
           else {
+            $scope.disabled = false;
             register_button.classList.remove("btn-primary");
             register_button.classList.remove("btn-danger");
             register_button.classList.add("btn-primary");
-            register_button.setAttribute("value", "register");
+            register_button.setAttribute("value", "server problem");
           }
         });
       }
@@ -54,40 +63,64 @@ var auto_resize_navbar = function () {
     if (document.documentElement.clientWidth < 935 &&
       document.documentElement.clientWidth >= 840) {
       document.getElementById("title").innerHTML = "airport...";
-      document.getElementById("atc-form-button").innerHTML = "atc form";
     }
     else if (document.documentElement.clientWidth < 840 &&
       document.documentElement.clientWidth >= 790) {
       document.getElementById("title").innerHTML = "...";
-      document.getElementById("atc-form-button").innerHTML = "atc form";
     }
     else if (document.documentElement.clientWidth < 790 &&
       document.documentElement.clientWidth > 767) {
-      document.getElementById("title").innerHTML = "";
-      document.getElementById("atc-form-button").innerHTML = "atc...";
+      document.getElementById("title").innerHTML = ".";
     }
     else {
       document.getElementById("title").innerHTML = "airport management";
-      document.getElementById("atc-form-button").innerHTML = "atc form";
     }
   }
 };
 
 // Function to manually style ATC Form button according to view port.
 var auto_style_atc_form_button = function () {
-  var dom_id = "atc-form-button";
-  var atc_form_button = document.getElementById(dom_id);
+  var id_form = "atc-form-button";
+  var id_list = "atc-list-button";
+  var atc_form_button = document.getElementById(id_form);
+  var atc_list_button = document.getElementById(id_list);
 
-  if (document.documentElement.clientWidth < 768 &&
-    $("#" + dom_id + ">button").length == 0) {
+  /* PENDING: A lot repetition here. A closure will be good. */
+  if (
+    document.documentElement.clientWidth < 768 &&
+    $("#" + id_form + ">button").length == 0 &&
+    $("#" + id_list + ">button").length == 0
+  ) {
     atc_form_button.innerHTML = "";
     $(atc_form_button)
       .append("<button class='btn btn-block btn-default'>atc form</button>");
+
+    atc_list_button.innerHTML = "";
+    $(atc_list_button)
+      .append("<button class='btn btn-block btn-default'>atcs list</button>");
+
+    document.getElementById("hide-atc-menu-when-mobile").style.display = "none";
+    $("#" + id_form + "-container").detach()
+      .appendTo("#move-atc-menu-here-when-mobile");
+    $("#" + id_list + "-container").detach()
+      .appendTo("#move-atc-menu-here-when-mobile");
   }
-  else if (document.documentElement.clientWidth >= 768 &&
-    $("#" + dom_id + ">button").length > 0) {
+  else if (
+    document.documentElement.clientWidth >= 768 &&
+    $("#" + id_form + ">button").length > 0 &&
+    $("#" + id_list + ">button").length > 0
+  ) {
     atc_form_button.innerHTML = "atc form";
-    $("#atc-form-button>button").remove();
+    $("#" + id_form + ">button").remove();
+
+    atc_list_button.innerHTML = "atc list";
+    $("#" + id_list + ">button").remove();
+
+    document.getElementById("hide-atc-menu-when-mobile").style.display = "";
+    $("#" + id_form + "-container").detach()
+      .appendTo("#move-atc-menu-here-when-not-mobile");
+    $("#" + id_list + "-container").detach()
+      .appendTo("#move-atc-menu-here-when-not-mobile");
   }
 };
 
@@ -140,18 +173,3 @@ var user_button = (function () {
     }
   }
 })();
-
-// Adjust the string in the navigation bar.
-window.onload = function () {
-  auto_resize_navbar();
-  auto_style_atc_form_button();
-};
-
-/*
-Adding fix to the title "ellipse" when the view port is below 855 pixels but
-still above 769 pixels (before the burger button shows)
-*/
-window.addEventListener("resize", function () {
-  auto_resize_navbar();
-  auto_style_atc_form_button();
-});

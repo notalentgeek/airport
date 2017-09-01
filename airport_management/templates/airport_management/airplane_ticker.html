@@ -1,17 +1,7 @@
 {% load djng_tags %}
 {% load static %}
 
-<!-- Testing client-side API pull. -->
-<!--
-{% for arrival_flight in arrival_flights %}
-  <script>
-    console.log("{{ arrival_flight }}");
-    console.log("{{ arrival_flights|length }}");
-  </script>
-{% endfor %}
--->
-
-<div id="pagination-main">
+<div id="content-main">
   <!--
   If a user is logged in show the management panel for the airport manager
   -->
@@ -32,25 +22,43 @@
     </div>
   {% endif %}
 
+  <div id="pagination-request-url"
+    param="{% url 'airport_management:request_table_pagination' %}">
+  </div>
+
   <div id="table-arrivaldeparture-main"
     ng-controller="table_arrivaldeparture_main">
 
-    {% angularjs %}
+      {% for property in properties %}
+        <!-- Pagination for arrival and departure table. -->
+        <div class="table-arrivaldeparture" id="{{ property.id_main }}">
+          <div>
+            <h1 class="table-arrivaldeparture-title">
+              {{ property.title }}
+            </h1>
+          </div>
+          <div class="table-arrivaldeparture-content-container">
+            <div>
+              <div id="{{ property.id_main }}-request">
+                <i>requesting new table...</i>
+              </div>
+              <div id="{{ property.id_main }}-server-problem">
+                <i>server problem</i>
+              </div>
+              <table class=" table table-condensed table-hover"
+                id="{{ property.id_main }}-content">
 
-      <!-- Pagination for arrival and departure table. -->
-      <div class="table-arrivaldeparture {{ property.class }}"
-        ng-repeat="property in properties">
-        <div class="table-arrivaldeparture-title">{{ property.text }}</div>
-        <div class="table-arrivaldeparture-container">
-          <ul id="{{ property.id }}" class="pagination"></ul>
+                {% include "airport_management/paginated-table.html" with data_list=property.data %}
+
+              </table>
+            </div>
+          </div>
+          <div class="table-arrivaldeparture-pagination-container">
+            <ul class="pagination" id="{{ property.id_pagination }}"
+              param="{{ property.num_pages }}"></ul>
+          </div>
         </div>
-      </div>
-
-    {% endangularjs %}
+      {% endfor %}
 
   </div>
 </div>
-
-<script>
-
-</script>

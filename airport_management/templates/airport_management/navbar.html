@@ -17,8 +17,23 @@
   <!-- Main menu, mainly used for login, logout, and register. -->
   <div class="collapse navbar-collapse" id="main-menu">
     <div class="navbar-left">
-      <ul class="nav navbar-nav">
-        <li><a href="#" id="atc-form-button">atc form</a></li>
+      <ul class="nav navbar-nav" id="move-atc-menu-here-when-mobile">
+
+        <li class="dropdown" id="hide-atc-menu-when-mobile">
+          <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle"
+            data-toggle="dropdown" href="#" role="button">
+            atc<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" id="move-atc-menu-here-when-not-mobile">
+            <li id="atc-form-button-container">
+              <a href="#" id="atc-form-button">atc form</a>
+            </li>
+            <li id="atc-list-button-container">
+              <a href="#" id="atc-list-button">atcs list</a>
+            </li>
+          </ul>
+        </li>
+
       </ul>
     </div>
 

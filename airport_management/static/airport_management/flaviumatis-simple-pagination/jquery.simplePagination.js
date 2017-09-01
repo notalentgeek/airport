@@ -40,7 +40,11 @@
 				},
 				onInit: function() {
 					// Callback triggered immediately after initialization
-				}
+				},
+				/*
+				HACK! Not good but I cannot find any other ways!
+				*/
+				arrival_or_departure:'' // To identify pagination. Sorry :|!
 			}, options || {});
 
 			var self = this;
@@ -362,6 +366,22 @@
 								// enter to accept
 								if ((val>0)&&(val<=o.pages))
 								methods._selectPage.call(self, val - 1);
+
+								/*
+								HACK! Not good but I cannot find any other ways!
+								*/
+								var scope_angularjs_controller = angular
+									.element(
+    									document
+    										.getElementById(
+    											"table-arrivaldeparture-main"
+    										)
+    								).scope();
+								scope_angularjs_controller
+									.get_new_arrivaldeparture_table(
+										o.arrival_or_departure,
+										val
+									);
 							} else if (event.which === 27) {
 								// escape to cancel
 								$ellip.empty().html(o.ellipseText);

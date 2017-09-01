@@ -17,5 +17,7 @@ urlpatterns = [
     url(r"^logout_airport_manager/$", views.logout_airport_manager,
         name="logout_airport_manager"),
     url(r"^register_airport_manager/$", views.register_airport_manager,
-        name="register_airport_manager")
+        name="register_airport_manager"),
+    url(r"^request_table_pagination/$", views.request_table_pagination,
+        name="request_table_pagination")
 ]
