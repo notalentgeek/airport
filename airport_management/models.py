@@ -68,7 +68,7 @@ class DepartureFlight(ArrivalDepartureFlight): pass
 
 class AirTrafficController(models.Model):
     # Code name for the ATC.
-    code = models.CharField(max_length=10)
+    code = models.CharField(max_length=10, unique=True)
 
     # The first name and the last name of the ATC.
     first_name = models.CharField(max_length=20)
@@ -84,4 +84,4 @@ class AirTrafficController(models.Model):
         on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{} {}".format(first_name, last_name)
+        return "{} {}".format(self.first_name, self.last_name)

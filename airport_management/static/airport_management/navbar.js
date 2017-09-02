@@ -1,4 +1,4 @@
-// Angular controller to check if the `username` empty or has been registered.
+// AngularJS controller to check if the `username` empty or has been registered.
 app.controller("login_register_form", function ($scope, $http) {
   // Generally, disabled the register button until proper `username` is inputed.
   $scope.disabled = true;
@@ -23,7 +23,7 @@ app.controller("login_register_form", function ($scope, $http) {
           method: "GET",
           params: { "username": $scope.username_input },
           url: url
-        }).then(function(data){
+        }).then(function (data) {
           $scope.disabled = string_to_bool(data.data);
 
           if (data.status === 200){
@@ -53,6 +53,71 @@ app.controller("login_register_form", function ($scope, $http) {
         });
       }
     };
+  }
+});
+
+/*
+AngularJS controller to check if ATC code is already registered or not.
+For the air traffic controller this application will only look for code. Thus,
+the first name and the last name can be the existing ones unless the ATC code
+is unique.
+*/
+app.controller("atc_register_form", function ($scope, $http) {
+  $scope.disable_atc_form_submit_button = true;
+  $scope.check_atc_code_existence = function () {
+    var atc_code_input = document.getElementById("atc-code-input");
+    var atc_submit_button = document.getElementById("atc-submit-button");
+    var url = atc_code_input.getAttribute("param");
+
+    /*
+    Initially always put the scope to be disabled before the HTTP call
+    initiated.
+    */
+    $scope.disable_atc_form_submit_button = true;
+
+    // Set the button style to processing, while the HTTP request is going.
+    atc_submit_button.classList.remove("btn-success");
+    atc_submit_button.classList.remove("btn-danger");
+    atc_submit_button.classList.add("btn-success");
+    atc_submit_button.setAttribute("value", "processing...");
+
+    $http({
+      method: "GET",
+      params: { "atc_code": $scope.atc_code_input },
+      url: url
+    }).then(function (data){
+      $scope.disable_atc_form_submit_button = string_to_bool(data.data);
+
+      if (data.status === 200){
+        // If the `username` found then change the button color to red.
+        if ($scope.disable_atc_form_submit_button) {
+          atc_submit_button.classList.remove("btn-success");
+          atc_submit_button.classList.remove("btn-danger");
+          atc_submit_button.classList.add("btn-danger");
+          atc_submit_button.setAttribute("value", "atc code exists");
+        }
+        // If the `username` is new, enable the registration button.
+        else {
+          atc_submit_button.classList.remove("btn-primary");
+          atc_submit_button.classList.remove("btn-danger");
+          atc_submit_button.classList.add("btn-success");
+          atc_submit_button.setAttribute("value", "register");
+        }
+      }
+      // In case of unresponsive server.
+      else {
+        $scope.disable_atc_form_submit_button = false;
+        atc_submit_button.classList.remove("btn-success");
+        atc_submit_button.classList.remove("btn-danger");
+        atc_submit_button.classList.add("btn-success");
+        atc_submit_button.setAttribute("value", "server problem");
+      }
+});
+  };
+  $scope.reset_values = function () {
+    $scope.atc_code_input = "";
+    $scope.atc_first_name_input = "";
+    $scope.atc_last_name_input = "";
   }
 });
 

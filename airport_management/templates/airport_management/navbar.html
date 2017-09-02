@@ -1,3 +1,4 @@
+{% load djng_tags %}
 {% load static %}
 
 <nav class="navbar navbar-default">
@@ -102,6 +103,59 @@
     </div>
   </div>
 </nav>
+
+<!-- Modal page for a form to register ATC. -->
+<div class="fade modal" id="atc-form-modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content. -->
+    <form action="{% url 'airport_management:register_atc' %}"
+      class="form-horizontal" id="atc-register-form" method="POST"
+      name="atc_register_form" ng-controller="atc_register_form">
+      {% csrf_token %}
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal" type="button">
+            &times;
+          </button>
+          <h4 class="modal-title">atc registration form</h4>
+        </div>
+        <div class="modal-body">
+
+          <!-- Form for registering new ATC. -->
+          <input class="form-control" id="atc-code-input" name="atc_code_input"
+            type="text"
+            param="{% url 'airport_management:check_air_traffic_controller_code_existence' %}"
+            placeholder="code" ng-change="check_atc_code_existence()"
+            ng-model="atc_code_input" required/>
+          <input class="form-control" name="atc_first_name_input" type="text"
+            placeholder="first name" ng-model="atc_first_name_input" required/>
+          <input class="form-control" name="atc_last_name_input" type="text"
+            placeholder="last name" ng-model="atc_last_name_input" required/>
+
+        </div>
+        <div class="modal-footer">
+
+          <!-- Reset form and register buttons. -->
+          <input class="btn btn-default" id="atc-reset-button" type="button"
+            value="reset" ng-click="reset_values()" />
+          <input class="btn btn-success" id="atc-submit-button" type="submit"
+            value="register" ng-disabled="
+              atc_register_form.atc_code_input.$invalid ||
+              atc_register_form.atc_first_name_input.$invalid ||
+              atc_register_form.atc_last_name_input.$invalid ||
+              disable_atc_form_submit_button
+            "
+          />
+
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
 
 <!-- Modal page if user inserted unmatched password. -->
 <div class="fade modal" id="wrong-password-modal" role="dialog">

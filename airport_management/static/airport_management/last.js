@@ -28,6 +28,11 @@ $(function() {
 
   // Re-compile/re-render the paginations.
   scope_angularjs_controller.recompile_pagination();
+
+  /*
+  For debug purposes only, show manually the atc registration form pagination.
+  */
+  $("#atc-form-modal").modal("show");
 });
 
 window.onload = function () {

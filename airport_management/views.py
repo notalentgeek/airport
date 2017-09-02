@@ -1,4 +1,4 @@
-from .models import ArrivalFlight, DepartureFlight
+from .models import AirTrafficController, ArrivalFlight, DepartureFlight
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, User
@@ -15,6 +15,11 @@ from json import dumps
 AIRPORT_MANAGER_GROUP = "airport_manager"
 
 # Create your views here.
+def check_air_traffic_controller_code_existence(request):
+    atc_code = request.GET.get("atc_code", "")
+    return HttpResponse(AirTrafficController.objects.filter(code=atc_code)
+        .exists())
+
 def check_user_existence(request):
     username = request.GET.get("username", "")
     return HttpResponse(User.objects.filter(username=username).exists())
@@ -90,6 +95,22 @@ def register_airport_manager(request):
         user.save()
     except IntegrityError as error:
         print(error)
+
+    return HttpResponseRedirect(reverse("airport_management:index"))
+
+def register_atc(request):
+    try:
+        atc_code = request.POST["atc_code_input"]
+        atc_first_name = request.POST["atc_first_name_input"]
+        atc_last_name = request.POST["atc_last_name_input"]
+        AirTrafficController.objects.create(
+            code = atc_code,
+            first_name = atc_first_name,
+            last_name = atc_last_name
+        )
+    except IntegrityError as error:
+        print(error)
+
     return HttpResponseRedirect(reverse("airport_management:index"))
 
 def request_table_pagination(request):

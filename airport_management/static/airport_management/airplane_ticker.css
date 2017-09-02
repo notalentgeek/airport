@@ -47,12 +47,9 @@
   }
   .table-arrivaldeparture-content-container>div {
     height: 100%;
-    position: relative;
     overflow-y: auto;
-  }
-  .table-arrivaldeparture-content-container>div {
+    overflow-x: hidden;
     position: relative;
-    overflow-y: auto;
   }
 }
 @media screen and (max-width: 767px) {
@@ -104,6 +101,7 @@
     height: 100%;
     position: relative;
     overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 #arrival-table-request,

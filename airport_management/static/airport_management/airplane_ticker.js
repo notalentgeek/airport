@@ -57,7 +57,7 @@ app.controller("table_arrivaldeparture_main", function ($scope, $compile,
         "which_pagination": arrival_or_departure_enum
       },
       url: url
-    }).then(function(data){
+    }).then(function (data) {
       if (data.status === 200) {
         document.getElementById(id_partial + "-table-content")
           .style.display = "block";

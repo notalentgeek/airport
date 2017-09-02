@@ -1,4 +1,12 @@
 @media not screen and (max-width: 767px) {
+  #atc-reset-button {
+    margin-right: 0;
+    width: 150px;
+  }
+  #atc-submit-button {
+    margin-left: 0;
+    width: 150px;
+  }
   #login-register-form {
     border: none;
   }
@@ -39,6 +47,14 @@
     padding-top: 0;
     text-align: center;
   }
+  #atc-reset-button {
+    margin-right: 0;
+    width: 50%;
+  }
+  #atc-submit-button {
+    margin-left: 0;
+    width: 50%;
+  }
   #login-register-form {
     border: none;
     margin-bottom: 0;
@@ -73,21 +89,38 @@
     flex: 1;
   }
 }
-#logout-form-button-container {
-  display: flex;
-  flex-direction: row;
+#atc-form-modal .modal-footer,
+#wrong-password-modal .modal-footer {
+  padding:9px 15px;
 }
-#user-button {
-  flex: 1;
-}
-#wrong-password-modal .modal-header {
-   border-top-left-radius: 5px;
-   border-top-right-radius: 5px;
+#atc-form-modal .modal-header,
+#wrong-password-modal .modal-header{
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
-  background-color: #D9534F;
   border-bottom:1px solid #EEEEEE;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   padding:9px 15px;
+}
+#atc-form-modal .modal-header {
+  background-color: #428BCA;
+}
+#wrong-password-modal .modal-header{
+  background-color: #D9534F;
+}
+#logout-form-button-container {
+  display: flex;
+  flex-direction: row;
+}
+/*
+This is meant to remove shadow margin. See this StackOverflow discussion for
+further reference, https://stackoverflow.com/questions/24036212/no-margin-or-padding-but-still-space-between-div-elements.
+*/
+#atc-register-form .modal-footer {
+  font-size: 0;
+}
+#user-button {
+  flex: 1;
 }
