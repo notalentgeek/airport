@@ -1,0 +1,20 @@
+<div id="flight-management-panel-info" style="display: flex; height: 100%;">
+  {% for column in columns %}
+    <div style="display: flex; flex: 1; flex-direction: column;">
+      {% for row in column %}
+        <div style="display: flex; flex: 1;flex-direction: row;">
+          {% for cell in row %}
+            <div class="{{ cell.class }}" style="align-items: center; display:
+              flex; position: relative;">
+              <div style="text-overflow: ellipsis; max-width: 100%;
+                overflow: hidden; position: absolute; white-space: nowrap;">
+                {{ cell.text | safe }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  <div style="align-items: center; display: flex; flex: 2; justify-content: center;"><h2>{{ status }}</h2></div>
+</div>

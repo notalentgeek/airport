@@ -31,7 +31,7 @@ def flight_api_pull():
         elif flight["direction"] == "D":
             get_input_save(DepartureFlight, flight)
 
-    update_all_proper_atc()
+    update_all_flight_status()
     create_backup_fixtures()
 
 """
@@ -39,7 +39,7 @@ Task to periodically marked which flights has properly arrived/departed. The
 parameters are to have both ATC and lane set when the flight arrives/departs.
 """
 @periodic_task(run_every=timedelta(minutes=1))
-def check_this_minute_proper_atc():
+def check_this_minute_flights_status():
     tz = timezone("Europe/Amsterdam")
     now = tz.localize(datetime.datetime.now())
     now_1_min = now + timedelta(minutes=1)
@@ -48,9 +48,9 @@ def check_this_minute_proper_atc():
     Arrival and departure time filter based on the time and if "proper" flag
     is already set.
     """
-    arrival_filter = ArrivalFlight.objects.filter(proper_atc__isnull=True,
+    arrival_filter = ArrivalFlight.objects.filter(status__isnull=True,
         sch_local_datetime__lt = now_1_min)
-    departure_filter = DepartureFlight.objects.filter(proper_atc__isnull=True,
+    departure_filter = DepartureFlight.objects.filter(status__isnull=True,
         sch_local_datetime__lt = now_1_min)
 
     """
@@ -66,10 +66,10 @@ def check_this_minute_proper_atc():
     departure_filter_not_proper = departure_filter.filter(Q(lane__isnull=True)\
         | Q(online_atc__isnull=True))
 
-    arrival_filter_proper.update(proper_atc=True)
-    arrival_filter_not_proper.update(proper_atc=False)
-    departure_filter_proper.update(proper_atc=True)
-    departure_filter_not_proper.update(proper_atc=False)
+    arrival_filter_proper.update(status=True)
+    arrival_filter_not_proper.update(check_this_minute_flights_status=False)
+    departure_filter_proper.update(status=True)
+    departure_filter_not_proper.update(status=False)
 
 # Create fixtures every time API saved into database.
 def create_backup_fixtures():
@@ -150,20 +150,20 @@ def input_to_model_for_arrivaldeparture_flight(arrivaldeparture_flight,
     return arrivaldeparture_flight
 
 # Function to update all flights that were not maintained by ATC.
-def update_all_proper_atc():
+def update_all_flight_status():
     tz = timezone("Europe/Amsterdam")
     now = tz.localize(datetime.datetime.now())
 
-    # Get all past flights which has `proper_atc` blank.
+    # Get all past flights which has `status` blank.
     not_proper_arrival = ArrivalFlight.objects.filter(
         sch_local_datetime__lt=now,
-        proper_atc__isnull=True
+        status__isnull=True
     )
     not_proper_departure = DepartureFlight.objects.filter(
         sch_local_datetime__lt=now,
-        proper_atc__isnull=True
+        status__isnull=True
     )
 
     # Set all past flights with no proper ATC to false.
-    not_proper_arrival.update(proper_atc=False)
-    not_proper_departure.update(proper_atc=False)
+    not_proper_arrival.update(status=False)
+    not_proper_departure.update(status=False)

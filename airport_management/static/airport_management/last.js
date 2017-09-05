@@ -2,6 +2,9 @@ $(function() {
   /*
   Initiate the paginations for arrival and departure. Get the reference to
   arrival pagination and departure pagination AngularJS controller.
+
+  PENDING: `scope_angularjs_controller` is used a lot of time in other scope.
+  Perhaps make it as a function to cut some codes later on?
   */
   var scope_angularjs_controller = angular.element(
     document.getElementById("table-arrivaldeparture-main")).scope();
@@ -28,11 +31,6 @@ $(function() {
 
   // Re-compile/re-render the paginations.
   scope_angularjs_controller.recompile_pagination();
-
-  /*
-  For debug purposes only, show manually the atc registration form pagination.
-  */
-  $("#atc-form-modal").modal("show");
 });
 
 window.onload = function () {

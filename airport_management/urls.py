@@ -25,6 +25,8 @@ urlpatterns = [
         name="register_airport_manager"),
     url(r"^register_atc/$", views.register_atc,
         name="register_atc"),
+    url(r"^request_flight/$", views.request_flight,
+        name="request_flight"),
     url(r"^request_table_pagination/$", views.request_table_pagination,
         name="request_table_pagination")
 ]

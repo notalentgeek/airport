@@ -7,18 +7,22 @@
   -->
   {% if user.is_authenticated and not user.is_superuser %}
     <div id="flight-management-panel" ng-controller="flight_management_panel">
-      {% angularjs %}
-        <div class="flight-management-title">flight informations</div>
-        <div class="flight-management-button-container">
+      <div id="flight-management-content">
 
+        {% include "airport_management/flight-management-panel.html" with columns=columns status=status %}
+
+      </div>
+      <div id="flight-management-button-container">
+
+        {% angularjs %}
           <!-- Three buttons. -->
           <button class="btn btn-block flight-management-button
             {{ button.bootstrap_color }}" ng-bind-html="button.text"
-            ng-repeat="button in buttons">
+            ng-repeat="button in control_buttons">
           </button>
+        {% endangularjs %}
 
-        </div>
-      {% endangularjs %}
+      </div>
     </div>
   {% endif %}
 
@@ -45,8 +49,9 @@
               <div id="{{ property.id_main }}-server-problem">
                 <i>server problem</i>
               </div>
-              <table class=" table table-condensed table-hover"
-                id="{{ property.id_main }}-content">
+              <table class="table table-condensed table-hover"
+                id="{{ property.id_main }}-content"
+                param="{% url 'airport_management:request_flight' %}">
 
                 {% include "airport_management/paginated-table.html" with data_list=property.data %}
 

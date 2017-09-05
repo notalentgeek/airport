@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.db import models
 from django.utils.timezone import localtime
 
@@ -7,7 +8,6 @@ class Lane(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class ArrivalDepartureFlight(models.Model):
     ########## Non-null-able fields. ##########
@@ -51,8 +51,18 @@ class ArrivalDepartureFlight(models.Model):
         on_delete=models.CASCADE, related_name="%(class)s_past_atcs")
 
     # Whether the flight has proper communications with online ATC.
-    proper_atc = models.NullBooleanField(null=True)
+    status = models.NullBooleanField(null=True)
 
+    """
+    When the last time this model was updated by the airport manager (the main
+    user).
+    """
+    last_update = models.DateTimeField(null=True)
+
+    class Meta:
+        abstract = True
+
+class ArrivalFlight(ArrivalDepartureFlight):
     def __str__(self):
         return "{} from {} airport, {}".format(
             self.flight_code,
@@ -60,11 +70,14 @@ class ArrivalDepartureFlight(models.Model):
             localtime(self.sch_local_datetime)
         )
 
-    class Meta:
-        abstract = True
+class DepartureFlight(ArrivalDepartureFlight):
+    def __str__(self):
+        return "{} to {} airport, {}".format(
+            self.flight_code,
+            self.airport,
+            localtime(self.sch_local_datetime)
+        )
 
-class ArrivalFlight(ArrivalDepartureFlight): pass
-class DepartureFlight(ArrivalDepartureFlight): pass
 
 class AirTrafficController(models.Model):
     # Code name for the ATC.

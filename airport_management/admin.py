@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import AirTrafficController, ArrivalFlight, DepartureFlight, Lane
 
-class DepartureArrival(admin.ModelAdmin):
+class ArrivalDeparture(admin.ModelAdmin):
     list_display = (
+        "pk",
         "flight_code",
         "airport",
         "day",
@@ -11,12 +12,13 @@ class DepartureArrival(admin.ModelAdmin):
         "lane",
         "online_atc",
         "past_atcs",
-        "proper_atc"
+        "status"
     )
     list_filter = ["sch_local_datetime"]
+    readonly_fields=("pk",)
 
 # Register your models here.
 admin.site.register(Lane)
-admin.site.register(ArrivalFlight, DepartureArrival)
-admin.site.register(DepartureFlight, DepartureArrival)
+admin.site.register(ArrivalFlight, ArrivalDeparture)
+admin.site.register(DepartureFlight, ArrivalDeparture)
 admin.site.register(AirTrafficController)

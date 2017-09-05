@@ -18,7 +18,8 @@
   <!-- Main menu, mainly used for login, logout, and register. -->
   <div class="collapse navbar-collapse" id="main-menu">
     <div class="navbar-left">
-      <ul class="nav navbar-nav" id="move-atc-menu-here-when-mobile">
+      <ul class="nav navbar-nav" id="move-atc-menu-here-when-mobile"
+        ng-controller="atc_menu">
 
         <li class="dropdown" id="hide-atc-menu-when-mobile">
           <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle"
@@ -26,11 +27,18 @@
             atc<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" id="move-atc-menu-here-when-not-mobile">
-            <li id="atc-form-button-container">
-              <a href="#" id="atc-form-button">atc form</a>
-            </li>
+            {% if user.is_authenticated and not user.is_superuser %}
+              <li id="atc-form-button-container">
+                <a href="#" id="atc-form-button"
+                  ng-click="show_atc_form_modal()">
+                  atc form
+                </a>
+              </li>
+            {% endif %}
             <li id="atc-list-button-container">
-              <a href="#" id="atc-list-button">atcs list</a>
+              <a href="#" id="atc-list-button" ng-click="show_atc_list_modal()">
+                atcs list
+              </a>
             </li>
           </ul>
         </li>
@@ -40,6 +48,7 @@
 
     <div class="navbar-right">
 
+      <!-- Login and register for the user (airport manager). -->
       {% if user.is_authenticated and not user.is_superuser %}
         <form action="{% url 'airport_management:logout_airport_manager' %}"
           class="navbar-form" id="logout-form" method="POST">
@@ -60,8 +69,9 @@
             <!-- Form's text input. -->
             <div id="main-menu-form-input">
               <input class="form-control" id="username-input" type="text"
-                name="username" param="{% url 'airport_management:check_user_existence' %}"
-                placeholder="user name" ng-change="check_user_existence()"
+                name="username"
+                param="{% url 'airport_management:check_user_existence' %}"
+                placeholder="user name" ng-change="check_username_existence()"
                 ng-model="username_input" />
 
               <!--
@@ -93,7 +103,7 @@
               <div class="main-menu-form-button">
                 <input class="btn btn-block btn-primary" id="register-button"
                   name="submit-button" type="submit" value="register"
-                  ng-disabled="disabled" />
+                  ng-disabled="disable_register_button" />
               </div>
             </div>
           </div>
@@ -130,9 +140,13 @@
             placeholder="code" ng-change="check_atc_code_existence()"
             ng-model="atc_code_input" required/>
           <input class="form-control" name="atc_first_name_input" type="text"
-            placeholder="first name" ng-model="atc_first_name_input" required/>
+            placeholder="first name"
+            ng-change="disable_atc_register_button_callback()"
+            ng-model="atc_first_name_input" required/>
           <input class="form-control" name="atc_last_name_input" type="text"
-            placeholder="last name" ng-model="atc_last_name_input" required/>
+            placeholder="last name"
+            ng-change="disable_atc_register_button_callback()"
+            ng-model="atc_last_name_input" required/>
 
         </div>
         <div class="modal-footer">
@@ -141,18 +155,57 @@
           <input class="btn btn-default" id="atc-reset-button" type="button"
             value="reset" ng-click="reset_values()" />
           <input class="btn btn-success" id="atc-submit-button" type="submit"
-            value="register" ng-disabled="
-              atc_register_form.atc_code_input.$invalid ||
-              atc_register_form.atc_first_name_input.$invalid ||
-              atc_register_form.atc_last_name_input.$invalid ||
-              disable_atc_form_submit_button
-            "
+            value="register" ng-disabled="disable_atc_register_button"
           />
 
         </div>
       </div>
 
     </form>
+
+  </div>
+</div>
+
+<!-- Modal page for ATC list. -->
+<div class="fade modal" id="atc-list-modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content. -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal" type="button">
+          &times;
+        </button>
+        <h4 class="modal-title">atc list</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-condensed" id="atc-list-table">
+          <thead>
+            <tr>
+              <!--
+              PENDING: I could make more extensive table for the ATCs but it
+              will take more time to implement some kind like passive drop down
+              menu.
+              -->
+              <th>atc code</th>
+              <th>first name</th>
+              <th>last name</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for atc in atcs %}
+              <tr>
+                <td>{{ atc.code }}</td>
+                <td>{{ atc.first_name }}</td>
+                <td>{{ atc.last_name }}</td>
+              </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
 
   </div>
 </div>

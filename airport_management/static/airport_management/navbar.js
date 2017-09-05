@@ -1,59 +1,36 @@
 // AngularJS controller to check if the `username` empty or has been registered.
-app.controller("login_register_form", function ($scope, $http) {
-  // Generally, disabled the register button until proper `username` is inputed.
-  $scope.disabled = true;
-
-  var register_button = document.getElementById("register-button");
-  var username_input = document.getElementById("username-input");
-
-  if (register_button !== null && username_input !== null) {
-    $scope.check_user_existence = function () {
-      var url = username_input.getAttribute("param");
-      $scope.disabled = true;
-
-      // Make sure the `username` is not empty.
-      if ($scope.username_input) {
-        // Set the button style to processing, while the HTTP request is going.
-        register_button.classList.remove("btn-primary");
-        register_button.classList.remove("btn-danger");
-        register_button.classList.add("btn-primary");
-        register_button.setAttribute("value", "processing...");
-
-        $http({
-          method: "GET",
-          params: { "username": $scope.username_input },
-          url: url
-        }).then(function (data) {
-          $scope.disabled = string_to_bool(data.data);
-
-          if (data.status === 200){
-            // If the `username` found then change the button color to red.
-            if ($scope.disabled) {
-              register_button.classList.remove("btn-primary");
-              register_button.classList.remove("btn-danger");
-              register_button.classList.add("btn-danger");
-              register_button.setAttribute("value", "username exists");
-            }
-            // If the `username` is new, enable the registration button.
-            else {
-              register_button.classList.remove("btn-primary");
-              register_button.classList.remove("btn-danger");
-              register_button.classList.add("btn-primary");
-              register_button.setAttribute("value", "register");
-            }
-          }
-          // In case of unresponsive server.
-          else {
-            $scope.disabled = false;
-            register_button.classList.remove("btn-primary");
-            register_button.classList.remove("btn-danger");
-            register_button.classList.add("btn-primary");
-            register_button.setAttribute("value", "server problem");
-          }
-        });
-      }
-    };
+app.controller("login_register_form", function ($http, $scope) {
+  $scope.disable_register_button = true;
+  $scope.disable_register_button_callback = function (value) {
+    $scope.disable_register_button = value;
   }
+  $scope.check_username_existence = function () {
+    button_and_input_http_check(
+      $scope.disable_register_button,
+      "register-button",
+      "username-input",
+      $scope.username_input,
+      $http,
+      "btn-danger",
+      "btn-primary",
+      "username",
+      "processing...",
+      "username exists",
+      "register",
+      "server problem",
+      $scope.disable_register_button_callback
+    );
+  };
+});
+
+// Just a simple controller ATC menu.
+app.controller("atc_menu", function ($scope) {
+  $scope.show_atc_form_modal = function () {
+    $("#atc-form-modal").modal("show");
+  };
+  $scope.show_atc_list_modal = function () {
+    $("#atc-list-modal").modal("show");
+  };
 });
 
 /*
@@ -62,63 +39,46 @@ For the air traffic controller this application will only look for code. Thus,
 the first name and the last name can be the existing ones unless the ATC code
 is unique.
 */
-app.controller("atc_register_form", function ($scope, $http) {
-  $scope.disable_atc_form_submit_button = true;
-  $scope.check_atc_code_existence = function () {
-    var atc_code_input = document.getElementById("atc-code-input");
-    var atc_submit_button = document.getElementById("atc-submit-button");
-    var url = atc_code_input.getAttribute("param");
-
+app.controller("atc_register_form", function ($http, $scope) {
+  $scope.disable_atc_register_button = true;
+  $scope.disable_atc_register_button_callback = function (value) {
     /*
-    Initially always put the scope to be disabled before the HTTP call
-    initiated.
+    If `value` is not `null` then it means this callback function was
+    triggered from the HTTP request.
     */
-    $scope.disable_atc_form_submit_button = true;
+    if (value !== null && value !== undefined) {
+      $scope.disable_atc_register_button = value;
+    }
 
-    // Set the button style to processing, while the HTTP request is going.
-    atc_submit_button.classList.remove("btn-success");
-    atc_submit_button.classList.remove("btn-danger");
-    atc_submit_button.classList.add("btn-success");
-    atc_submit_button.setAttribute("value", "processing...");
-
-    $http({
-      method: "GET",
-      params: { "atc_code": $scope.atc_code_input },
-      url: url
-    }).then(function (data){
-      $scope.disable_atc_form_submit_button = string_to_bool(data.data);
-
-      if (data.status === 200){
-        // If the `username` found then change the button color to red.
-        if ($scope.disable_atc_form_submit_button) {
-          atc_submit_button.classList.remove("btn-success");
-          atc_submit_button.classList.remove("btn-danger");
-          atc_submit_button.classList.add("btn-danger");
-          atc_submit_button.setAttribute("value", "atc code exists");
-        }
-        // If the `username` is new, enable the registration button.
-        else {
-          atc_submit_button.classList.remove("btn-primary");
-          atc_submit_button.classList.remove("btn-danger");
-          atc_submit_button.classList.add("btn-success");
-          atc_submit_button.setAttribute("value", "register");
-        }
-      }
-      // In case of unresponsive server.
-      else {
-        $scope.disable_atc_form_submit_button = false;
-        atc_submit_button.classList.remove("btn-success");
-        atc_submit_button.classList.remove("btn-danger");
-        atc_submit_button.classList.add("btn-success");
-        atc_submit_button.setAttribute("value", "server problem");
-      }
-});
-  };
-  $scope.reset_values = function () {
-    $scope.atc_code_input = "";
-    $scope.atc_first_name_input = "";
-    $scope.atc_last_name_input = "";
+    if (
+      $scope.atc_register_form.atc_code_input.$valid &&
+      $scope.atc_register_form.atc_first_name_input.$valid &&
+      $scope.atc_register_form.atc_last_name_input.$valid &&
+      !$scope.disable_atc_register_button
+    ) {
+      $scope.disable_atc_register_button = false;
+    }
+    else {
+      $scope.disable_atc_register_button = true;
+    }
   }
+  $scope.check_atc_code_existence = function () {
+    $scope.disable_atc_register_button = button_and_input_http_check(
+      $scope.disable_atc_register_button,
+      "atc-submit-button",
+      "atc-code-input",
+      $scope.atc_code_input,
+      $http,
+      "btn-danger",
+      "btn-success",
+      "atc_code",
+      "processing...",
+      "atc code exists",
+      "register",
+      "server problem",
+      $scope.disable_atc_register_button_callback
+    );
+  };
 });
 
 // Function to automatically resize navigation bar components.
@@ -150,42 +110,140 @@ var auto_style_atc_form_button = function () {
   var atc_form_button = document.getElementById(id_form);
   var atc_list_button = document.getElementById(id_list);
 
-  /* PENDING: A lot repetition here. A closure will be good. */
+  /*
+  `$("#" + id_form + ">button").length` is not used in this `if` statement
+  because it is not always available. In case there is no user logged in it will
+  be always return `false`.
+
+  PENDING: A lot repetition here. A closure will be good.
+  */
   if (
     document.documentElement.clientWidth < 768 &&
-    $("#" + id_form + ">button").length == 0 &&
     $("#" + id_list + ">button").length == 0
   ) {
-    atc_form_button.innerHTML = "";
-    $(atc_form_button)
-      .append("<button class='btn btn-block btn-default'>atc form</button>");
+    if (atc_form_button) {
+      atc_form_button.innerHTML = "";
+      $(atc_form_button)
+        .append("<button class='btn btn-block btn-default'>atc form</button>");
+      $("#" + id_form + "-container").detach()
+        .appendTo("#move-atc-menu-here-when-mobile");
+    }
 
     atc_list_button.innerHTML = "";
     $(atc_list_button)
       .append("<button class='btn btn-block btn-default'>atcs list</button>");
-
-    document.getElementById("hide-atc-menu-when-mobile").style.display = "none";
-    $("#" + id_form + "-container").detach()
-      .appendTo("#move-atc-menu-here-when-mobile");
     $("#" + id_list + "-container").detach()
       .appendTo("#move-atc-menu-here-when-mobile");
+
+    document.getElementById("hide-atc-menu-when-mobile").style.display = "none";
   }
   else if (
     document.documentElement.clientWidth >= 768 &&
-    $("#" + id_form + ">button").length > 0 &&
     $("#" + id_list + ">button").length > 0
   ) {
-    atc_form_button.innerHTML = "atc form";
-    $("#" + id_form + ">button").remove();
+    if (atc_form_button) {
+      atc_form_button.innerHTML = "atc form";
+      $("#" + id_form + ">button").remove();
+      $("#" + id_form + "-container").detach()
+        .appendTo("#move-atc-menu-here-when-not-mobile");
+    }
 
     atc_list_button.innerHTML = "atc list";
     $("#" + id_list + ">button").remove();
-
-    document.getElementById("hide-atc-menu-when-mobile").style.display = "";
-    $("#" + id_form + "-container").detach()
-      .appendTo("#move-atc-menu-here-when-not-mobile");
     $("#" + id_list + "-container").detach()
       .appendTo("#move-atc-menu-here-when-not-mobile");
+
+    document.getElementById("hide-atc-menu-when-mobile").style.display = "";
+  }
+};
+
+/*
+Function to disable button for any cases in input field sent to server.
+Components must be inside AngularJS controller.
+*/
+var button_and_input_http_check = function (
+  disable,                      // Boolean to disable the button using
+                                // `ng-disabled`.
+  button_id,                    // The button's DOM id which we want to disable
+                                // and enable accordingly.
+  input_id,                     // The input's DOM id which used to determine if
+                                // the `button` will be disabled or not.
+  input_value,                  // The value from the element with `input_id` id.
+  http,                         // `$http` application object from AngularJS.
+  disable_class,                // CSS class used for the `button` if it is
+                                // disabled.
+  enable_class,                 // CSS class used for the `button` if it is
+                                // enabled.
+  param_name,                   // Parameter to be expected in the server.
+  button_processing_string,     // The `button` string when `$http` is being
+                                // processed.
+  button_disabled_string,       // The `button` string when the returned value
+                                // makes the `button` to be disabled.
+  button_enabled_string,        // The `button` string when the returned value
+                                // makes the `button` to be enabled.
+  button_server_problem_string, // The `button` string when there is a server
+                                // problem.
+  callback                      // Function to call after successful HTTP call.
+) {
+  /*
+  Keep the register button to be disabled. Only let the button to be enabled
+  from this AngularJS controller.
+  */
+  disable = true;
+
+  // Get access to necessary DOMs.
+  var button = document.getElementById(button_id);
+  var input = document.getElementById(input_id);
+
+  // Check the availability of the mentioned DOMs.
+  if (button && input) {
+    // Get URL from the used DOMs attribute `param`.
+    var url = input.getAttribute("param");
+
+    // Make sure the input is not empty.
+    if (input_value) {
+      /*
+      Set the button style when the before the HTTP request is being
+      processed.
+      */
+      button.classList.remove(disable_class);
+      button.classList.remove(enable_class);
+      button.classList.add(disable_class);
+      button.setAttribute("value", button_processing_string);
+
+      // Begin the HTTP request.
+      http_dict_params = {};
+      http_dict_params[param_name] = input_value;
+      http({
+        method: "GET",
+        params: http_dict_params,
+        url: url
+      }).then(function (data) {
+        disable = string_to_bool(data.data);
+        callback(disable);
+
+        if (data.status === 200) {
+          /*
+          When the data returned is `true` (for example same username found
+          in the table).
+          */
+          if (disable) {
+            button.setAttribute("value", button_disabled_string);
+          }
+          // When the data returned is `false` (for example unique username).
+          else {
+            button.classList.remove(disable_class);
+            button.classList.remove(enable_class);
+            button.classList.add(enable_class);
+            button.setAttribute("value", button_enabled_string);
+          }
+        }
+        // If there is a server problem.
+        else {
+          button.setAttribute("value", button_server_problem_string);
+        }
+      });
+    }
   }
 };
 

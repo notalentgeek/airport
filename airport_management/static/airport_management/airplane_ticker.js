@@ -1,17 +1,17 @@
 // AngularJS controllers.
 app.controller("flight_management_panel", function ($scope) {
-  $scope.buttons = [
+  $scope.control_buttons = [
+    {
+      "bootstrap_color": "btn-default",
+      "text": "add/change<br />lane"
+    },
+    {
+      "bootstrap_color": "btn-default",
+      "text": "add atc"
+    },
     {
       "bootstrap_color": "btn-success",
       "text": "submit"
-    },
-    {
-      "bootstrap_color": "btn-warning",
-      "text": "go to <br /> next flight"
-    },
-    {
-      "bootstrap_color": "btn-primary",
-      "text": "go to <br /> current flight"
     }
   ];
 });
@@ -20,6 +20,34 @@ app.controller("table_arrivaldeparture_main", function ($scope, $compile,
   $http) {
   $scope.arrival_pagination;
   $scope.departure_pagination;
+  $scope.get_flight_document = function (id_main, id_pagination, id) {
+    var requested_table = 0;
+    var table = document.getElementById(id_main + "-content");
+    var url = table.getAttribute("param");
+
+    if (id_pagination.toLowerCase().indexOf("arrival".toLowerCase()) > -1) {
+      requested_table = AOD.ARRIVAL;
+    }
+    else if (
+      id_pagination.toLowerCase().indexOf("departure".toLowerCase()) > -1
+    ) {
+      requested_table = AOD.DEPARTURE;
+    }
+
+    $http({
+      method: "GET",
+      params: { "requested_table": requested_table, "id": id },
+      url: url
+    }).then(function (data) {
+      /*
+      Check if there is `#flight-management-panel` exist in the view. If not,
+      it means that there is no user logged in.
+      */
+      if (document.getElementById("flight-management-panel")) {
+        $("#flight-management-content").html(data.data);
+      }
+    });
+  };
   $scope.get_new_arrivaldeparture_table = function (
     arrival_or_departure_enum, page) {
     var id_partial, arrivaldeparture_pagination,
@@ -67,17 +95,26 @@ app.controller("table_arrivaldeparture_main", function ($scope, $compile,
           .style.display = "none";
 
         $("#" + id_partial + "-table-content").html(data.data["html"]);
+
+        /*
+        Re-compile the table back with AngularJS, hence the `ng-click` is
+        activated again.
+        */
+        $compile($("#" + id_partial + "-table-content").contents())($scope);
+
+        // Adjust the style of the table again.
         auto_adjust_tables();
 
+        // In case the new data exceed our current need of pagination.
         if (data.data["num_pages"] != num_pages) {
           $("#pagination-" + id_partial).pagination("destroy");
-            arrivaldeparture_pagination =
-            set_table_pagination_for_arrivaldeparture(
-              arrival_or_departure_enum,   // Enumeration for flights.
-              "#pagination-" + id_partial, // ID for table pagination.
-              data.data["num_pages"],      // Total pages for this pagination.
-              page                         // Currently selected page.
-            );
+          arrivaldeparture_pagination =
+          set_table_pagination_for_arrivaldeparture(
+            arrival_or_departure_enum,   // Enumeration for flights.
+            "#pagination-" + id_partial, // ID for table pagination.
+            data.data["num_pages"],      // Total pages for this pagination.
+            page                         // Currently selected page.
+          );
           recompile_arrivaldeparture_pagination();
         }
       }
@@ -91,6 +128,10 @@ app.controller("table_arrivaldeparture_main", function ($scope, $compile,
       }
     });
   };
+  /*
+  Functions to re-compile AngularJS after the DOMs loaded and the initial
+  AngularJS components had been rendered.
+  */
   $scope.recompile_pagination = function () {
     $scope.recompile_arrival_pagination();
     $scope.recompile_departure_pagination();

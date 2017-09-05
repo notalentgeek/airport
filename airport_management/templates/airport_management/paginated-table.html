@@ -13,7 +13,13 @@
 <tbody>
 
   {% for data in data_list %}
-    <tr>
+    <!--
+    `'{{ data.id }}'` should be enclosed in quote because it need to be
+    perceived as a string.
+    -->
+    <tr ng-click="get_flight_document('{{ property.id_main }}',
+    '{{ property.id_pagination }}',
+    '{{ data.id }}')">
       <td>{{ data.flight_code }}</td>
       <td class="td-hide-for-small-width">
         {{ data.carrier }}
@@ -26,8 +32,8 @@
       </td>
       <td>{{ data.sch_local_datetime }}</td>
       <td>{{ data.lane }}</td>
-      <td>{{ data.online_atc }}</td>
-      <td>{{ data.proper_atc }}</td>
+      <td><a href="#">atcs</a></td>
+      <td style="position: relative;"><div style="text-overflow: ellipsis; max-width: 100%; overflow: hidden; position: absolute; white-space: nowrap;">{{ data.status }}</div></td>
     </tr>
   {% endfor %}
 
