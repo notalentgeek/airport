@@ -1,4 +1,4 @@
-from .models import AirTrafficController, ArrivalFlight, DepartureFlight
+from .models import AirTraficController, ArrivalFlight, DepartureFlight
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, User
@@ -8,18 +8,34 @@ from django.db import IntegrityError
 from django.db.models import Max, Min
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.template import RequestContext
 from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.timezone import localtime
+from enum import Enum
 from json import dumps
 
-AIRPORT_MANAGER_GROUP = "airport_manager"
-STATUS = [
-    "missing atc and lane",
-    "missing atc",
-    "missing lane"
-]
+"""
+PENDING: Practically this application will not work with empty database. Hence
+please make sure that the migrations happen with the fixtures.
+"""
+
+# Enumeration class to refer to `ArrivalFlight` or `DepartureFlight`.
+class AOD(Enum):
+    ARRIVAL = 1
+    DEPARTURE = 2
+
+"""
+Airport manager user group. This is not used in this prototype. Initially, I
+want to register air traffic controller (ATC) as `User` as well, but for now it
+is too complicated.
+"""
+AIRPORT_MANAGER_GROUP = "airport_manager_group"
+
+# Field name used to sort models historically.
+DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS = "scheduled_datetime"
+
+# The amount of objects in each paginations.
+PAGINATION_OBJECTS_COUNT = 100
 
 # Create your views here.
 def check_air_traffic_controller_code_existence(request):
