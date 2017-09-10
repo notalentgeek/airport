@@ -1,0 +1,154 @@
+@media not screen and (max-width: 767px) {
+  #airport-manager-form-buttons-container {
+    display: inline;
+  }
+  #airport-manager-form-buttons-container>div {
+    display: table-cell;
+    width: 50%;
+  }
+  #airport-manager-form-buttons-container>div>input {
+    width: 150px;
+  }
+  #airport-manager-form-inputs-container {
+    display: flex;
+    flex: 2;
+    flex-direction: row;
+  }
+  #airport-manager-form-inputs-container input {
+    flex: 1;
+    max-width: 150px;
+  }
+  #airport-manager-login-and-register-form {
+    border: none;
+  }
+  #airport-manager-login-and-register-form-container {
+    display: flex;
+    flex-direction: row;
+  }
+  #airport-manager-logout-form {
+    width: 315px;
+  }
+  #atc-form-register-button {
+    margin-left: 0;
+    width: 150px;
+  }
+  #atc-form-reset-button {
+    margin-right: 0;
+    width: 150px;
+  }
+  form.navbar-form {
+    border: none;
+  }
+}
+@media screen and (max-width: 767px) {
+  #airport-manager-login-and-register-form {
+    border: none;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  #airport-manager-login-and-register-form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  #airport-manager-logout-form {
+    min-width: 150px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  #airport-manager-form-buttons-container {
+    display: flex;
+    flex-direction: row;
+  }
+  #airport-manager-form-buttons-container>div {
+    flex: 1;
+  }
+  #airport-manager-form-buttons-container>div>input {
+    width: 100%;
+  }
+  #airport-manager-form-inputs-container {
+    display: flex;
+    flex-direction: column;
+  }
+  #airport-manager-form-inputs-container input {
+    flex: 1;
+  }
+  #atc-form-modal-button,
+  #atc-list-modal-button {
+    padding-bottom: 0;
+    padding-top: 0;
+    text-align: center;
+  }
+  #atc-form-reset-button {
+    margin-right: 0;
+    width: 50%;
+  }
+  #atc-form-register-button {
+    margin-left: 0;
+    width: 50%;
+  }
+  form.navbar-form {
+    border: none;
+  }
+}
+#airport-manager-button {
+  flex: 1;
+}
+#airport-manager-logout-button-container {
+  display: flex;
+  flex-direction: row;
+}
+#airport-manager-wrong-password-modal .modal-footer
+#atc-form-modal .modal-footer {
+  padding:9px 15px;
+}
+#airport-manager-wrong-password-modal .modal-header {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  background-color: #D9534F;
+  border-bottom:1px solid #EEEEEE;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding:9px 15px;
+}
+/*
+This is meant to remove shadow margin. See this StackOverflow discussion for
+further reference, https://stackoverflow.com/questions/24036212/no-margin-or-padding-but-still-space-between-div-elements.
+*/
+#atc-form .modal-footer {
+  font-size: 0;
+}
+#atc-form-modal .modal-header {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  background-color: #5CB85C;
+  border-bottom:1px solid #EEEEEE;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding:9px 15px;
+}
+#atc-list-modal .modal-header {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  background-color: #428BCA;
+  border-bottom:1px solid #EEEEEE;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding:9px 15px;
+}
+/* To handle table overflowing. */
+#atc-list-modal .modal-body {
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#atc-list-table th {
+  text-align: center;
+}

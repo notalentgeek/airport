@@ -88,11 +88,11 @@ def make_dictionary_for_arrivaldeparture(flight, altered_hours=5):
     sch_local_time = flight["scheduleTime"]
 
     sch_local_tz = timezone("Europe/Amsterdam")
-    sch_local_datetime = "{}T{}".format(sch_local_date,
+    scheduled_datetime = "{}T{}".format(sch_local_date,
         sch_local_time)
-    sch_local_datetime_original = sch_local_tz.localize(
+    scheduled_datetime_original = sch_local_tz.localize(
         datetime.strptime(
-            sch_local_datetime,
+            scheduled_datetime,
             "%Y-%m-%dT%H:%M:%S"
         )
     )
@@ -103,12 +103,12 @@ def make_dictionary_for_arrivaldeparture(flight, altered_hours=5):
     airport management "game" I put additional `altered_hours` into the original
     data taken from the Schipol API.
     """
-    sch_local_datetime_altered = sch_local_datetime_original +\
+    scheduled_datetime_altered = scheduled_datetime_original +\
         timedelta(hours=altered_hours)
-    dictionary["sch_local_datetime"] = sch_local_datetime_altered
+    dictionary["scheduled_datetime"] = scheduled_datetime_altered
 
     dictionary["day"] = get_day_from_datetime(
-        dictionary["sch_local_datetime"])
+        dictionary["scheduled_datetime"])
 
     carrier = flight["prefixICAO"]
     if carrier != "None" or carrier != None:

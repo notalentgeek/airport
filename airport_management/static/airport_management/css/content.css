@@ -1,0 +1,178 @@
+@media not screen and (max-width: 767px) {
+  #arrival-flight-table {
+    margin-right: 5px;
+  }
+  #arrivaldeparture-table-set-container {
+    display: flex;
+    flex-direction: row;
+    flex: 5;
+    height: 100%;
+    margin-top: 5px;
+  }
+  #departure-flight-table {
+    margin-left: 5px;
+  }
+  #flight-management-panel {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    margin-bottom: 5px;
+  }
+  #flight-management-button-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    height: 100%;
+  }
+  #flight-management-panel-content {
+    flex: 7;
+  }
+  #flight-management-panel-info {
+    flex-direction: row;
+  }
+  #main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .arrivaldeparture-table {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+  }
+  .arrivaldeparture-table-content-container>div {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+  }
+  .flight-management-button {
+    height: 100%;
+    width: 100px;
+    flex: 1;
+    padding-bottom: 0;
+    padding-top: 0;
+    margin-top: 0 !important; /* Why `!important` is necessary? */
+  }
+}
+@media screen and (max-width: 767px) {
+  #arrival-flight-table {
+    margin-bottom: 10px;
+  }
+  #arrivaldeparture-table-set-container {
+    display: flex;
+    flex-direction: column;
+    flex: 5;
+    height: 100%;
+  }
+  #departure-flight-table {
+    margin-top: 10px;
+  }
+  #flight-management-button-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    height: 100%;
+  }
+  #flight-management-panel {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    margin-bottom: 20px;
+  }
+  #flight-management-panel-content {
+    flex: 2;
+  }
+  #flight-management-panel-info {
+    flex-direction: column;
+  }
+  #main-content {
+    display: flex;
+    flex-direction: column;
+    height: 900px;
+  }
+  .arrivaldeparture-table {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    padding-right: 25px;
+  }
+  .arrivaldeparture-table-content-container>div {
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .flight-management-button {
+    height: 100%;
+    margin-top: 0 !important; /* Why `!important` is necessary? */
+  }
+}
+#arrival-flight-table-pagination,
+#departure-flight-table-pagination {
+  height: 40px;
+  margin-bottom: 0;
+  padding-right: 0;
+  width: 100%;
+}
+#arrival-flight-table-pagination>li,
+#departure-flight-table-pagination>li {
+  width: 10%;
+}
+#arrival-flight-table-pagination>li>span, #arrival-flight-table-pagination>li>a,
+#departure-flight-table-pagination>li>span, #departure-flight-table-pagination>li>a {
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+  width: 100%;
+}
+#arrival-flight-table-error,
+#arrival-flight-table-requesting,
+#departure-flight-table-error,
+#departure-flight-table-requesting {
+  display: none;
+}
+#pagination-request-flight-table {
+  display: none;
+}
+.arrivaldeparture-table-content-container {
+  flex: 1;
+  height: 1px; /* Insert arbitrary small number here. Idk why, it just works. */
+  margin-bottom: 5px;
+  margin-top: 5px;
+  text-align: center;
+}
+.arrivaldeparture-table-content-container td {
+  cursor: pointer;
+}
+.arrivaldeparture-table-content-container>div>table {
+  position: absolute;
+}
+.arrivaldeparture-table-content-container>div>table th {
+  text-align: center;
+}
+.arrivaldeparture-table-pagination-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+.arrivaldeparture-table-title {
+  margin: 0 0 5px 0;
+}
+.line-separator {
+  background-color: lightgray;
+  height: 2px;
+  width: 100%;
+}
+.pagination-button-dynamic-width>span.clickable.ellipse>input {
+  width: 100%;
+}
+.pagination-button-dynamic-width>span.clickable.ellipse>input::-webkit-inner-spin-button,
+.pagination-button-dynamic-width>span.clickable.ellipse>input::-webkit-outer-spin-button {
+  /*display: none; /* Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* Apparently some margin are still there even though it is
+                hidden. */
+}

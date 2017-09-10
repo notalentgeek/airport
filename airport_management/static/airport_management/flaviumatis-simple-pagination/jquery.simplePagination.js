@@ -374,7 +374,7 @@
 									.element(
     									document
     										.getElementById(
-    											"table-arrivaldeparture-main"
+    											"arrivaldeparture-table-set-container"
     										)
     								).scope();
 								scope_angularjs_controller

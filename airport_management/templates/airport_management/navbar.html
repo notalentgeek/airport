@@ -1,11 +1,9 @@
 {% load djng_tags %}
 {% load static %}
-
 <nav class="navbar navbar-default">
-
-  <!-- Header and burger button for mobile view. -->
+  <!-- Header and burger buttons for mobile view. -->
   <div class="navbar-header">
-    <a class="navbar-brand" href="#" id="title">airport management</a>
+    <a class="navbar-brand" href="#" id="title">airport manager</a>
     <button aria-expanded="false" class="collapsed navbar-toggle"
       data-target="#main-menu" data-toggle="collapse" type="button">
       <span class="sr-only">toggle navigation</span>
@@ -14,66 +12,75 @@
       <span class="icon-bar"></span>
     </button>
   </div>
-
-  <!-- Main menu, mainly used for login, logout, and register. -->
+  <!--
+  Main menu, mainly used for login, logout, and register. There are some
+  buttons to activate modals as well.
+  -->
   <div class="collapse navbar-collapse" id="main-menu">
+    <!-- Left navigation bar. -->
     <div class="navbar-left">
-      <ul class="nav navbar-nav" id="move-atc-menu-here-when-mobile"
+      <ul class="nav navbar-nav" id="atc-modal-buttons-move-mobile"
         ng-controller="atc_menu">
-
-        <li class="dropdown" id="hide-atc-menu-when-mobile">
+        <li class="dropdown" id="atc-modal-buttons-container-hide-mobile">
+          <!-- ATC button when viewed with standard computer display. -->
           <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle"
             data-toggle="dropdown" href="#" role="button">
             atc<span class="caret"></span>
           </a>
-          <ul class="dropdown-menu" id="move-atc-menu-here-when-not-mobile">
+          <!-- Button to show ATC form modal and ATC list modal. -->
+          <ul class="dropdown-menu" id="atc-modal-buttons-move-non-mobile">
+            <!--
+            ATC form modal and its button can only be seen if an airport manager
+            is logged in.
+            -->
             {% if user.is_authenticated and not user.is_superuser %}
-              <li id="atc-form-button-container">
-                <a href="#" id="atc-form-button"
+              <li id="atc-form-modal-button-container">
+                <a href="#" id="atc-form-modal-button"
                   ng-click="show_atc_form_modal()">
                   atc form
                 </a>
               </li>
             {% endif %}
-            <li id="atc-list-button-container">
-              <a href="#" id="atc-list-button" ng-click="show_atc_list_modal()">
-                atcs list
+            <li id="atc-list-modal-button-container">
+              <a href="#" id="atc-list-modal-button"
+                ng-click="show_atc_list_modal()">
+                atc list
               </a>
             </li>
           </ul>
         </li>
-
       </ul>
     </div>
-
+    <!-- Right navigation bar. -->
     <div class="navbar-right">
-
-      <!-- Login and register for the user (airport manager). -->
+      <!-- Logout form if an airport manager is logged in. -->
       {% if user.is_authenticated and not user.is_superuser %}
         <form action="{% url 'airport_management:logout_airport_manager' %}"
-          class="navbar-form" id="logout-form" method="POST">
+          class="navbar-form" id="airport-manager-logout-form" method="POST">
           {% csrf_token %}
-          <div id="logout-form-button-container">
-            <input class="btn btn-block btn-success" id="user-button"
-              param="{{ user.username }}" type="submit"
-              value="hello! {{ user.username }}" />
+          <div id="airport-manager-logout-button-container">
+            <input class="btn btn-block btn-success"
+              id="airport-manager-button"
+              param="{{ airport_manager.username }}" type="submit"
+              value="hello! {{ airport_manager.username }}" />
           </div>
         </form>
       {% else %}
-        <form action="{% url 'airport_management:login_or_register_airport_manager' %}"
-          class="navbar-form" id="login-register-form" method="POST"
-          ng-controller="login_register_form">
-          <div id="main-menu-container">
-            {% csrf_token %}
-
-            <!-- Form's text input. -->
-            <div id="main-menu-form-input">
-              <input class="form-control" id="username-input" type="text"
-                name="username"
-                param="{% url 'airport_management:check_user_existence' %}"
-                placeholder="user name" ng-change="check_username_existence()"
-                ng-model="username_input" />
-
+        <form
+          action="{% url 'airport_management:login_or_register_airport_manager' %}"
+          class="navbar-form" id="airport-manager-login-and-register-form"
+          method="POST" ng-controller="login_and_register_form">
+          {% csrf_token %}
+          <div id="airport-manager-login-and-register-form-container">
+            <!-- Form's text inputs. -->
+            <div id="airport-manager-form-inputs-container">
+              <!-- Airport manager name input (username). -->
+              <input class="form-control" id="airport-manager-name-input"
+                type="text" name="airport_manager_name_input"
+                param="{% url 'airport_management:check_airport_manager_name_existence' %}"
+                placeholder="username"
+                ng-change="check_airport_manager_name_existstence()"
+                ng-model="airport_manager_name_input">
               <!--
               Adding wrong password modal trigger with these codes. The
               template received error message from the Django server. The
@@ -83,94 +90,98 @@
               {% if messages %}
                 {% for message in messages %}
                   {% with wrong_password=message %}
-                    <input class="form-control" id="password-input"
-                      type="password" name="password"
-                      param="{{ wrong_password }}" placeholder="password" />
+                    <!-- Airport manager password input. -->
+                    <input class="form-control"
+                      id="airport-manager-password-input"
+                      type="password" name="airport_manager_password_input"
+                      param="{{ wrong_password }}" placeholder="password">
                   {% endwith %}
                 {% endfor %}
               {% else %}
-                <input class="form-control" id="password-input"
-                  type="password" name="password" placeholder="password" />
+                <!--
+                This is the airport manager password input for the first time
+                page loads or if previously inputted password is correct
+                according to the supplied airport manager name.
+                -->
+                <input class="form-control" id="airport-manager-password-input"
+                  type="password" name="airport_manager_password_input"
+                  placeholder="password">
               {% endif %}
             </div>
-
             <!-- Form's buttons. -->
-            <div id="main-menu-form-buttons-container">
-              <div class="main-menu-form-button">
-                <input class="btn btn-block btn-success" name="submit-button"
-                  type="submit" value="login" />
+            <div id="airport-manager-form-buttons-container">
+              <div>
+                <!-- Airport manager login button. -->
+                <input class="btn btn-block btn-success"
+                  name="airport_manager_submit_button"
+                  type="submit" value="login">
               </div>
-              <div class="main-menu-form-button">
-                <input class="btn btn-block btn-primary" id="register-button"
-                  name="submit-button" type="submit" value="register"
-                  ng-disabled="disable_register_button" />
+              <div>
+                <!-- Airport manager register button. -->
+                <input class="btn btn-block btn-primary"
+                  id="airport-manager-register-button"
+                  name="airport_manager_submit_button"
+                  type="submit" value="register"
+                  ng-disabled="disable_airport_manager_register_button">
               </div>
             </div>
           </div>
         </form>
       {% endif %}
-
     </div>
   </div>
 </nav>
-
 <!-- Modal page for a form to register ATC. -->
 <div class="fade modal" id="atc-form-modal" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content. -->
     <form action="{% url 'airport_management:register_atc' %}"
-      class="form-horizontal" id="atc-register-form" method="POST"
-      name="atc_register_form" ng-controller="atc_register_form">
+      class="form-horizontal" id="atc-form" method="POST" name="atc_form"
+      ng-controller="atc_form">
       {% csrf_token %}
-
       <div class="modal-content">
         <div class="modal-header">
           <button class="close" data-dismiss="modal" type="button">
             &times;
           </button>
-          <h4 class="modal-title">atc registration form</h4>
+          <h4 class="modal-title">atc form</h4>
         </div>
         <div class="modal-body">
-
-          <!-- Form for registering new ATC. -->
-          <input class="form-control" id="atc-code-input" name="atc_code_input"
-            type="text"
-            param="{% url 'airport_management:check_air_traffic_controller_code_existence' %}"
-            placeholder="code" ng-change="check_atc_code_existence()"
-            ng-model="atc_code_input" required/>
-          <input class="form-control" name="atc_first_name_input" type="text"
+          <!--
+          Inputs for a form that register ATC.
+          ATC code.
+          -->
+          <input class="form-control" id="atc-form-code-input"
+            name="atc_form_code_input" type="text"
+            param="{% url 'airport_management:check_atc_code_existence' %}"
+            placeholder="atc code" ng-change="check_atc_code_existence()"
+            ng-model="atc_form_code_input" required />
+          <!-- ATC first name. -->
+          <input class="form-control" name="atc_form_first_name_input" type="text"
             placeholder="first name"
             ng-change="disable_atc_register_button_callback()"
-            ng-model="atc_first_name_input" required/>
-          <input class="form-control" name="atc_last_name_input" type="text"
+            ng-model="atc_form_first_name_input" required/>
+          <!-- ATC last name. -->
+          <input class="form-control" name="atc_form_last_name_input" type="text"
             placeholder="last name"
             ng-change="disable_atc_register_button_callback()"
-            ng-model="atc_last_name_input" required/>
-
+            ng-model="atc_form_last_name_input" required/>
         </div>
         <div class="modal-footer">
-
-          <!-- Reset form and register buttons. -->
-          <input class="btn btn-default" id="atc-reset-button" type="button"
-            value="reset" ng-click="reset_values()" />
-          <input class="btn btn-success" id="atc-submit-button" type="submit"
-            value="register" ng-disabled="disable_atc_register_button"
-          />
-
+          <!-- Reset form button and register button. -->
+          <input class="btn btn-default" id="atc-form-reset-button"
+            type="button" value="reset" ng-click="reset_values()" />
+          <input class="btn btn-success" id="atc-form-register-button"
+            type="submit" value="register"
+            ng-disabled="disable_atc_register_button" />
         </div>
       </div>
-
     </form>
-
   </div>
 </div>
-
-<!-- Modal page for ATC list. -->
+<!-- Modal page for ATCs list. -->
 <div class="fade modal" id="atc-list-modal" role="dialog">
   <div class="modal-dialog">
-
-    <!-- Modal content. -->
     <div class="modal-content">
       <div class="modal-header">
         <button class="close" data-dismiss="modal" type="button">
@@ -179,21 +190,19 @@
         <h4 class="modal-title">atc list</h4>
       </div>
       <div class="modal-body">
+        <!-- ATC list table. -->
         <table class="table table-condensed" id="atc-list-table">
           <thead>
-            <tr>
-              <!--
-              PENDING: I could make more extensive table for the ATCs but it
-              will take more time to implement some kind like passive drop down
-              menu.
-              -->
-              <th>atc code</th>
-              <th>first name</th>
-              <th>last name</th>
-            </tr>
+            <!--
+            PENDING: I could make more extensive table for the ATCs but it
+            will take more time to implement some kind like passive drop down
+            menu.
+            -->
+            <th>atc code</th>
+            <th>first name</th>
+            <th>last name</th>
           </thead>
           <tbody>
-
             {% for atc in atcs %}
               <tr>
                 <td>{{ atc.code }}</td>
@@ -201,29 +210,26 @@
                 <td>{{ atc.last_name }}</td>
               </tr>
             {% endfor %}
-
           </tbody>
         </table>
       </div>
     </div>
-
   </div>
 </div>
-
-<!-- Modal page if user inserted unmatched password. -->
-<div class="fade modal" id="wrong-password-modal" role="dialog">
+<!-- Modal page if previously inserted password is wrong. -->
+<div class="fade modal" id="airport-manager-wrong-password-modal" role="dialog">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button class="close" data-dismiss="modal" type="button">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
         <h4 class="modal-title">error!</h4>
       </div>
       <div class="modal-body">
-        wrong username and password combination
+        <p>wrong username and password combination</p>
       </div>
     </div>
-
   </div>
 </div>

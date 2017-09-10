@@ -1,3 +1,5 @@
+// Functions.
+
 /*
 There is a hack I used in the jquery.simplePagination.js to force ellipsed
 pagination to select the proper pagination page and table. The hack is located
@@ -18,24 +20,19 @@ function string_to_bool (to_bool) {
 }
 
 /*
+Get the AngularJS controller for the pagination buttons. The `.element()`'s
+parameter for some reason cannot accept JQuery selector.
+*/
+function get_angularjs_scope (dom_id) {
+  return angular.element(document.getElementById(dom_id)).scope();
+}
+
+/*
 Function to detect THE INITIAL device, whether it is a touch screen or
 non-touch screen display.
 */
 function is_touch_device () {
-  return (('ontouchstart' in window)
+  return (("ontouchstart" in window)
     || (navigator.MaxTouchPoints > 0)
     || (navigator.msMaxTouchPoints > 0));
 }
-
-/*
-Simple enumeration for arrival or departure. `AOD` is meant for "arrival or
-departure". Do not use `0` as an enumeration value because it can be coerced
-into `false`.
-*/
-var AOD = Object.freeze({ ARRIVAL: 1, DEPARTURE: 2 });
-
-// Number of pages in arrival and departure paginations.
-var arrival_num_pages, departure_num_pages;
-
-// Initiating AngularJS application.
-var app = angular.module("airport_management", ["ngSanitize"]);

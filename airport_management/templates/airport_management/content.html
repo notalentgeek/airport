@@ -1,0 +1,77 @@
+{% load djng_tags %}
+{% load static %}
+<div id="main-content">
+  <!-- If an airport manager is logged in, show the flight management panel. -->
+  {% if user.is_authenticated and not user.is_superuser %}
+    <div id="flight-management-panel" ng-controller="flight_management_panel">
+      <div id="flight-management-panel-content">
+        {% include "airport_management/flight_management_panel.html" with flight_management_panel_initial_doms=flight_management_panel_initial_doms flight_management_panel_initial_status_doms=flight_management_panel_initial_status_doms %}
+      </div>
+      <div id="flight-management-button-container">
+        {% angularjs %}
+          <!-- Three buttons. -->
+          <button class="btn btn-block flight-management-button {{ control_button.bootstrap_color }}"
+          ng-bind-html="control_button.text"
+          ng-repeat="control_button in control_buttons"
+          >
+          </button>
+        {% endangularjs %}
+      </div>
+    </div>
+    <hr class="line-separator" />
+  {% endif %}
+  <!--
+  Invisible DOM to store GET url to get new flight table when clicking on
+  pagination button.
+  -->
+  <div id="pagination-request-flight-table"
+    param="{% url 'airport_management:pagination_request_flight_table' %}">
+  </div>
+  <!--
+  Invisible DOM to store GET url to get flight document when a row is clicked.
+  -->
+  <div id="table-request-flight"
+    param="{% url 'airport_management:table_request_flight' %}">
+  </div>
+  <!-- Set of tables (table title, table, and table pagination). -->
+  <div id="arrivaldeparture-table-set-container"
+    ng-controller="arrivaldeparture_table">
+    <!-- Create two tables, arrival flight table and departure flight table. -->
+    {% for table_properties in tables_properties %}
+      <div class="arrivaldeparture-table"
+        id="{{ table_properties.table_set_container_id }}">
+        <!-- Table title. -->
+        <div>
+          <h1 class="arrivaldeparture-table-title">
+            {{ table_properties.table_title }}
+          </h1>
+        </div>
+        <!-- Table. -->
+        <div class="arrivaldeparture-table-content-container">
+          <div>
+            <!-- Error table. -->
+            <div id="{{ table_properties.table_error_id }}">
+              <i>server problem</i>
+            </div>
+            <!-- Requesting table. -->
+            <div id="{{ table_properties.table_requesting_id }}">
+              <i>requesting new table</i>
+            </div>
+            <!-- Main table. -->
+            <table class="table table-condensed table-hover"
+              id="{{ table_properties.table_id }}">
+              {% include "airport_management/paginated_table.html" with flight_objects=table_properties.flight_objects %}
+            </table>
+          </div>
+        </div>
+        <!-- Table pagination. -->
+        <div class="arrivaldeparture-table-pagination-container">
+          <ul class="pagination"
+            id ="{{ table_properties.table_pagination_id }}"
+            param="{{ table_properties.number_of_pages }}">
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

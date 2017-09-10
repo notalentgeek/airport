@@ -1,4 +1,5 @@
-from .models import AirTraficController, ArrivalFlight, DepartureFlight
+from .consts import AOD, CSS, KEY
+from .models import AirTrafficController, ArrivalFlight, DepartureFlight
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, User
@@ -15,16 +16,6 @@ from enum import Enum
 from json import dumps
 
 """
-PENDING: Practically this application will not work with empty database. Hence
-please make sure that the migrations happen with the fixtures.
-"""
-
-# Enumeration class to refer to `ArrivalFlight` or `DepartureFlight`.
-class AOD(Enum):
-    ARRIVAL = 1
-    DEPARTURE = 2
-
-"""
 Airport manager user group. This is not used in this prototype. Initially, I
 want to register air traffic controller (ATC) as `User` as well, but for now it
 is too complicated.
@@ -37,124 +28,135 @@ DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS = "scheduled_datetime"
 # The amount of objects in each paginations.
 PAGINATION_OBJECTS_COUNT = 100
 
+"""
+PENDING:Practically this application will not work with empty database. Hence
+please make sure that the migrations happen with the fixtures.
+"""
+
 # Create your views here.
-def check_air_traffic_controller_code_existence(request):
-    atc_code = request.GET.get("atc_code", "")
-    return HttpResponse(AirTrafficController.objects.filter(code=atc_code)
-        .exists())
 
-def check_user_existence(request):
-    username = request.GET.get("username", "")
-    return HttpResponse(User.objects.filter(username=username).exists())
-
+# Non-transit views.
 def index(request):
-    # Split the flight objects into 100 documents each with `Pagination`.
-    arrival_flights_paginator = Paginator(ArrivalFlight.objects.all().order_by("sch_local_datetime"), 100)
-    arrival_flights_paginator_page_1 =\
-        arrival_flights_paginator.page(1).object_list
-    departure_flights_paginator = Paginator(DepartureFlight.objects.all().order_by("sch_local_datetime"), 100)
-    departure_flights_paginator_page_1 =\
-        departure_flights_paginator.page(1).object_list
+    # Informations for flight management panel.
 
-    latest_datetime = ArrivalFlight.objects.aggregate(Max("sch_local_datetime"))["sch_local_datetime__max"]
-    earliest_document_from_latest_day = ArrivalFlight.objects.filter(
-        sch_local_datetime__year=latest_datetime.year,
-        sch_local_datetime__month=latest_datetime.month,
-        sch_local_datetime__day=latest_datetime.day
-    ).order_by("sch_local_datetime")[0]
+    """
+    For the initial page set the flight management panel to only display the
+    earliest flight from the latest day. This could be changed based on
+    preference though.
+    """
+    latest_datetime_from_arrivalflight = get_latest_datetime_from_a_model(
+        ArrivalFlight, DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS)
 
-    columns = [
-        [
-            [
-                {
-                    "class": "management-panel-info-text",
-                    "text": "<strong>code:</strong>"
-                },
-                {
-                    "class": "management-panel-variable-text",
-                    "text": earliest_document_from_latest_day.flight_code
-                }
-            ],
-            [
-                {
-                    "class": "management-panel-info-text",
-                    "text": "<strong>airport:</strong>"
-                },
-                {
-                    "class": "management-panel-variable-text",
-                    "text": earliest_document_from_latest_day.airport
-                }
-            ]
-        ],
-        [
-            [
-                {
-                    "class": "management-panel-info-text",
-                    "text": "<strong>day:</strong>"
-                },
-                {
-                    "class": "management-panel-variable-text",
-                    "text": earliest_document_from_latest_day.day
-                }
-            ],
-            [
-                {
-                    "class": "management-panel-info-text",
-                    "text": "<strong>schedule:</strong>"
-                },
-                {
-                    "class": "management-panel-variable-text",
-                    "text": localtime(earliest_document_from_latest_day.sch_local_datetime)
-                }
-            ]
-        ]
-    ];
-
-    status = check_flight_status(
-        earliest_document_from_latest_day.online_atc,
-        bool(earliest_document_from_latest_day.lane)
+    """
+    Get the earliest `ArrivalFlight` document from the latest day as the first
+    document shown in the flight management panel.
+    """
+    earliest_arrivalflight_from_latest_day = get_earliest_document_from_a_day(
+        ArrivalFlight,
+        DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS,
+        latest_datetime_from_arrivalflight
     )
 
-    # Repeat table properties.
-    properties = [
+    flight_management_panel_initial_dom = generate_flight_management_panel_dom(
+        earliest_arrivalflight_from_latest_day)
+
+    # Informations for flight table.
+
+    # Create paginations.
+    arrivalflight_paginations =\
+        create_pagination_return_page_and_num_pages(
+            ArrivalFlight,
+            DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS,
+            PAGINATION_OBJECTS_COUNT
+        )
+    departureflight_paginations =\
+        create_pagination_return_page_and_num_pages(
+            DepartureFlight,
+            DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS,
+            PAGINATION_OBJECTS_COUNT
+        )
+
+    # Tables properties (arrival table and departure table).
+    tables_properties = [
         {
-            "data": arrival_flights_paginator_page_1,
-            "id_main": "arrival-table", # For CSS purposes.
-            "id_pagination": "pagination-arrival",
-            "num_pages": arrival_flights_paginator.num_pages,
-            "title": "arrival flights"
+            "flight_objects":arrivalflight_paginations["objects"],
+            "number_of_pages":arrivalflight_paginations["number_of_pages"],
+            "table_set_container_id":\
+                CSS.ARRIVAL_FLIGHT_TABLE_SET_CONTAINER_ID,
+            "table_error_id":CSS.ARRIVAL_FLIGHT_TABLE_ERROR_ID,
+            "table_id":CSS.ARRIVAL_FLIGHT_TABLE_ID,
+            "table_pagination_id":CSS.ARRIVAL_FLIGHT_TABLE_PAGINATION_ID,
+            "table_requesting_id":CSS.ARRIVAL_FLIGHT_TABLE_REQUESTING_ID,
+            "table_title":"arrival table"
         },
         {
-            "data": departure_flights_paginator_page_1,
-            "id_main": "departure-table", # For CSS purposes.
-            "id_pagination": "pagination-departure",
-            "num_pages": departure_flights_paginator.num_pages,
-            "title": "departure flights"
+            "flight_objects":departureflight_paginations["objects"],
+            "number_of_pages":departureflight_paginations["number_of_pages"],
+            "table_set_container_id":\
+                CSS.DEPARTURE_FLIGHT_TABLE_SET_CONTAINER_ID,
+            "table_error_id":CSS.DEPARTURE_FLIGHT_TABLE_ERROR_ID,
+            "table_id":CSS.DEPARTURE_FLIGHT_TABLE_ID,
+            "table_pagination_id":CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID,
+            "table_requesting_id":CSS.DEPARTURE_FLIGHT_TABLE_REQUESTING_ID,
+            "table_title":"departure table"
         }
-    ];
+    ]
 
-    """
-    PENDING: `properties` is actually used to retrieve arrival and departure
-    flights data. It could be changed to better name.
-    """
     return render(request, "airport_management/index.html", {
-        "atcs": AirTrafficController.objects.all(),
-        "columns": columns,
-        "properties": properties,
-        "status": status,
-        "user": request.user
+        "atcs":AirTrafficController.objects.all(),
+        "flight_management_panel_initial_doms":\
+            flight_management_panel_initial_dom["doms"],
+        "flight_management_panel_initial_status_dom":\
+            flight_management_panel_initial_dom["status"],
+        "tables_properties":tables_properties,
+        "airport_manager":request.user
     })
 
+# Transit views.
+
+# Dealing with ATC.
+def check_atc_code_existence(request):
+    return check_existence(request, KEY.ATC_CODE, AirTrafficController, "code")
+
+def register_atc(request):
+    try:
+        code = request.POST[KEY.ATC_FORM_CODE_INPUT]
+        first_name = request.POST[KEY.ATC_FORM_FIRST_NAME_INPUT]
+        last_name = request.POST[KEY.ATC_FORM_LAST_NAME_INPUT]
+
+        AirTrafficController.objects.create(
+            code=code,
+            first_name=first_name,
+            last_name=last_name
+        )
+    except IntegrityError as error:
+        print(error)
+
+    return HttpResponseRedirect(reverse("airport_management:index"))
+
+# Dealing with the airport manager (the main user for this application).
+def check_airport_manager_name_existence(request):
+    return check_existence(request, KEY.AIRPORT_MANAGER_NAME, User,
+        "username")
+
+def login_or_register_airport_manager(request):
+    if request.POST[KEY.AIRPORT_MANAGER_SUBMIT_BUTTON] == "login":
+        return login_airport_manager(request)
+    elif request.POST[KEY.AIRPORT_MANAGER_SUBMIT_BUTTON] == "register":
+        return register_airport_manager(request)
+
+    return HttpResponseRedirect(reverse("airport_management:index"))
+
 def login_airport_manager(request):
-    user = authenticate(
-        username=request.POST["username"],
-        password=request.POST["password"]
+    airport_manager = authenticate(
+        username=request.POST[KEY.AIRPORT_MANAGER_NAME_INPUT],
+        password=request.POST[KEY.AIRPORT_MANAGER_PASSWORD_INPUT]
     )
 
     # For correct and wrong password.
-    if user is not None:
-        if user.is_active:
-            login(request, user)
+    if airport_manager is not None:
+        if airport_manager.is_active:
+            login(request, airport_manager)
             return HttpResponseRedirect(reverse("airport_management:index"))
     else:
         """
@@ -164,14 +166,24 @@ def login_airport_manager(request):
         """
         messages.error(request, "wrong_password")
         return HttpResponseRedirect(reverse("airport_management:index"))
-        #return render(request, "airport_management/index.html", {
-        #    "user": request.user, "wrong_password": True })
 
-def login_or_register_airport_manager(request):
-    if request.POST["submit-button"] == "login":
-        return login_airport_manager(request)
-    elif request.POST["submit-button"] == "register":
-        return register_airport_manager(request)
+        # This is the recommended way to re-direct user after failed login.
+        #return render(request, "airport_management/index.html", {
+        #    "user":request.user, "wrong_password":True })
+
+def register_airport_manager(request):
+    try:
+        # Register airport manager.
+        username=request.POST[KEY.AIRPORT_MANAGER_NAME_INPUT]
+        password=request.POST[KEY.AIRPORT_MANAGER_PASSWORD_INPUT]
+        airport_manager = User.objects.create_user(username, password=password)
+
+        # Add the newly created airport manager into airport manager group.
+        airport_manager_group = get_or_create_group(AIRPORT_MANAGER_GROUP)
+        airport_manager.groups.add(airport_manager_group)
+        airport_manager.save()
+    except IntegrityError as error:
+        print(error)
 
     return HttpResponseRedirect(reverse("airport_management:index"))
 
@@ -179,163 +191,204 @@ def logout_airport_manager(request):
     logout(request)
     return HttpResponseRedirect(reverse("airport_management:index"))
 
-def register_airport_manager(request):
-    try:
-        group = get_or_create_group(AIRPORT_MANAGER_GROUP)
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = User.objects.create_user(username, password=password)
-        user.groups.add(group)
-        user.save()
-    except IntegrityError as error:
-        print(error)
-
-    return HttpResponseRedirect(reverse("airport_management:index"))
-
-def register_atc(request):
-    try:
-        atc_code = request.POST["atc_code_input"]
-        atc_first_name = request.POST["atc_first_name_input"]
-        atc_last_name = request.POST["atc_last_name_input"]
-        AirTrafficController.objects.create(
-            code = atc_code,
-            first_name = atc_first_name,
-            last_name = atc_last_name
-        )
-    except IntegrityError as error:
-        print(error)
-
-    return HttpResponseRedirect(reverse("airport_management:index"))
-
-def request_flight(request):
-    # The id of the arrival or departure flight.
-    id_ = request.GET.get("id", "")
+# Processing HTTP request from AngularJS.
+def table_request_flight(request):
+    # The `id` of the arrival and departure flight we are looking for.
+    flight_id = request.GET.get(KEY.FLIGHT_ID, "")
 
     """
     `requested_table` is either `1` or `2`. `1` refers to arrival flight table,
     while `2` refers to departure flight.
     """
-    requested_table = request.GET.get("requested_table", "0")
+    requested_table = request.GET.get(KEY.REQUESTED_TABLE, "0")
 
-    if requested_table == "1":
-        flight = ArrivalFlight.objects.get(pk=id_)
-    elif requested_table == "2":
-        flight = DepartureFlight.objects.get(pk=id_)
+    # We need to coerce the value first to integer.
+    if int(requested_table) == AOD.ARRIVAL:
+        flight = ArrivalFlight.objects.get(pk=flight_id)
+    elif int(requested_table) == AOD.DEPARTURE:
+        flight = DepartureFlight.objects.get(pk=flight_id)
 
-    if flight:
-        columns = [
-            [
-                [
-                    {
-                        "class": "management-panel-info-text",
-                        "text": "<strong>code:</strong>"
-                    },
-                    {
-                        "class": "management-panel-variable-text",
-                        "text": flight.flight_code
-                    }
-                ],
-                [
-                    {
-                        "class": "management-panel-info-text",
-                        "text": "<strong>airport:</strong>"
-                    },
-                    {
-                        "class": "management-panel-variable-text",
-                        "text": flight.airport
-                    }
-                ]
-            ],
-            [
-                [
-                    {
-                        "class": "management-panel-info-text",
-                        "text": "<strong>day:</strong>"
-                    },
-                    {
-                        "class": "management-panel-variable-text",
-                        "text": flight.day
-                    }
-                ],
-                [
-                    {
-                        "class": "management-panel-info-text",
-                        "text": "<strong>schedule:</strong>"
-                    },
-                    {
-                        "class": "management-panel-variable-text",
-                        "text": localtime(flight.sch_local_datetime)
-                    }
-                ]
-            ]
-        ];
+    flight_management_panel_initial_doms = generate_flight_management_panel_dom(
+        flight)
 
-        status = check_flight_status(
-            flight.online_atc, bool(flight.lane)
+    # Get the template HTML file for the flight management panel.
+    flight_management_panel_template =\
+        get_template("airport_management/flight_management_panel.html")
+
+    # Render the template with some parameter.
+    flight_management_panel_html = flight_management_panel_template.render({
+        "flight_management_panel_initial_doms":\
+            flight_management_panel_initial_doms["doms"],
+        "flight_management_panel_initial_status_doms":\
+            flight_management_panel_initial_doms["status"]
+    }, request)
+
+    return HttpResponse(flight_management_panel_html)
+
+def pagination_request_flight_table(request):
+    # Closure.
+    def pagination_request_flight_table_(model_objects, pagination_page):
+        model_paginations = create_pagination_return_page_and_num_pages(
+            model_objects,
+            DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS,
+            PAGINATION_OBJECTS_COUNT,
+            pagination_page
         )
 
-        template = get_template("airport_management/flight-management-panel.html")
-        html = template.render({
-            "columns": columns,
-            "status": status
+        table_template = get_template("airport_management/paginated_table.html")
+        table_html = table_template.render({
+            "flight_objects":model_paginations["objects"]
         }, request)
 
-    return HttpResponse(html)
-
-def request_table_pagination(request):
-    page = request.GET.get("page", "")
-    which_pagination = request.GET.get("which_pagination", "")
-
-    # Closure.
-    def request_table_pagination_(object_all):
-        flights_paginator = Paginator(object_all, 100)
-        flights_paginator_page =\
-            flights_paginator.page(page).object_list
-
-        template = get_template("airport_management/paginated-table.html")
-        html = template.render({ "data_list": flights_paginator_page },
-            request)
-
-        dictionary = {
-            "html": html,
-            "num_pages": flights_paginator.num_pages
-        }
+        dictionary = {}
+        dictionary[KEY.TABLE_HTML] = table_html
+        dictionary[KEY.NUMBER_OF_PAGES] = model_paginations["number_of_pages"]
 
         return HttpResponse(dumps(dictionary))
 
-    if which_pagination == "1":
-        return request_table_pagination_(ArrivalFlight.objects.all().order_by("sch_local_datetime"))
-    elif which_pagination == "2":
-        return request_table_pagination_(DepartureFlight.objects.all().order_by("sch_local_datetime"))
+    # The pagination page the application is looking for.
+    pagination_page = request.GET.get(KEY.REQUESTED_PAGINATION_PAGE, "")
 
-    return HttpResponse()
+    """
+    `requested_table` is either `1` or `2`. `1` refers to arrival flight table,
+    while `2` refers to departure flight.
+    """
+    requested_table = request.GET.get(KEY.REQUESTED_TABLE, "0")
+    # We need to coerce the value first to integer.
+    if int(requested_table) == AOD.ARRIVAL:
+        return pagination_request_flight_table_(ArrivalFlight,
+            pagination_page)
+    elif int(requested_table) == AOD.DEPARTURE:
+        return pagination_request_flight_table_(DepartureFlight,
+            pagination_page)
 
 # Decorator function.
-# Not used anymore, since there is only one type of user.
+
+"""
+This function was meant for view that can only be accessed by certain group.
+However, because there is only one kind of `User` in this prototype, this
+function is not currently being used.
+"""
 def airport_manager_login_required(function):
     def wrap(request, *args, **kwargs):
-        if request.user.is_authenticated() and\
-            request.user.groups.filter(name=AIRPORT_MANAGER_GROUP).exists():
+        user = request.user
+        if user.is_authenticated() and\
+            user.groups.filter(name=AIRPORT_MANAGER_GROUP).exists():
             return function(request, *args, **kwargs)
         else:
-            return HttpResponse("you are not allowed to see this page")
+            return HttpResponse("you are not allowed to see this web page")
 
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
 
     return wrap
 
-# Non-view function.
-def check_flight_status(atc, lane):
-    if not atc and not lane:
-        return STATUS[0]
-    elif not atc and lane:
-        return STATUS[1]
-    elif atc and not lane:
-        return STATUS[2]
+# Non-view functions.
+
+# Function to check existence based on one field and its value.
+def check_existence(
+    request,         # Request object.
+    key_name,        # Key name from the client.
+    model,           # Model to look up.
+    key_name_filter, # Key name from the model.
+):
+    value = request.GET.get(key_name, "")
+    return HttpResponse(model.objects.filter(**{ key_name_filter:value })
+        .exists())
+
+def create_pagination_return_page_and_num_pages(
+    model,
+    order_field, # Table of which pagination will be sorted into (to prevent
+                 # warning).
+    amount,
+    returned_page=1
+):
+    paginator = Paginator(model.objects.all().order_by(order_field), amount)
+    dictionary = {}
+    dictionary["objects"] = paginator.page(returned_page).object_list
+    dictionary["number_of_pages"] = paginator.num_pages
+
+    return dictionary
+
+# Function to generate DOM elements for flight management panel.
+def generate_flight_management_panel_dom(arrivaldeparture_flight):
+    flight_management_panel_dom_fragment = { "class":None, "text":None }
+
+    fmpdf_code_key = dict(flight_management_panel_dom_fragment)
+    fmpdf_code_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_code_key["text"] = "code:"
+    fmpdf_code_value = dict(flight_management_panel_dom_fragment)
+    fmpdf_code_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_code_value["text"] = arrivaldeparture_flight.flight_code
+
+    fmpdf_airport_key = dict(flight_management_panel_dom_fragment)
+    fmpdf_airport_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_airport_key["text"] = "airport:"
+    fmpdf_airport_value = dict(flight_management_panel_dom_fragment)
+    fmpdf_airport_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_airport_value["text"] = arrivaldeparture_flight.airport
+
+    fmpdf_day_key = dict(flight_management_panel_dom_fragment)
+    fmpdf_day_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_day_key["text"] = "day:"
+    fmpdf_day_value = dict(flight_management_panel_dom_fragment)
+    fmpdf_day_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_day_value["text"] = arrivaldeparture_flight.day
+
+    fmpdf_schedule_key = dict(flight_management_panel_dom_fragment)
+    fmpdf_schedule_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_schedule_key["text"] = "schedule:"
+    fmpdf_schedule_value = dict(flight_management_panel_dom_fragment)
+    fmpdf_schedule_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_schedule_value["text"] = arrivaldeparture_flight.scheduled_datetime
+
+    # This is actually a 3 dimensional array.
+    flight_management_panel_dom = [[
+        [fmpdf_code_key, fmpdf_code_value],
+        [fmpdf_airport_key, fmpdf_airport_value]],
+        [[fmpdf_day_key, fmpdf_day_value],
+        [fmpdf_schedule_key, fmpdf_schedule_value]
+    ]]
+
+    dictionary = {}
+    dictionary["doms"] = flight_management_panel_dom
+    dictionary["status"] = get_flight_status_as_a_string(
+        arrivaldeparture_flight.online_atc, arrivaldeparture_flight.lane)
+
+    return dictionary
+
+"""
+Function to return string so that `ArrivalDepartureFlight.status` can be
+easily understandable.
+"""
+def get_flight_status_as_a_string(with_atc, with_lane):
+    if not with_atc and not with_lane:
+        return "no atc and no lane"
+    elif not with_atc and with_lane:
+        return "no atc"
+    elif with_atc and not with_lane:
+        return "no lane"
     else:
         return ""
 
+# Get the earliest date and time from a model.
+def get_earliest_datetime_from_a_model(model, field_name):
+    return model.objects.aggregate(Min(field_name))\
+        ["{}{}".format(field_name, "__min")]
+
+def get_earliest_document_from_a_day(model, field_name, datetime):
+    return model.objects.filter(**{
+        field_name + "__year":datetime.year,
+        field_name + "__month":datetime.month,
+        field_name + "__day":datetime.day
+    }).order_by(field_name)[0]
+
+# Get the latest date and time from a model.
+def get_latest_datetime_from_a_model(model, field_name):
+    return model.objects.aggregate(Max(field_name))\
+        ["{}{}".format(field_name, "__max")]
+
+# Get or create new group for `User`.
 def get_or_create_group(group_name):
     try:
         return Group.objects.create(name=group_name)
