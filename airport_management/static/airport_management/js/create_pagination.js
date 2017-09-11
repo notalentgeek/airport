@@ -47,25 +47,32 @@ var create_pagination_for_arrivaldeparture_table = function (
         or previous buttons. Since, only `<a>` that exactly point out to the
         next page will return an int.
         */
-        if (a_page && !li.hasClass("active")) {
+        if (a_page || a_or_span.hasClass("clickable")) {
           // Pagination page buttons have dynamic width.
-          li.addClass(CSS.PAGINATION_BUTTON_FIXED_WIDTH_CLASS);
-          a_or_span.attr(
-            "ng-click",
-            "pagination_request_flight_table(" + arrivaldeparture_enum +
-              ", " + a_page + ")"
-          );
+          li.addClass(CSS.PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS);
+
+          /*
+          Only add `ng-click` controller to pagination buttons with number on
+          it.
+          */
+          if (a_page) {
+            a_or_span.attr(
+              "ng-click",
+              "pagination_request_flight_table(" + arrivaldeparture_enum +
+                ", " + a_page + ")"
+            );
+          }
         }
         /*
         This is meant for the next and previous button to trigger the pagination
         request AJAX.
         */
-        else if (!a_page && !li.hasClass("active")) {
+        else if (!a_page) {
           /*
           Pagination next and previous buttons always have 10% width of their
           parent.
           */
-          li.addClass(CSS.PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS);
+          li.addClass(CSS.PAGINATION_BUTTON_FIXED_WIDTH_CLASS);
 
           // Adjust the `ng-click`.
           if (a_or_span.hasClass("next")) {
@@ -99,8 +106,8 @@ var create_pagination_for_arrivaldeparture_table = function (
     other pagination buttons should occupy the max (100% - 20%) of the parent's
     width.
     */
-    $("." + CSS.PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS).css(
-      "width", (80/pagination_page_buttons_count) + "%");
+    $("#" + pagination_id + ">." + CSS.PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS)
+      .css("width", (80/pagination_page_buttons_count) + "%");
 
     /*
     Re-compile/re-render AngularJS controller for the pagination buttons. Please

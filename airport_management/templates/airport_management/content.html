@@ -75,3 +75,29 @@
     {% endfor %}
   </div>
 </div>
+<!-- Modal page for inputting ATC to a flight. -->
+<div class="modal fade" id="set-atc-modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+        <h4 class="modal-title">set atc</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <input class="btn btn-default" type="button" value="reset">
+        <input class="btn btn-success" type="submit" value="set">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload(function () {
+    console.log("hello world");
+  });
+</script>

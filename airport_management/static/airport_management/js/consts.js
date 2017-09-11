@@ -82,7 +82,19 @@ var KEY = Object.freeze({
   ATC_FORM_FIRST_NAME_INPUT: "atc_form_first_name_input",
   ATC_FORM_LAST_NAME_INPUT: "atc_form_last_name_input",
 
-  // Received key to the client.
+  // Received key from server.
+  AIRPORT_MANAGER: "airport_manager",
+  ATCS: "atcs",
+  CLASS: "class",
+  DOMS: "doms",
+  FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS:
+      "flight_management_panel_initial_doms",
+  FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM:
+      "flight_management_panel_initial_status_dom",
   NUMBER_OF_PAGES: "number_of_pages",
-  TABLE_HTML: "html_table"
+  OBJECTS: "objects",
+  STATUS: "status",
+  TABLE_HTML: "html_table",
+  TABLES_PROPERTIES: "tables_properties",
+  TEXT: "text"
 });

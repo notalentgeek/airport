@@ -8,3 +8,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#scheduled-datetime-column {
+  position: relative;
+  width: 100%;
+}
+#scheduled-datetime-column>div {
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}

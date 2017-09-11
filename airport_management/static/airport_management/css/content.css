@@ -164,6 +164,7 @@
 .line-separator {
   background-color: lightgray;
   height: 2px;
+  margin-top: px;
   width: 100%;
 }
 .pagination-button-dynamic-width>span.clickable.ellipse>input {

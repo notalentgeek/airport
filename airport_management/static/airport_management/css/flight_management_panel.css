@@ -34,7 +34,11 @@
 }
 #flight-management-panel-info-non-status>div>div {
   align-items: center;
+  border-radius: 5px;
+  border: 1px solid lightgray;
   display: flex;
+  margin: 2px;
+  padding: 1px;
   position: relative;
 }
 #flight-management-panel-info-non-status>div>div>div {
@@ -44,20 +48,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#flight-management-panel-info-status{
+#flight-management-panel-info-status {
   align-items: center;
   display: flex;
   flex: 1;
   justify-content: center;
 }
-#scheduled-datetime-column {
-  position: relative;
-  width: 100%;
-}
-#scheduled-datetime-column>div {
-  overflow: hidden;
-  position: absolute;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
+#flight-management-panel-info-status>h2 {
+  margin: 0;
+  padding: 0;
 }

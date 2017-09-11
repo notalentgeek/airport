@@ -102,15 +102,18 @@ def index(request):
         }
     ]
 
-    return render(request, "airport_management/index.html", {
-        "atcs":AirTrafficController.objects.all(),
-        "flight_management_panel_initial_doms":\
-            flight_management_panel_initial_dom["doms"],
-        "flight_management_panel_initial_status_dom":\
-            flight_management_panel_initial_dom["status"],
-        "tables_properties":tables_properties,
-        "airport_manager":request.user
-    })
+    dictionary = {}
+    dictionary[KEY.AIRPORT_MANAGER] = request.user
+    dictionary[KEY.ATCS] = AirTrafficController.objects.all()
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS] =\
+        flight_management_panel_initial_dom[KEY.DOMS]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
+        flight_management_panel_initial_dom[KEY.STATUS]
+    dictionary[KEY.TABLES_PROPERTIES] = tables_properties
+
+    print(flight_management_panel_initial_dom[KEY.DOMS]);
+
+    return render(request, "airport_management/index.html", dictionary)
 
 # Transit views.
 
@@ -215,13 +218,15 @@ def table_request_flight(request):
     flight_management_panel_template =\
         get_template("airport_management/flight_management_panel.html")
 
+    dictionary = {}
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS] =\
+        flight_management_panel_initial_doms[KEY.DOMS]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
+        flight_management_panel_initial_doms[KEY.STATUS]
+
     # Render the template with some parameter.
-    flight_management_panel_html = flight_management_panel_template.render({
-        "flight_management_panel_initial_doms":\
-            flight_management_panel_initial_doms["doms"],
-        "flight_management_panel_initial_status_doms":\
-            flight_management_panel_initial_doms["status"]
-    }, request)
+    flight_management_panel_html = flight_management_panel_template.render(
+        dictionary, request)
 
     return HttpResponse(flight_management_panel_html)
 
@@ -242,7 +247,7 @@ def pagination_request_flight_table(request):
 
         dictionary = {}
         dictionary[KEY.TABLE_HTML] = table_html
-        dictionary[KEY.NUMBER_OF_PAGES] = model_paginations["number_of_pages"]
+        dictionary[KEY.NUMBER_OF_PAGES] = model_paginations[KEY.NUMBER_OF_PAGES]
 
         return HttpResponse(dumps(dictionary))
 
@@ -305,42 +310,42 @@ def create_pagination_return_page_and_num_pages(
 ):
     paginator = Paginator(model.objects.all().order_by(order_field), amount)
     dictionary = {}
-    dictionary["objects"] = paginator.page(returned_page).object_list
-    dictionary["number_of_pages"] = paginator.num_pages
+    dictionary[KEY.NUMBER_OF_PAGES] = paginator.num_pages
+    dictionary[KEY.OBJECTS] = paginator.page(returned_page).object_list
 
     return dictionary
 
 # Function to generate DOM elements for flight management panel.
 def generate_flight_management_panel_dom(arrivaldeparture_flight):
-    flight_management_panel_dom_fragment = { "class":None, "text":None }
+    flight_management_panel_dom_fragment = { KEY.CLASS:None, KEY.TEXT:None }
 
     fmpdf_code_key = dict(flight_management_panel_dom_fragment)
-    fmpdf_code_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
-    fmpdf_code_key["text"] = "code:"
+    fmpdf_code_key[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_code_key[KEY.TEXT] = "code:"
     fmpdf_code_value = dict(flight_management_panel_dom_fragment)
-    fmpdf_code_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
-    fmpdf_code_value["text"] = arrivaldeparture_flight.flight_code
+    fmpdf_code_value[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_code_value[KEY.TEXT] = arrivaldeparture_flight.flight_code
 
     fmpdf_airport_key = dict(flight_management_panel_dom_fragment)
-    fmpdf_airport_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
-    fmpdf_airport_key["text"] = "airport:"
+    fmpdf_airport_key[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_airport_key[KEY.TEXT] = "airport:"
     fmpdf_airport_value = dict(flight_management_panel_dom_fragment)
-    fmpdf_airport_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
-    fmpdf_airport_value["text"] = arrivaldeparture_flight.airport
+    fmpdf_airport_value[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_airport_value[KEY.TEXT] = arrivaldeparture_flight.airport
 
     fmpdf_day_key = dict(flight_management_panel_dom_fragment)
-    fmpdf_day_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
-    fmpdf_day_key["text"] = "day:"
+    fmpdf_day_key[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_day_key[KEY.TEXT] = "day:"
     fmpdf_day_value = dict(flight_management_panel_dom_fragment)
-    fmpdf_day_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
-    fmpdf_day_value["text"] = arrivaldeparture_flight.day
+    fmpdf_day_value[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_day_value[KEY.TEXT] = arrivaldeparture_flight.day
 
     fmpdf_schedule_key = dict(flight_management_panel_dom_fragment)
-    fmpdf_schedule_key["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
-    fmpdf_schedule_key["text"] = "schedule:"
+    fmpdf_schedule_key[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_KEY_CLASS
+    fmpdf_schedule_key[KEY.TEXT] = "schedule:"
     fmpdf_schedule_value = dict(flight_management_panel_dom_fragment)
-    fmpdf_schedule_value["class"] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
-    fmpdf_schedule_value["text"] = arrivaldeparture_flight.scheduled_datetime
+    fmpdf_schedule_value[KEY.CLASS] = CSS.FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS
+    fmpdf_schedule_value[KEY.TEXT] = arrivaldeparture_flight.scheduled_datetime
 
     # This is actually a 3 dimensional array.
     flight_management_panel_dom = [[
@@ -351,8 +356,8 @@ def generate_flight_management_panel_dom(arrivaldeparture_flight):
     ]]
 
     dictionary = {}
-    dictionary["doms"] = flight_management_panel_dom
-    dictionary["status"] = get_flight_status_as_a_string(
+    dictionary[KEY.DOMS] = flight_management_panel_dom
+    dictionary[KEY.STATUS] = get_flight_status_as_a_string(
         arrivaldeparture_flight.online_atc, arrivaldeparture_flight.lane)
 
     return dictionary
