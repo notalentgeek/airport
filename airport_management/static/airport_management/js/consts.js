@@ -10,15 +10,16 @@ var AOD = Object.freeze({
 
 // AngularJS controller strings.
 var CONTROLLER_STRING = Object.freeze({
-  ATC_MENU: "atc_menu",
+  ARRIVALDEPARTURE_TABLE: "arrivaldeparture_table",
   ATC_FORM: "atc_form",
+  ATC_MENU: "atc_menu",
   FLIGHT_MANAGEMENT_PANEL: "flight_management_panel",
   LOGIN_AND_REGISTER_FORM: "login_and_register_form",
-  ARRIVALDEPARTURE_TABLE: "arrivaldeparture_table"
+  SET_FLIGHT_ATC_FORM: "set_flight_atc_form"
 });
 
 // CSS classes.
-var CSS = Object.freeze({
+var CSS = Object({
   // CSS IDs.
   AIRPORT_MANAGER_BUTTON_ID: "airport-manager-button",
   AIRPORT_MANAGER_WRONG_PASSWORD_MODAL_ID:

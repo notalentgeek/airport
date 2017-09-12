@@ -145,7 +145,7 @@ further reference, https://stackoverflow.com/questions/24036212/no-margin-or-pad
 }
 /* To handle table overflowing. */
 #atc-list-modal .modal-body {
-  max-height: 80vh;
+  max-height: 50vh;
   overflow-y: auto;
   overflow-x: hidden;
 }

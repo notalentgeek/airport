@@ -47,8 +47,8 @@ class ArrivalDepartureFlight(models.Model):
         related_name="%(class)s_lane")
 
     # Current air traffic controller (ATC).
-    online_atc = models.ForeignKey("AirTrafficController", null=True,
-        on_delete=models.CASCADE, related_name="%(class)s_online_atc")
+    online_atc = models.ManyToManyField("AirTrafficController",
+        related_name="%(class)s_online_atc")
 
     """
     Whether a flight has assigned to ATC and lane during the

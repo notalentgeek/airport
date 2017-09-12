@@ -105,13 +105,18 @@ def index(request):
     dictionary = {}
     dictionary[KEY.AIRPORT_MANAGER] = request.user
     dictionary[KEY.ATCS] = AirTrafficController.objects.all()
+    """
+    Set `dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE]` to
+    `1` to call into `ArrivalFlight` model.
+    """
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE] = 1
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS] =\
         flight_management_panel_initial_dom[KEY.DOMS]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ID] =\
+        flight_management_panel_initial_dom[KEY.FLIGHT_ID]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
         flight_management_panel_initial_dom[KEY.STATUS]
     dictionary[KEY.TABLES_PROPERTIES] = tables_properties
-
-    print(flight_management_panel_initial_dom[KEY.DOMS]);
 
     return render(request, "airport_management/index.html", dictionary)
 
@@ -174,6 +179,10 @@ def login_airport_manager(request):
         #return render(request, "airport_management/index.html", {
         #    "user":request.user, "wrong_password":True })
 
+def logout_airport_manager(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("airport_management:index"))
+
 def register_airport_manager(request):
     try:
         # Register airport manager.
@@ -190,9 +199,25 @@ def register_airport_manager(request):
 
     return HttpResponseRedirect(reverse("airport_management:index"))
 
-def logout_airport_manager(request):
-    logout(request)
-    return HttpResponseRedirect(reverse("airport_management:index"))
+# Dealing with flight.
+def set_flight_atc_form(request):
+    arrivaldeparture = request.POST["arrivaldeparture"]
+    flight_id = request.POST["flight_id"]
+    atc_ids = request.POST.getlist("atc")
+
+    model = None
+    if str(arrivaldeparture) == str(AOD.ARRIVAL):
+        model = ArrivalFlight
+    elif str(arrivaldeparture) == str(AOD.DEPARTURE):
+        model = DepartureFlight
+
+    flight = model.objects.get(pk=flight_id)
+    print(flight.online_atc.all())
+    flight.online_atc.clear()
+    for atc_id in atc_ids:
+        atc = AirTrafficController.objects.get(pk=atc_id)
+        flight.online_atc.add(atc)
+    return HttpResponse("hello world")
 
 # Processing HTTP request from AngularJS.
 def table_request_flight(request):
@@ -211,7 +236,7 @@ def table_request_flight(request):
     elif int(requested_table) == AOD.DEPARTURE:
         flight = DepartureFlight.objects.get(pk=flight_id)
 
-    flight_management_panel_initial_doms = generate_flight_management_panel_dom(
+    flight_management_panel_initial_dom = generate_flight_management_panel_dom(
         flight)
 
     # Get the template HTML file for the flight management panel.
@@ -219,10 +244,14 @@ def table_request_flight(request):
         get_template("airport_management/flight_management_panel.html")
 
     dictionary = {}
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE] =\
+        int(requested_table)
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS] =\
-        flight_management_panel_initial_doms[KEY.DOMS]
+        flight_management_panel_initial_dom[KEY.DOMS]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ID] =\
+        flight_management_panel_initial_dom[KEY.FLIGHT_ID]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
-        flight_management_panel_initial_doms[KEY.STATUS]
+        flight_management_panel_initial_dom[KEY.STATUS]
 
     # Render the template with some parameter.
     flight_management_panel_html = flight_management_panel_template.render(
@@ -357,6 +386,7 @@ def generate_flight_management_panel_dom(arrivaldeparture_flight):
 
     dictionary = {}
     dictionary[KEY.DOMS] = flight_management_panel_dom
+    dictionary[KEY.FLIGHT_ID] = arrivaldeparture_flight.id
     dictionary[KEY.STATUS] = get_flight_status_as_a_string(
         arrivaldeparture_flight.online_atc, arrivaldeparture_flight.lane)
 

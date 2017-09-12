@@ -45,6 +45,9 @@ app.controller(
       flight_id,     // The flight ID that was just clicked by the user.
       pagination_id, // The pagination ID.
     ) {
+      // Set the global flight id.
+      selected_flight_id = flight_id;
+
       /*
       Check if flight management panel is exists in the view (there is a user
       logged in).
@@ -61,6 +64,9 @@ app.controller(
         else if (pagination_id === CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID) {
           requested_table = AOD.DEPARTURE;
         }
+
+        // Set the global active modal displayed in the flight management panel.
+        selected_arrivaldeparture =  requested_table;
 
         /*
         HTTP GET request through this URL to get flight data for flight
@@ -236,3 +242,28 @@ app.controller(
     };
   }
 );
+
+
+CSS.SET_FLIGHT_ATC_FORM = "set-flight-atc-form";
+CSS.SET_FLIGHT_ATC_FORM_ARRIVALDEPARTURE =
+  "set-flight-atc-form-arrivaldeparture";
+CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ID = "set-flight-atc-form-flight-id";
+CSS.SET_FLIGHT_ATC_FORM_MODAL = "set-flight-atc-form-modal";
+var selected_arrivaldeparture = $("#" +
+  CSS.SET_FLIGHT_ATC_FORM_ARRIVALDEPARTURE).attr("param");
+selected_arrivaldeparture = parseInt(selected_arrivaldeparture);
+var selected_flight_id = $("#" + CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ID)
+  .attr("value");
+app.controller(CONTROLLER_STRING.SET_FLIGHT_ATC_FORM, function ($scope) {
+  $scope.atc_checklists = [];
+  $scope.show_set_flight_atc_form_modal = (function () {
+    $("#" + CSS.SET_FLIGHT_ATC_FORM_MODAL).modal("show");
+  })();
+  $scope.reset_atc_checklists = function () {
+    for (var i = 0; i < $scope.atc_checklists.length; i ++) {
+      $scope.atc_checklists[i] = false;
+    }
+  };
+});
+// Used to detect if modal page button is triggered or not.
+//$("#" + CSS.SET_FLIGHT_ATC_FORM_MODAL).on("show.bs.modal", function(event) {});

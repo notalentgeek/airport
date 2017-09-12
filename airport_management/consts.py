@@ -72,8 +72,12 @@ class KEY():
     ATCS = "atcs"
     CLASS = "class"
     DOMS = "doms"
+    FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE =\
+        "flight_management_panel_initial_arrivaldeparture"
     FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS =\
         "flight_management_panel_initial_doms"
+    FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ID =\
+        "flight_management_panel_initial_flight_id"
     FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM =\
         "flight_management_panel_initial_status_dom"
     NUMBER_OF_PAGES = "number_of_pages"

@@ -10,7 +10,6 @@ class ArrivalDepartureModel(admin.ModelAdmin):
         "scheduled_datetime",
         "carrier",
         "lane",
-        "online_atc",
         "status"
     )
     list_filter = ["scheduled_datetime"]
