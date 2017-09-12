@@ -5,15 +5,14 @@
   {% if user.is_authenticated and not user.is_superuser %}
     <div id="flight-management-panel" ng-controller="flight_management_panel">
       <div id="flight-management-panel-content">
-        {% include "airport_management/flight_management_panel.html" with flight_management_panel_initial_doms=flight_management_panel_initial_doms flight_management_panel_initial_status_dom=flight_management_panel_initial_status_dom %}
+        {% include "airport_management/flight_management_panel.html" with flight_management_panel_initial_doms=flight_management_panel_initial_doms flight_management_panel_initial_status_dom=flight_management_panel_initial_status_dom  %}
       </div>
       <div id="flight-management-button-container">
         {% angularjs %}
           <!-- Three buttons. -->
           <button class="btn btn-block flight-management-button {{ control_button.bootstrap_color }}"
-          ng-bind-html="control_button.text"
-          ng-repeat="control_button in control_buttons"
-          >
+            ng-bind-html="control_button.text" ng-click="control_button.ng_click()"
+            ng-repeat="control_button in control_buttons">
           </button>
         {% endangularjs %}
       </div>
@@ -90,6 +89,7 @@
           <h4 class="modal-title">set atc</h4>
         </div>
         <div class="modal-body">
+          <input id="set-flight-atc-form-flight-online-atc" name="atcs" value="{{ flight_management_panel_initial_flight_online_atc }}" style="display: none;" />
           <input id="set-flight-atc-form-arrivaldeparture"
             name="arrivaldeparture" type="text"
             value="{{ flight_management_panel_initial_arrivaldeparture }}" />
@@ -100,7 +100,7 @@
             {% for atc in atcs %}
               <tr>
                 <td class="td-with-checkbox">
-                  <input type="checkbox" name="atc" value="{{ atc.id }}"
+                  <input class="atc-checklist" id="atc-checklist-{{ atc.id }}" type="checkbox" name="atc" value="{{ atc.id }}"
                     ng-model="atc_checklists[{{ forloop.counter0 }}]" />
                 </td>
                 <td class="td-without-checkbox">

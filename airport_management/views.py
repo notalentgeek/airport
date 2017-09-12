@@ -105,6 +105,7 @@ def index(request):
     dictionary = {}
     dictionary[KEY.AIRPORT_MANAGER] = request.user
     dictionary[KEY.ATCS] = AirTrafficController.objects.all()
+
     """
     Set `dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE]` to
     `1` to call into `ArrivalFlight` model.
@@ -114,6 +115,10 @@ def index(request):
         flight_management_panel_initial_dom[KEY.DOMS]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ID] =\
         flight_management_panel_initial_dom[KEY.FLIGHT_ID]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_LANE] =\
+        flight_management_panel_initial_dom[KEY.LANE]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATC] =\
+        flight_management_panel_initial_dom[KEY.ONLINE_ATC]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
         flight_management_panel_initial_dom[KEY.STATUS]
     dictionary[KEY.TABLES_PROPERTIES] = tables_properties
@@ -205,6 +210,10 @@ def set_flight_atc_form(request):
     flight_id = request.POST["flight_id"]
     atc_ids = request.POST.getlist("atc")
 
+    print(arrivaldeparture)
+    print(flight_id)
+    print(atc_ids)
+
     model = None
     if str(arrivaldeparture) == str(AOD.ARRIVAL):
         model = ArrivalFlight
@@ -212,7 +221,6 @@ def set_flight_atc_form(request):
         model = DepartureFlight
 
     flight = model.objects.get(pk=flight_id)
-    print(flight.online_atc.all())
     flight.online_atc.clear()
     for atc_id in atc_ids:
         atc = AirTrafficController.objects.get(pk=atc_id)
@@ -250,14 +258,30 @@ def table_request_flight(request):
         flight_management_panel_initial_dom[KEY.DOMS]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ID] =\
         flight_management_panel_initial_dom[KEY.FLIGHT_ID]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_LANE] =\
+        flight_management_panel_initial_dom[KEY.LANE]
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATC] =\
+        flight_management_panel_initial_dom[KEY.ONLINE_ATC]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
         flight_management_panel_initial_dom[KEY.STATUS]
+
+    """
+    PENDING: The flight lane and the flight ATC is not necessary to be
+    rendered.
+    """
 
     # Render the template with some parameter.
     flight_management_panel_html = flight_management_panel_template.render(
         dictionary, request)
 
-    return HttpResponse(flight_management_panel_html)
+    # TEST: Return dictionary instead.
+    return_dictionary = {}
+    return_dictionary["html"] = flight_management_panel_html
+    return_dictionary["online_atc"] =\
+        dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATC]
+
+    #return HttpResponse(flight_management_panel_html)
+    return HttpResponse(dumps(return_dictionary))
 
 def pagination_request_flight_table(request):
     # Closure.
@@ -387,6 +411,9 @@ def generate_flight_management_panel_dom(arrivaldeparture_flight):
     dictionary = {}
     dictionary[KEY.DOMS] = flight_management_panel_dom
     dictionary[KEY.FLIGHT_ID] = arrivaldeparture_flight.id
+    dictionary[KEY.LANE] = arrivaldeparture_flight.lane
+    dictionary[KEY.ONLINE_ATC] = [atc.id for atc in\
+        arrivaldeparture_flight.online_atc.all()]
     dictionary[KEY.STATUS] = get_flight_status_as_a_string(
         arrivaldeparture_flight.online_atc, arrivaldeparture_flight.lane)
 
