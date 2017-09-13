@@ -12,23 +12,11 @@
   #departure-flight-table {
     margin-left: 5px;
   }
-  #flight-management-panel {
-    display: flex;
-    flex-direction: row;
-    height: 50px;
-    margin-bottom: 5px;
-  }
   #flight-management-button-container {
     display: flex;
     flex-direction: row;
     flex: 1;
     height: 100%;
-  }
-  #flight-management-panel-content {
-    flex: 7;
-  }
-  #flight-management-panel-info {
-    flex-direction: row;
   }
   #main-content {
     display: flex;
@@ -75,18 +63,7 @@
     flex: 1;
     height: 100%;
   }
-  #flight-management-panel {
-    display: flex;
-    flex-direction: column;
-    height: 300px;
-    margin-bottom: 20px;
-  }
-  #flight-management-panel-content {
-    flex: 2;
-  }
-  #flight-management-panel-info {
-    flex-direction: column;
-  }
+
   #main-content {
     display: flex;
     flex-direction: column;

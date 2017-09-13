@@ -9,7 +9,7 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
   }
 
   function flight_online_atcs_form_modal (angularjs_app) {
-    var ANGULAR_JS_CONTROLLER = Object.freeze({
+    var ANGULARJS_CONTROLLER = Object.freeze({
       FLIGHT_ATC_FORM: "flight_atc_form"
     });
 
@@ -77,7 +77,7 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
     })();
 
     angularjs_app.controller(
-      ANGULAR_JS_CONTROLLER.FLIGHT_ATC_FORM,
+      ANGULARJS_CONTROLLER.FLIGHT_ATC_FORM,
       function ($scope) {
         // List variable to help put all check boxes into `ng-model` array.
         $scope.atc_check_boxes = {};
