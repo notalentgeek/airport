@@ -1,22 +1,39 @@
-<div id="flight-management-panel-info">
-  {% for columns in flight_management_panel_initial_doms %}
-    <div id="flight-management-panel-info-non-status">
-      {% for rows in columns %}
-        <div>
-          {% for cell in rows %}
-            <div class="{{ cell.class }}">
-              <div>
-                {{ cell.text|safe }}
-              </div>
+  <!-- If an airport manager is logged in, show the flight management panel. -->
+  {% if user.is_authenticated and not user.is_superuser %}
+    <div id="flight-management-panel" ng-controller="flight_management_panel">
+      <div id="flight-management-panel-content">
+        <div id="flight-management-panel-info">
+          {% for columns in flight_management_panel_initial_doms %}
+            <div id="flight-management-panel-info-non-status">
+              {% for rows in columns %}
+                <div>
+                  {% for cell in rows %}
+                    <div class="{{ cell.class }}">
+                      <div>
+                        {{ cell.text|safe }}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endfor %}
             </div>
           {% endfor %}
+          <div id="flight-management-panel-info-status">
+            <h2>
+              {{ flight_management_panel_initial_status_dom }}
+            </h2>
+          </div>
         </div>
-      {% endfor %}
+      </div>
+      <div id="flight-management-button-container">
+        {% angularjs %}
+          <!-- Three buttons. -->
+          <button class="btn btn-block flight-management-button {{ control_button.bootstrap_color }}"
+            ng-bind-html="control_button.text" ng-click="control_button.ng_click()"
+            ng-repeat="control_button in control_buttons">
+          </button>
+        {% endangularjs %}
+      </div>
     </div>
-  {% endfor %}
-  <div id="flight-management-panel-info-status">
-    <h2>
-      {{ flight_management_panel_initial_status_dom }}
-    </h2>
-  </div>
-</div>
+    <hr class="line-separator" />
+  {% endif %}

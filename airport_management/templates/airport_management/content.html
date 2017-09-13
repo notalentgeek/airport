@@ -1,24 +1,7 @@
 {% load djng_tags %}
 {% load static %}
 <div id="main-content">
-  <!-- If an airport manager is logged in, show the flight management panel. -->
-  {% if user.is_authenticated and not user.is_superuser %}
-    <div id="flight-management-panel" ng-controller="flight_management_panel">
-      <div id="flight-management-panel-content">
-        {% include "airport_management/flight_management_panel.html" with flight_management_panel_initial_doms=flight_management_panel_initial_doms flight_management_panel_initial_status_dom=flight_management_panel_initial_status_dom  %}
-      </div>
-      <div id="flight-management-button-container">
-        {% angularjs %}
-          <!-- Three buttons. -->
-          <button class="btn btn-block flight-management-button {{ control_button.bootstrap_color }}"
-            ng-bind-html="control_button.text" ng-click="control_button.ng_click()"
-            ng-repeat="control_button in control_buttons">
-          </button>
-        {% endangularjs %}
-      </div>
-    </div>
-    <hr class="line-separator" />
-  {% endif %}
+
   <!--
   Invisible DOM to store GET url to get new flight table when clicking on
   pagination button.
