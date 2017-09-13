@@ -47,7 +47,7 @@ class ArrivalDepartureFlight(models.Model):
         related_name="%(class)s_lane")
 
     # Current air traffic controller (ATC).
-    online_atc = models.ManyToManyField("AirTrafficController",
+    online_atcs = models.ManyToManyField("AirTrafficController",
         related_name="%(class)s_online_atc")
 
     """

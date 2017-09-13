@@ -1,0 +1,38 @@
+#flight-atc-form-arrivaldeparture,
+#flight-atc-form-flight-id,
+#flight-atc-form-flight-online-atcs {
+  display: none;
+}
+#flight-atc-form-modal .modal-body {
+  max-height: 50vh;
+  overflow-x: hidden;
+  overflor-y: auto;
+}
+#flight-atc-form-modal .modal-footer {
+  display: flex;
+  flex-direction: row;
+}
+#flight-atc-form-modal .modal-footer>input {
+  flex: 1;
+  margin: 0;
+}
+#flight-atc-form-modal .td-with-checkbox {
+  padding: 2.5px;
+}
+#flight-atc-form-modal .td-with-checkbox>input {
+  height: 30px;
+  width: 30px;
+}
+#flight-atc-form-modal .td-without-checkbox {
+  padding: 2.5px;
+  position: absolute;
+  width: 80%;
+}
+#flight-atc-form-modal .td-without-checkbox>div {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 7.5px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

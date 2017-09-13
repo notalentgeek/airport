@@ -80,8 +80,8 @@ class KEY():
         "flight_management_panel_initial_flight_id"
     FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_LANE =\
         "flight_management_panel_initial_flight_lane"
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATC =\
-        "flight_management_panel_initial_flight_online_atc"
+    FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATCS =\
+        "flight_management_panel_initial_flight_online_atcs"
     FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM =\
         "flight_management_panel_initial_status_dom"
     LANE = "lane"

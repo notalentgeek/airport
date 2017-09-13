@@ -1,0 +1,51 @@
+{% load djng_tags %}
+{% load static %}
+<div class="modal fade" id="flight-atc-form-modal" role="dialog">
+  <div class="modal-dialog">
+    <form action="{% url 'airport_management:flight_atc_form' %}"
+      id="flight-atc-form" method="POST" ng-controller="flight_atc_form">
+      {% csrf_token %}
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+          <h4 class="modal-title">set atc</h4>
+        </div>
+        <div class="modal-body">
+          <!-- Invisible inputs to be sent to URL as well. -->
+          <input id="flight-atc-form-arrivaldeparture"
+            name="flight_atc_form_arrivaldeparture" type="text"
+            value="{{ flight_atc_form_arrivaldeparture }}" ng-model="asd" />
+          <input id="flight-atc-form-flight-id"
+            name="flight_atc_form_flight_id" type="text"
+            value="{{ flight_atc_form_flight_id }}" />
+          <input id="flight-atc-form-flight-online-atcs"
+            name="flight_atc_form_flight_online_atcs" type="text"
+            value="{{ flight_atc_form_flight_online_atcs }}" />
+          <!-- Table displays selection of ATCS. -->
+          <table>
+            {% for atc in atcs %}
+              <tr>
+                <td class="td-with-checkbox">
+                  <input class="flight-online-atc-check-box"
+                    id="flight-online-atc-check-box-{{ atc.id }}"
+                    type="checkbox" name="flight_online_atc_check_box"
+                    value="{{ atc.id }}"/>
+                </td>
+                <td class="td-without-checkbox">
+                  <div>{{ atc.code }}</div>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div class="modal-footer">
+          <input class="btn btn-block btn-default" type="button" value="reset"
+            ng-click="reset_atc_check_boxes()">
+          <input class="btn btn-block btn-success" type="submit" value="set">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

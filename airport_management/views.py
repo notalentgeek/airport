@@ -117,7 +117,7 @@ def index(request):
         flight_management_panel_initial_dom[KEY.FLIGHT_ID]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_LANE] =\
         flight_management_panel_initial_dom[KEY.LANE]
-    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATC] =\
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATCS] =\
         flight_management_panel_initial_dom[KEY.ONLINE_ATC]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
         flight_management_panel_initial_dom[KEY.STATUS]
@@ -205,14 +205,12 @@ def register_airport_manager(request):
     return HttpResponseRedirect(reverse("airport_management:index"))
 
 # Dealing with flight.
-def set_flight_atc_form(request):
-    arrivaldeparture = request.POST["arrivaldeparture"]
-    flight_id = request.POST["flight_id"]
-    atc_ids = request.POST.getlist("atc")
+def flight_atc_form(request):
+    arrivaldeparture = request.POST["flight_atc_form_arrivaldeparture"]
+    flight_id = request.POST["flight_atc_form_flight_id"]
+    online_atcs = request.POST.getlist("flight_online_atc_check_box")
 
-    print(arrivaldeparture)
-    print(flight_id)
-    print(atc_ids)
+    print(request.POST)
 
     model = None
     if str(arrivaldeparture) == str(AOD.ARRIVAL):
@@ -221,10 +219,14 @@ def set_flight_atc_form(request):
         model = DepartureFlight
 
     flight = model.objects.get(pk=flight_id)
-    flight.online_atc.clear()
-    for atc_id in atc_ids:
-        atc = AirTrafficController.objects.get(pk=atc_id)
-        flight.online_atc.add(atc)
+    flight.online_atcs.clear()
+    if len(online_atcs) > 0:
+        for online_atc in online_atcs:
+            print("="*50)
+            print(online_atc)
+            print("="*50)
+            atc = AirTrafficController.objects.get(pk=online_atc)
+            flight.online_atcs.add(atc)
     return HttpResponse("hello world")
 
 # Processing HTTP request from AngularJS.
@@ -260,7 +262,7 @@ def table_request_flight(request):
         flight_management_panel_initial_dom[KEY.FLIGHT_ID]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_LANE] =\
         flight_management_panel_initial_dom[KEY.LANE]
-    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATC] =\
+    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATCS] =\
         flight_management_panel_initial_dom[KEY.ONLINE_ATC]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
         flight_management_panel_initial_dom[KEY.STATUS]
@@ -277,8 +279,8 @@ def table_request_flight(request):
     # TEST: Return dictionary instead.
     return_dictionary = {}
     return_dictionary["html"] = flight_management_panel_html
-    return_dictionary["online_atc"] =\
-        dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATC]
+    return_dictionary["online_atcs"] =\
+        dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATCS]
 
     #return HttpResponse(flight_management_panel_html)
     return HttpResponse(dumps(return_dictionary))
@@ -413,9 +415,9 @@ def generate_flight_management_panel_dom(arrivaldeparture_flight):
     dictionary[KEY.FLIGHT_ID] = arrivaldeparture_flight.id
     dictionary[KEY.LANE] = arrivaldeparture_flight.lane
     dictionary[KEY.ONLINE_ATC] = [atc.id for atc in\
-        arrivaldeparture_flight.online_atc.all()]
+        arrivaldeparture_flight.online_atcs.all()]
     dictionary[KEY.STATUS] = get_flight_status_as_a_string(
-        arrivaldeparture_flight.online_atc, arrivaldeparture_flight.lane)
+        arrivaldeparture_flight.online_atcs, arrivaldeparture_flight.lane)
 
     return dictionary
 

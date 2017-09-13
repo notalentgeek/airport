@@ -31,9 +31,9 @@ urlpatterns = [
         name="pagination_request_flight_table"
     ),
     url(
-        r"^set_flight_atc_form/$",
-        views.set_flight_atc_form,
-        name="set_flight_atc_form"
+        r"^flight_atc_form/$",
+        views.flight_atc_form,
+        name="flight_atc_form"
     ),
     url(
         r"^table_request_flight/$",

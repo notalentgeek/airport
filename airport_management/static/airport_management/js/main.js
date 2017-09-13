@@ -2,6 +2,28 @@
 var arrival_pagination_number_of_pages;
 var departure_pagination_number_of_pages;
 
+var dom_get_and_set = {
+  get_dom_attribute: function (jquery_dom_selector, attribute) {
+    return $(jquery_dom_selector).attr(attribute);
+  },
+  get_dom_param: function (jquery_dom_selector) {
+    return this.get_dom_attribute(jquery_dom_selector, "param");
+  },
+  get_dom_value: function (jquery_dom_selector) {
+    return this.get_dom_attribute(jquery_dom_selector, "value");
+  },
+  set_dom_attribute: function (jquery_dom_selector, attribute, value) {
+    return $(jquery_dom_selector).attr(attribute, value);
+  },
+  set_dom_value: function (jquery_dom_selector, value) {
+    return this.set_dom_attribute(jquery_dom_selector, "value", value);
+  }
+};
+
+var string_to_list = function (string) {
+  return string.replace(" ", "").replace("[", "").replace("]", "").split(",");
+};
+
 // Initiating AngularJS application.
 var app = angular.module("airport_management", ["ngSanitize"]);
 

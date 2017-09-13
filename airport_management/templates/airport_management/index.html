@@ -11,6 +11,7 @@
   <link href="{% static 'airport_management/flaviumatis-simple-pagination/simplePagination.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/content.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/flight_management_panel.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/css/flight_online_atcs_form_modal.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/index.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/navbar.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/paginated_table.css' %}" rel="stylesheet" type="text/css" />
@@ -37,9 +38,11 @@
       {% include "airport_management/content.html" %}
     </div>
   </div>
+  {% include "airport_management/flight_online_atcs_form_modal.html" with atcs=atcs flight_atc_form_arrivaldeparture=flight_management_panel_initial_arrivaldeparture flight_atc_form_flight_id=flight_management_panel_initial_flight_id flight_atc_form_flight_online_atcs=flight_management_panel_initial_flight_online_atcs %}
   <script src="{% static 'airport_management/js/consts.js' %}"></script>
   <script src="{% static 'airport_management/js/functs.js' %}"></script>
   <script src="{% static 'airport_management/js/main.js' %}"></script>
+  <script src="{% static 'airport_management/js/flight_online_atcs_form_modal.js' %}"></script>
   <script src="{% static 'airport_management/js/fmp_and_table_controller.js' %}"></script>
   <script src="{% static 'airport_management/js/navbar_controller.js' %}"></script>
   <script src="{% static 'airport_management/js/adjust.js' %}"></script>

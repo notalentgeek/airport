@@ -3,6 +3,9 @@ Controllers used in table (+ paginations) and the flight management panel
 (fmp).
 */
 
+// PENDING: Change this later please.
+flight_online_atcs_form_modal = new flight_online_atcs_form_modal(app);
+
 // AngularJS controllers.
 
 // Controller for the flight management panel.
@@ -12,7 +15,7 @@ app.controller(
 
     var show_set_flight_atc_form_modal = function () {
       // Used to detect if modal page button is triggered or not.
-      $("#" + CSS.SET_FLIGHT_ATC_FORM_MODAL_ID).modal("show");
+      $("#" + flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATC_FORM_MODAL).modal("show");
     };
 
     $scope.control_buttons = [
@@ -34,6 +37,7 @@ app.controller(
     ];
   }
 );
+
 
 // Controller for arrival flight table and departure flight table.
 app.controller(
@@ -91,17 +95,11 @@ app.controller(
           // Render back the set management panel.
           $("#" + CSS.FLIGHT_MANAGEMENT_PANEL_CONTENT_ID).html(data.data["html"]);
 
-          selected_flight_online_atc = Array.from(data.data["online_atc"]);
-          selected_arrivaldeparture =  requested_table;
-          selected_flight_id = flight_id;
-
-          console.log(selected_flight_online_atc);
-          console.log(selected_arrivaldeparture);
-          console.log(selected_flight_id);
-
-  $("#" + CSS.SET_FLIGHT_ATC_FORM_ARRIVALDEPARTURE_ID).attr("value", selected_arrivaldeparture);
-  $("#" + CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ID).attr("value", selected_flight_id);
-  $("#" + CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATC).attr("value", selected_flight_online_atc);
+          flight_online_atcs_form_modal.set_selected_flight_properties(
+            requested_table,
+            flight_id,
+            Array.from(data.data["online_atcs"])
+          );
 
           /*
           PENDING: Re-render back AngularJS component of the flight management
@@ -258,25 +256,3 @@ app.controller(
     };
   }
 );
-
-
-CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATC = "set-flight-atc-form-flight-online-atc"
-CSS.SET_FLIGHT_ATC_FORM_ARRIVALDEPARTURE_ID =
-  "set-flight-atc-form-arrivaldeparture";
-CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ID = "set-flight-atc-form-flight-id";
-CSS.SET_FLIGHT_ATC_FORM_MODAL_ID = "set-flight-atc-form-modal";
-var selected_arrivaldeparture =
-  $("#" + CSS.SET_FLIGHT_ATC_FORM_ARRIVALDEPARTURE_ID).attr("value");
-selected_arrivaldeparture = parseInt(selected_arrivaldeparture);
-var selected_flight_id = $("#" + CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ID)
-  .attr("value");
-var selected_flight_online_atc = $("#" + CSS.SET_FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATC).attr("value");
-selected_flight_online_atc = selected_flight_online_atc.replace("[", "").replace("]", "").split(", ");
-app.controller(CONTROLLER_STRING.SET_FLIGHT_ATC_FORM, function ($scope) {
-  $scope.atc_checklists = [];
-  $scope.reset_atc_checklists = function () {
-    for (var i = 0; i < $scope.atc_checklists.length; i ++) {
-      $scope.atc_checklists[i] = false;
-    }
-  };
-});

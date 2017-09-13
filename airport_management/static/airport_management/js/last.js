@@ -28,15 +28,6 @@ $(function () {
   // Re-compile paginations back with AngularJS.
   table_scope.recompile_table_pagination();
 
-  // PENDING: Fix this please.
-  $("#" + CSS.SET_FLIGHT_ATC_FORM_MODAL_ID).on("show.bs.modal", function(event) {
-      $(".atc-checklist").prop("checked", false);
-      for (var i = 0; i < selected_flight_online_atc.length; i ++) {
-        $("#atc-checklist-" + selected_flight_online_atc[i]).prop("checked", true);
-      }
-    }
-  );
-
 });
 
 window.onload = function () {
