@@ -1,9 +1,58 @@
 @media not screen and (max-width: 767px) {
+  #airport-manager-login-and-registration-form {
+    border: none;
+  }
+  #airport-manager-login-and-registration-form .buttons-container {
+    display: inline;
+  }
+  #airport-manager-login-and-registration-form .buttons-container>div {
+    display: table-cell;
+    width: 50%;
+  }
+  #airport-manager-login-and-registration-form .buttons-container>div>input {
+    width: 150px;
+  }
+  #airport-manager-login-and-registration-form .inputs-container {
+    display: flex;
+    flex: 2;
+    flex-direction: row;
+  }
+  #airport-manager-login-and-registration-form .inputs-container>input {
+    flex: 1;
+    max-width: 150px;
+  }
   #airport-manager-logout-form {
     width: 315px;
   }
 }
 @media screen and (max-width: 767px) {
+  #airport-manager-login-and-registration-form {
+    border: none;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  #airport-manager-login-and-registration-form>.buttons-and-inputs-container {
+    display: flex;
+    flex-direction: column;
+  }
+  #airport-manager-login-and-registration-form .buttons-container {
+    display: flex;
+    flex-direction: row;
+  }
+  #airport-manager-login-and-registration-form .buttons-container>div {
+    flex: 1;
+  }
+  #airport-manager-login-and-registration-form .buttons-container>div>input {
+    width: 100%;
+  }
+  #airport-manager-login-and-registration-form .inputs-container {
+    display: flex;
+    flex-direction: column;
+  }
+  #airport-manager-login-and-registration-form .inputs-container>input {
+    flex: 1;
+  }
   #airport-manager-logout-form {
     min-width: 150px;
     margin-bottom: 0;
