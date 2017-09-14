@@ -4,6 +4,7 @@ Controllers used in table (+ paginations) and the flight management panel
 */
 
 // PENDING: Change this later please.
+navbar = new navbar(app);
 flight_online_atcs_form_modal = new flight_online_atcs_form_modal(app);
 flight_management_panel = new flight_management_panel(app,
   flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATC_FORM_MODAL);

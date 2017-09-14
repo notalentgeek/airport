@@ -1,0 +1,56 @@
+<!-- Right navigation bar. -->
+<div class="navbar-right">
+  <!--
+  Logout form only if there is an airport manager logged in. Otherwise,
+  show the register button.
+  -->
+  {% if user.is_authenticated and not user.is_superuser %}
+    <form action="{% url 'airport_management:logout_airport_manager' %}"
+      class="navbar-form" id="airport-manager-logout-form" method="POST">
+      {% csrf_token %}
+      <div id="airport-manager-button-container">
+        <div id="airport_manager_username"
+          param="{{ airport_manager_username }}"
+          style="display: none;">
+        </div>
+        <input class="btn btn-block btn-success"
+          value="hello! {{ airport_manager_username }}" />
+      </div>
+    </form>
+  {% else %}
+    <form action="{% url 'airport_managemen:login_and_registration_form' %}"
+      class="navbar-form" id="airport-manager-login-and-registration-form"
+      method="POST" ng-controller="airport_manager_login_and_registration_form">
+      <div class="buttons-and-inputs-container">
+        <div class="inputs-container">
+          <div id="check-airport-manager-name-existence-url"
+            param="{% url 'airport_management:check_airport_manager_name_existence' %}"
+            style="display: none;">
+          </div>
+          <input class="form-control" id="airport-manager-name-input"
+            type="text" name="airport_manager_name_input"
+            placeholder="username"
+            ng-change="check_airport_manager_name_existence()"
+            ng-model="airport_manager_name_input" />
+          <input class="form-control" id="airport-manager-password-input"
+            type="password" name="airport_manager_password_input"
+            placeholder="password" />
+        </div>
+        <div class="buttons-container">
+          <div>
+            <input class="btn btn-block btn-success"
+              name="airport_manager_login_or_register_button"
+              type="submit" value="login_button">
+          </div>
+          <div>
+            <input class="btn btn-block btn-success"
+              id="airport-manager-register-button"
+              name="airport_manager_login_or_register_button"
+              type="submit" value="register_button"
+              ng-disabled="disable_airport_manager_register_button">
+          </div>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+</div>

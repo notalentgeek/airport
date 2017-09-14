@@ -1,0 +1,31 @@
+<div class="fade modal" id="atc-list-modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal" type="button">
+          &times;
+        </button>
+        <h4 class="modal-title">atc list</h4>
+      </div>
+      <div class="modal-body">
+        <!-- List of all ATCs registered in the database. -->
+        <table class="table table-condensed" id="atc-list-table">
+          <thead>
+            <th>atc code</th>
+            <th>first name</th>
+            <th>last name</th>
+          </thead>
+          <tbody>
+            {% for atc in atcs %}
+              <tr>
+                <td>{{ atc.code }}</td>
+                <td>{{ atc.first_name }}</td>
+                <td>{{ atc.last_name }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
