@@ -5,39 +5,8 @@ Controllers used in table (+ paginations) and the flight management panel
 
 // PENDING: Change this later please.
 flight_online_atcs_form_modal = new flight_online_atcs_form_modal(app);
-
-// AngularJS controllers.
-
-// Controller for the flight management panel.
-app.controller(
-  CONTROLLER_STRING.FLIGHT_MANAGEMENT_PANEL,
-  function ($compile, $scope) {
-
-    var show_set_flight_atc_form_modal = function () {
-      // Used to detect if modal page button is triggered or not.
-      $("#" + flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATC_FORM_MODAL).modal("show");
-    };
-
-    $scope.control_buttons = [
-      {
-        bootstrap_color: "btn-default",
-        ng_click: "",
-        text: "add/change<br />lane"
-      },
-      {
-        bootstrap_color: "btn-default",
-        ng_click: show_set_flight_atc_form_modal,
-        text: "add/remove<br />atc"
-      },
-      {
-        bootstrap_color: "btn-success",
-        ng_click: "",
-        text: "submit"
-      }
-    ];
-  }
-);
-
+flight_management_panel = new flight_management_panel(app,
+  flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATC_FORM_MODAL);
 
 // Controller for arrival flight table and departure flight table.
 app.controller(
@@ -62,7 +31,7 @@ app.controller(
       Check if flight management panel is exists in the view (there is a user
       logged in).
       */
-      if ($("#" + CSS.FLIGHT_MANAGEMENT_PANEL_ID).length) {
+      if ($("#" + flight_management_panel.DOM_ID.FLIGHT_MANAGEMENT_PANEL).length) {
         /*
         The `requested_table` will be either `1` (for arrival flight table) or
         `2` (for departure flight table).
@@ -93,7 +62,7 @@ app.controller(
           url: url
         }).then(function (data) {
           // Render back the set management panel.
-          $("#" + CSS.FLIGHT_MANAGEMENT_PANEL_CONTENT_ID).html(data.data["html"]);
+          $("#flight-management-panel-informations").html(data.data["html"]);
 
           flight_online_atcs_form_modal.set_selected_flight_properties(
             requested_table,

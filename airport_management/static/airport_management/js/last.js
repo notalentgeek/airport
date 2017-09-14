@@ -2,7 +2,7 @@ $(function () {
   // Initial setup for both pagination.
 
   // Get the controller.
-  var table_scope = get_angularjs_scope(
+  var table_scope = get_angular_scope_by_dom_id(
     CSS.ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID);
 
   // Get pagination pages for both paginations.

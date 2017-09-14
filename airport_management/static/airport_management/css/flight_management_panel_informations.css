@@ -1,0 +1,50 @@
+@media not screen and (max-width: 767px) {
+  .flight-management-panel-information-non-status-key,
+  .flight-management-panel-information-non-status-value {
+    flex: 1;
+  }
+}
+@media screen and (max-width: 767px) {
+  .flight-management-panel-information-non-status-key {
+    flex: 1;
+  }
+  .flight-management-panel-information-non-status-value {
+    flex: 2;
+  }
+}
+.flight-management-panel-information-non-status {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.flight-management-panel-information-non-status>div {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+.flight-management-panel-information-non-status>div>div {
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  display: flex;
+  margin: 2px;
+  padding: 1px;
+  position: relative;
+}
+.flight-management-panel-information-non-status>div>div>div {
+  max-width: 100%;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#flight-management-panel-informations-status-container {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+#flight-management-panel-informations-status-container>h2 {
+  margin: 0;
+  padding: 0;
+}

@@ -2,6 +2,9 @@
 {% load static %}
 <div id="main-content">
 
+  <!-- PENDING: Adjust the flight management panel soon. -->
+  {% include "airport_management/flight_management_panel.html" with flight_management_panel_informations_non_status=flight_management_panel_initial_doms flight_management_panel_informations_status=flight_management_panel_initial_status_dom %}
+
   <!--
   Invisible DOM to store GET url to get new flight table when clicking on
   pagination button.

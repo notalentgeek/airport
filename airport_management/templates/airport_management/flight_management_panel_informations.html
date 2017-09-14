@@ -1,0 +1,30 @@
+{% load djng_tags %}
+{% load static %}
+{% for columns in flight_management_panel_informations_non_status %}
+  <div class="flight-management-panel-information-non-status">
+    {% for rows in columns %}
+      <div>
+        {% for cell in rows %}
+          <!--
+          The class for `{{ cell.class }}` is either
+          `flight-management-panel-information-non-status-key` or
+          `flight-management-panel-information-non-status-value`.
+          -->
+          <div class="{{ cell.class }}">
+            <div>
+              <!--
+              `|safe` is used to render HTML tags inside `text`.
+              -->
+              {{ cell.text|safe }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+{% endfor %}
+<div id="flight-management-panel-informations-status-container">
+  <h2>
+    {{ flight_management_panel_informations_status }}
+  </h2>
+</div>

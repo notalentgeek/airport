@@ -12,12 +12,6 @@
   #departure-flight-table {
     margin-left: 5px;
   }
-  #flight-management-button-container {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    height: 100%;
-  }
   #main-content {
     display: flex;
     flex-direction: column;
@@ -35,14 +29,6 @@
     overflow-x: hidden;
     position: relative;
   }
-  .flight-management-button {
-    height: 100%;
-    width: 100px;
-    flex: 1;
-    padding-bottom: 0;
-    padding-top: 0;
-    margin-top: 0 !important; /* Why `!important` is necessary? */
-  }
 }
 @media screen and (max-width: 767px) {
   #arrival-flight-table {
@@ -57,13 +43,6 @@
   #departure-flight-table {
     margin-top: 10px;
   }
-  #flight-management-button-container {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    height: 100%;
-  }
-
   #main-content {
     display: flex;
     flex-direction: column;
@@ -81,10 +60,6 @@
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
-  }
-  .flight-management-button {
-    height: 100%;
-    margin-top: 0 !important; /* Why `!important` is necessary? */
   }
 }
 #arrival-flight-table-pagination,
@@ -137,12 +112,6 @@
 }
 .arrivaldeparture-table-title {
   margin: 0 0 5px 0;
-}
-.line-separator {
-  background-color: lightgray;
-  height: 2px;
-  margin-top: px;
-  width: 100%;
 }
 .pagination-button-dynamic-width>span.clickable.ellipse>input {
   width: 100%;

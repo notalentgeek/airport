@@ -115,11 +115,11 @@ var create_pagination_for_arrivaldeparture_table = function (
     prevent shadow DOMs.
     */
     if (arrivaldeparture_enum === AOD.ARRIVAL) {
-      get_angularjs_scope(CSS.ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID)
+      get_angular_scope_by_dom_id(CSS.ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID)
         .recompile_arrival_table_pagination();
     }
     else if (arrivaldeparture_enum === AOD.DEPARTURE) {
-      get_angularjs_scope(CSS.ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID)
+      get_angular_scope_by_dom_id(CSS.ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID)
         .recompile_departure_table_pagination();
     }
   }

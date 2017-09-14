@@ -23,7 +23,7 @@ function string_to_bool (to_bool) {
 Get the AngularJS controller for the pagination buttons. The `.element()`'s
 parameter for some reason cannot accept JQuery selector.
 */
-function get_angularjs_scope (dom_id) {
+function get_angular_scope_by_dom_id (dom_id) {
   return angular.element(document.getElementById(dom_id)).scope();
 }
 

@@ -1,10 +1,9 @@
 var flight_online_atcs_form_modal = function (angularjs_app) {
-  var instance = [];
   var init_count = 1; // Singleton.
+  var instances = [];
 
-  function create_instance () {
-    var instance = new flight_online_atcs_form_modal(
-      angularjs_app);
+  function create_instances () {
+    var instance = new flight_online_atcs_form_modal(angularjs_app);
     return instance;
   }
 
@@ -62,15 +61,19 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
     };
 
     var get_selected_flight_properties_from_dom = (function () {
-      variables = ["selected_arrivaldeparture", "selected_flight_id",
-        "selected_flight_online_atcs"];
-      if (JQUERY_SELECTOR_FOR_FORM.length === variables.length) {
-        for (var i = 0; i < JQUERY_SELECTOR_FOR_FORM.length; i ++) {
-          // Demonic solution to set values for primitive list.
-          eval(variables[i] +
-            " = dom_get_and_set.get_dom_value(JQUERY_SELECTOR_FOR_FORM[i])");
-        }
+      values = [];
+
+      for (var i = 0; i < JQUERY_SELECTOR_FOR_FORM.length; i ++) {
+        values.push(dom_get_and_set.get_dom_value(
+          JQUERY_SELECTOR_FOR_FORM[i]));
       }
+
+      /*
+      Variable destructing! With this method primitives can be put as
+      reference instead of value.
+      */
+      [selected_arrivaldeparture, selected_flight_id,
+        selected_flight_online_atcs] = values;
 
       // Convert the string "list" into a list of strings.
       selected_flight_online_atcs = string_to_list(selected_flight_online_atcs);
@@ -110,11 +113,11 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
 
   return (function () {
     for (var i = 0; i < init_count; i ++) {
-      if (!instance[i]) {
-        instance[i] = create_instance();
+      if (!instances[i]) {
+        instances[i] = create_instances();
       }
     }
 
-    return instance[init_count - 1];
+    return instances[init_count - 1];
   })();
 };

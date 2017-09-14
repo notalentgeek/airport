@@ -251,7 +251,7 @@ def table_request_flight(request):
 
     # Get the template HTML file for the flight management panel.
     flight_management_panel_template =\
-        get_template("airport_management/flight_management_panel.html")
+        get_template("airport_management/flight_management_panel_informations.html")
 
     dictionary = {}
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE] =\
@@ -272,9 +272,15 @@ def table_request_flight(request):
     rendered.
     """
 
+    # Temporary dictionary.
+    dictionary_test = {};
+    dictionary_test["flight_management_panel_informations_non_status"] = flight_management_panel_initial_dom[KEY.DOMS]
+    dictionary_test["flight_management_panel_informations_status"] = flight_management_panel_initial_dom[KEY.STATUS]
+
+
     # Render the template with some parameter.
     flight_management_panel_html = flight_management_panel_template.render(
-        dictionary, request)
+        dictionary_test, request)
 
     # TEST: Return dictionary instead.
     return_dictionary = {}

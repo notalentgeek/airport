@@ -44,8 +44,8 @@ class CSS():
     TITLE_ID =  "title"
 
     # CSS classes.
-    FLIGHT_MANAGEMENT_PANEL_KEY_CLASS = "flight-management-panel-key"
-    FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS = "flight-management-panel-value"
+    FLIGHT_MANAGEMENT_PANEL_KEY_CLASS = "flight-management-panel-information-non-status-key"
+    FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS = "flight-management-panel-information-non-status-value"
     HIDE_FOR_SMALL_WIDTH_CLASS = "hide-for-small-width"
     PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS = "pagination-button-dynamic-width"
     PAGINATION_BUTTON_FIXED_WIDTH_CLASS = "pagination-button-fixed-width"
