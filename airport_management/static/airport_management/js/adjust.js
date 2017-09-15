@@ -1,72 +1,3 @@
-/*
-Adjust logout button for touch and non-touch browser. This is necessary because
-the log out button has a hover event. The button only appeared when there is an
-airport manager logged in.
-*/
-var auto_adjust_airport_manager_button = function () {
-  // PENDING: please put this into a closured variable.
-  var airport_manager_button = $("#airport-manager-button-container>input");
-  var airport_manager_name_parameter = $("#airport-manager-name");
-
-  console.log($("#airport-manager-name").attr("param"));
-
-  // Check if the airport manager button exists.
-  if (airport_manager_button.length) {
-
-    // Button width with border, margins, and paddings.
-    var airport_manager_button_width = airport_manager_button.outerWidth();
-
-    // Transfer value from DjangoTemplates.
-    var airport_manager_name = airport_manager_name_parameter.attr("param");
-
-    console.log(airport_manager_name);
-
-    // Shorten the name into 12 characters only with prefix three dots ("...").
-    var airport_manager_name_12 = airport_manager_name.substr(0, 12);
-
-    // Check if the name has more than 15 character or not.
-    airport_manager_name = airport_manager_name.length > 15 ?
-      airport_manager_name_12 + "..." : airport_manager_name;
-
-    // Change the airport name display in the view.
-    airport_manager_button.attr("value", "hello! " + airport_manager_name);
-
-    /*
-    Adjust this button for touch device. `is_touch_device()` check, after the
-    web application is fully rendered, if the web browser supports touch input
-    or not.
-    */
-    if (is_touch_device()) {
-      console.log("asd");
-
-      airport_manager_button.removeClass("btn-success");
-      airport_manager_button.addClass("btn-warning");
-      airport_manager_button.attr("value", "logout? " + airport_manager_name);
-      airport_manager_button.css("width", airport_manager_button_width + "px");
-    }
-    else {
-      console.log("asd")
-
-      /*
-      These codes is meant for non-touch display. If so, add `"mouseout"` and
-      `"mouseover"` listener event.
-      */
-      airport_manager_button[0].addEventListener("mouseout", function () {
-        airport_manager_button.removeClass("btn-danger");
-        airport_manager_button.addClass("btn-success");
-        airport_manager_button.attr("value", "hello! " + airport_manager_name);
-        airport_manager_button.css("width", "285px");
-      });
-      airport_manager_button[0].addEventListener("mouseover", function () {
-        airport_manager_button.removeClass("btn-success");
-        airport_manager_button.addClass("btn-danger");
-        airport_manager_button.attr("value", "logout?");
-        airport_manager_button.css("width", "285px");
-      });
-    }
-  }
-};
-
 // Function to manually style ATC Form button according to view port.
 var auto_adjust_atc_modal_buttons = function () {
   // Closure.
@@ -92,11 +23,11 @@ var auto_adjust_atc_modal_buttons = function () {
   }
 
   if (document.documentElement.clientWidth < 768) {
-    if ($("#" + CSS.ATC_FORM_MODAL_BUTTON_ID).length) {
+    if ($("#" + "atc-registration-form-modal-button").length) {
       auto_adjust_atc_modal_buttons_(
         true,
-        CSS.ATC_FORM_MODAL_BUTTON_ID,
-        CSS.ATC_FORM_MODAL_BUTTON_CONTAINER_ID,
+        "atc-registration-form-modal-button",
+        "atc-registration-form-modal-button-containery",
         CSS.ATC_MODAL_BUTTONS_MOVE_MOBILE_ID,
         "atc form"
       );
@@ -110,15 +41,15 @@ var auto_adjust_atc_modal_buttons = function () {
       "atc list"
     );
 
-    $("#" + CSS.ATC_MODAL_BUTTONS_CONTAINER_HIDE_MOBILE_ID).css("display",
+    $("#atc-modals-buttons-container").css("display",
       "none");
 }
   else if (document.documentElement.clientWidth >= 768) {
-    if ($("#" + CSS.ATC_FORM_MODAL_BUTTON_ID).length) {
+    if ($("#" + "atc-registration-form-modal-button").length) {
       auto_adjust_atc_modal_buttons_(
         false,
-        CSS.ATC_FORM_MODAL_BUTTON_ID,
-        CSS.ATC_FORM_MODAL_BUTTON_CONTAINER_ID,
+        "atc-registration-form-modal-button",
+        "atc-registration-form-modal-button-containery",
         CSS.ATC_MODAL_BUTTONS_MOVE_NON_MOBILE_ID,
         "atc form"
       );
@@ -132,7 +63,7 @@ var auto_adjust_atc_modal_buttons = function () {
       "atc list"
     );
 
-    $("#" + CSS.ATC_MODAL_BUTTONS_CONTAINER_HIDE_MOBILE_ID).css("display", "");
+    $("#atc-modals-buttons-container").css("display", "");
   }
 };
 
@@ -177,7 +108,7 @@ var auto_adjust_tables = function () {
 };
 
 var auto_adjust = function () {
-  auto_adjust_airport_manager_button();
+  navbar_right.adjust_airport_manager_button();
   auto_adjust_atc_modal_buttons();
   auto_adjust_navigation_bar();
   auto_adjust_tables();

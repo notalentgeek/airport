@@ -241,6 +241,7 @@ def table_request_flight(request):
     """
     requested_table = request.GET.get(KEY.REQUESTED_TABLE, "0")
 
+    flight = None
     # We need to coerce the value first to integer.
     if int(requested_table) == AOD.ARRIVAL:
         flight = ArrivalFlight.objects.get(pk=flight_id)

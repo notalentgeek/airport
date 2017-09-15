@@ -7,13 +7,12 @@
   {% load static %}
   {% load djng_tags %}
   <link href="{% static 'airport_management/bower_components/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
-  <link href="{% static 'airport_management/bower_components/datatables.net-bs/css/dataTables.bootstrap.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/flaviumatis-simple-pagination/simplePagination.css' %}" rel="stylesheet" type="text/css" />
-  <link href="{% static 'airport_management/css/content.css' %}" rel="stylesheet" type="text/css" />
-  <link href="{% static 'airport_management/css/flight_management_panel.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/airport_manager_wrong_password_modal.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/atc_list_modal.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/atc_registration_form_modal.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/css/content.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'airport_management/css/flight_management_panel.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/flight_management_panel_informations.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/flight_online_atcs_form_modal.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/index.css' %}" rel="stylesheet" type="text/css" />
@@ -21,13 +20,10 @@
   <link href="{% static 'airport_management/css/navbar_left.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/navbar_right.css' %}" rel="stylesheet" type="text/css" />
   <link href="{% static 'airport_management/css/paginated_table.css' %}" rel="stylesheet" type="text/css" />
+  <script src="{% static 'airport_management/bower_components/jquery/dist/jquery.js' %}"></script>
   <script src="{% static 'airport_management/bower_components/angular/angular.js' %}"></script>
   <script src="{% static 'airport_management/bower_components/angular-sanitize/angular-sanitize.js' %}"></script>
-  <script src="{% static 'airport_management/bower_components/jquery/dist/jquery.js' %}"></script>
   <script src="{% static 'airport_management/bower_components/bootstrap/dist/js/bootstrap.js' %}"></script>
-  <script src="{% static 'airport_management/bower_components/datatables.net/js/jquery.dataTables.js' %}"></script>
-  <script src="{% static 'airport_management/bower_components/datatables.net-bs/js/dataTables.bootstrap.js' %}"></script>
-  <script src="{% static 'airport_management/bower_components/he/he.js' %}"></script>
   <script src="{% static 'airport_management/flaviumatis-simple-pagination/jquery.simplePagination.js' %}"></script>
 </head>
 <!--
@@ -48,9 +44,13 @@
   <script src="{% static 'airport_management/js/consts.js' %}"></script>
   <script src="{% static 'airport_management/js/functs.js' %}"></script>
   <script src="{% static 'airport_management/js/main.js' %}"></script>
+
   <script src="{% static 'airport_management/js/flight_management_panel.js' %}"></script>
   <script src="{% static 'airport_management/js/flight_online_atcs_form_modal.js' %}"></script>
-  <script src="{% static 'airport_management/js/navbar.js' %}"></script>
+  <script src="{% static 'airport_management/js/atc_registration_form_modal.js' %}"></script>
+  <script src="{% static 'airport_management/js/navbar_left.js' %}"></script>
+  <script src="{% static 'airport_management/js/navbar_right.js' %}"></script>
+
   <script src="{% static 'airport_management/js/fmp_and_table_controller.js' %}"></script>
   <script src="{% static 'airport_management/js/adjust.js' %}"></script>
   <script src="{% static 'airport_management/js/create_pagination.js' %}"></script>

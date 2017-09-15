@@ -2,7 +2,7 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
   var init_count = 1; // Singleton.
   var instances = [];
 
-  function create_instances () {
+  function create_instance () {
     var instance = new flight_online_atcs_form_modal(angularjs_app);
     return instance;
   }
@@ -114,7 +114,7 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
   return (function () {
     for (var i = 0; i < init_count; i ++) {
       if (!instances[i]) {
-        instances[i] = create_instances();
+        instances.push(create_instance());
       }
     }
 

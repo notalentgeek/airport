@@ -5,7 +5,7 @@ var flight_management_panel = function (
   var init_count = 1; // Singleton.
   var instances = [];
 
-  function create_instances () {
+  function create_instance () {
     var instance = new flight_management_panel(angularjs_app);
     return instance;
   }
@@ -45,12 +45,12 @@ var flight_management_panel = function (
         ];
       }
     );
-  }
+  };
 
   return (function () {
     for (var i = 0; i < init_count; i ++) {
       if (!instances[i]) {
-        instances[i] = create_instances();
+        instances.push(create_instance());
       }
     }
 
