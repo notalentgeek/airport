@@ -15,12 +15,19 @@ var navbar = function (angularjs_app) {
     });
 
     var DOM_ID = Object.freeze({
+      AIRPORT_MANAGER_BUTTON_CONTAINER: "airport-manager-button-container",
+      AIRPORT_MANAGER_NAME: "airport-manager-name",
       AIRPORT_MANAGER_NAME_INPUT: "airport-manager-name-input",
       AIRPORT_MANAGER_REGISTER_BUTTON: "airport-manager-register-button",
       ATC_CODE_INPUT: "atc-code-input",
       ATC_LIST_MODAL: "atc-list-modal",
       ATC_REGISTER_BUTTON: "atc-register-button",
       ATC_REGISTRATION_FORM_MODAL: "atc-registration-form-modal"
+    });
+
+    var JQUERY_SELECTOR = Object.freeze({
+      AIRPORT_MANAGER_BUTTON: "#" + DOM_ID.AIRPORT_MANAGER_BUTTON_CONTAINER +
+        ">.input"
     });
 
     var KEY = Object.freeze({

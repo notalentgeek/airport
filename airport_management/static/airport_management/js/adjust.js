@@ -8,6 +8,8 @@ var auto_adjust_airport_manager_button = function () {
   var airport_manager_button = $("#airport-manager-button-container>input");
   var airport_manager_name_parameter = $("#airport-manager-name");
 
+  console.log($("#airport-manager-name").attr("param"));
+
   // Check if the airport manager button exists.
   if (airport_manager_button.length) {
 
@@ -15,7 +17,7 @@ var auto_adjust_airport_manager_button = function () {
     var airport_manager_button_width = airport_manager_button.outerWidth();
 
     // Transfer value from DjangoTemplates.
-    var airport_manager_name = airport_manager_button.attr("param");
+    var airport_manager_name = airport_manager_name_parameter.attr("param");
 
     console.log(airport_manager_name);
 
