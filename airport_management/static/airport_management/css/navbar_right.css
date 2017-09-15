@@ -2,6 +2,10 @@
   #airport-manager-login-and-registration-form {
     border: none;
   }
+  #airport-manager-login-and-registration-form>.buttons-and-inputs-container {
+    display: flex;
+    flex-direction: row;
+  }
   #airport-manager-login-and-registration-form .buttons-container {
     display: inline;
   }

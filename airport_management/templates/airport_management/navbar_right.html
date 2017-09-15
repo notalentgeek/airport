@@ -9,18 +9,19 @@
       class="navbar-form" id="airport-manager-logout-form" method="POST">
       {% csrf_token %}
       <div id="airport-manager-button-container">
-        <div id="airport_manager_username"
-          param="{{ airport_manager_username }}"
+        <div id="airport-manager-name"
+          param="{{ airport_manager_name }}"
           style="display: none;">
         </div>
-        <input class="btn btn-block btn-success"
-          value="hello! {{ airport_manager_username }}" />
+        <input class="btn btn-block btn-success" type="submit"
+          value="hello! {{ airport_manager_name }}" />
       </div>
     </form>
   {% else %}
-    <form action="{% url 'airport_managemen:login_and_registration_form' %}"
+    <form action="{% url 'airport_management:airport_manager_login_and_registration_form' %}"
       class="navbar-form" id="airport-manager-login-and-registration-form"
       method="POST" ng-controller="airport_manager_login_and_registration_form">
+      {% csrf_token %}
       <div class="buttons-and-inputs-container">
         <div class="inputs-container">
           <div id="check-airport-manager-name-existence-url"
@@ -40,13 +41,13 @@
           <div>
             <input class="btn btn-block btn-success"
               name="airport_manager_login_or_register_button"
-              type="submit" value="login_button">
+              type="submit" value="login">
           </div>
           <div>
             <input class="btn btn-block btn-success"
               id="airport-manager-register-button"
               name="airport_manager_login_or_register_button"
-              type="submit" value="register_button"
+              type="submit" value="register"
               ng-disabled="disable_airport_manager_register_button">
           </div>
         </div>

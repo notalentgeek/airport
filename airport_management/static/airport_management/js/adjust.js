@@ -4,15 +4,20 @@ the log out button has a hover event. The button only appeared when there is an
 airport manager logged in.
 */
 var auto_adjust_airport_manager_button = function () {
-  var airport_manager_button = $("#" + CSS.AIRPORT_MANAGER_BUTTON_ID);
+  // PENDING: please put this into a closured variable.
+  var airport_manager_button = $("#airport-manager-button-container>input");
+  var airport_manager_name_parameter = $("#airport-manager-name");
 
   // Check if the airport manager button exists.
   if (airport_manager_button.length) {
+
     // Button width with border, margins, and paddings.
     var airport_manager_button_width = airport_manager_button.outerWidth();
 
     // Transfer value from DjangoTemplates.
     var airport_manager_name = airport_manager_button.attr("param");
+
+    console.log(airport_manager_name);
 
     // Shorten the name into 12 characters only with prefix three dots ("...").
     var airport_manager_name_12 = airport_manager_name.substr(0, 12);
@@ -30,12 +35,16 @@ var auto_adjust_airport_manager_button = function () {
     or not.
     */
     if (is_touch_device()) {
+      console.log("asd");
+
       airport_manager_button.removeClass("btn-success");
       airport_manager_button.addClass("btn-warning");
       airport_manager_button.attr("value", "logout? " + airport_manager_name);
       airport_manager_button.css("width", airport_manager_button_width + "px");
     }
     else {
+      console.log("asd")
+
       /*
       These codes is meant for non-touch display. If so, add `"mouseout"` and
       `"mouseover"` listener event.

@@ -152,10 +152,11 @@ def check_airport_manager_name_existence(request):
     return check_existence(request, KEY.AIRPORT_MANAGER_NAME, User,
         "username")
 
-def login_or_register_airport_manager(request):
-    if request.POST[KEY.AIRPORT_MANAGER_SUBMIT_BUTTON] == "login":
+def airport_manager_login_and_registration_form(request):
+    print(request.POST)
+    if request.POST["airport_manager_login_or_register_button"] == "login":
         return login_airport_manager(request)
-    elif request.POST[KEY.AIRPORT_MANAGER_SUBMIT_BUTTON] == "register":
+    elif request.POST["airport_manager_login_or_register_button"] == "register":
         return register_airport_manager(request)
 
     return HttpResponseRedirect(reverse("airport_management:index"))

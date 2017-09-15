@@ -13,9 +13,9 @@ urlpatterns = [
     url(r"^check_atc_code_existence/$", views.check_atc_code_existence,
         name="check_atc_code_existence"),
     url(
-        r"^login_or_register_airport_manager/$",
-        views.login_or_register_airport_manager,
-        name="login_or_register_airport_manager"
+        r"^airport_manager_login_and_registration_form/$",
+        views.airport_manager_login_and_registration_form,
+        name="airport_manager_login_and_registration_form"
     ),
     url(r"^login_airport_manager/$", views.login_airport_manager,
         name="login_airport_manager"),
