@@ -130,9 +130,10 @@ var navbar_right = function (angularjs_app) {
         };
 
         // Callback function after HTTP request fulfilled.
-        $scope.disable_airport_manager_register_button_callback = function (value) {
-          $scope.disable_airport_manager_register_button = value;
-        };
+        $scope.disable_airport_manager_register_button_callback =
+          function (value) {
+            $scope.disable_airport_manager_register_button = value;
+          };
       }
     );
   };
