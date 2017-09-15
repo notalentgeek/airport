@@ -4,6 +4,7 @@
     <form action="{% url 'airport_management:register_atc' %}"
       class="form-horizontal" id="atc-registration-form" method="POST"
       name="atc_registration_form" ng-controller="atc-registration-form">
+      {% csrf_token %}
       <div class="modal-content">
         <div class="modal-header">
           <button class="close" data-dismiss="modal" type="button">
@@ -18,7 +19,7 @@
           </div>
           <!-- ATC code input. -->
           <input class="form-control" id="atc-code-input" name="atc_code_input"
-            type="text" placeholder=" atc code"
+            type="text" placeholder="atc code"
             ng-change="check_atc_code_existence()" ng-model="atc_code_input"
             required />
           <!-- ATC first name input. -->
@@ -28,16 +29,17 @@
             ng-model="atc_first_name_input" required />
           <!-- ATC last name input. -->
           <input class="form-control" name="atc_last_name_input" type="text"
-            placehoder="last name"
+            placeholder="last name"
             ng-change="disable_atc_register_button_callback()"
             ng-model="atc_last_name_input" required />
         </div>
         <div class="modal-footer">
           <!-- Reset form and register buttons. -->
-          <input class="btn btn-default reset-button" type="button"
+          <input class="btn btn-default" id="atc-reset-button" type="button"
             value="reset" ng-click="reset_values()" />
-          <input class="btn btn-default register-button" type="submit"
-            value="register" ng-disabled="disable_atc_register_button" />
+          <input class="btn btn-default" id="atc-registration-button"
+            type="submit" value="register"
+            ng-disabled="disable_atc_register_button" />
         </div>
       </div>
     </form>

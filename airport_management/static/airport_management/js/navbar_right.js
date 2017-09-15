@@ -9,7 +9,8 @@ var navbar_right = function (angularjs_app) {
 
   function navbar_right (angularjs_app) {
     var ANGULARJS_CONTROLLER = Object.freeze({
-      LOGIN_AND_REGISTER_FORM: "login_and_register_form"
+      AIRPORT_MANAGER_LOGIN_AND_REGISTRATION_FORM:
+        "airport_manager_login_and_registration_form"
     });
 
     var DOM_ID = Object.freeze({
@@ -25,7 +26,7 @@ var navbar_right = function (angularjs_app) {
     });
 
     var KEY = Object.freeze({
-      AIRPORT_MANAGER_NAME: "airport-manager-name"
+      AIRPORT_MANAGER_NAME: "airport_manager_name"
     });
 
     this.adjust_airport_manager_button = function () {
@@ -74,10 +75,9 @@ var navbar_right = function (angularjs_app) {
         if (is_touch_device()) {
           airport_manager_button.removeClass("btn-success");
           airport_manager_button.addClass("btn-warning");
-          airport_manager_button.css("width", airport_manager_button_width +
-            "px");
           dom_get_and_set.set_dom_value(airport_manager_button_jquery_selector,
             STRING.LOGOUT + airport_manager_name);
+          airport_manager_button.css("width", "100%");
         }
         else {
           /*
@@ -87,27 +87,27 @@ var navbar_right = function (angularjs_app) {
           airport_manager_button[0].addEventListener("mouseout", function () {
             airport_manager_button.removeClass("btn-danger");
             airport_manager_button.addClass("btn-success");
-            airport_manager_button.css("width", CSS_VALUE.WIDTH);
             dom_get_and_set.set_dom_value(
               airport_manager_button_jquery_selector,
               STRING.LOGGED_IN + airport_manager_name
             );
+            airport_manager_button.css("width", CSS_VALUE.WIDTH);
           });
           airport_manager_button[0].addEventListener("mouseover", function () {
             airport_manager_button.removeClass("btn-success");
             airport_manager_button.addClass("btn-danger");
-            airport_manager_button.css("width", CSS_VALUE.WIDTH);
             dom_get_and_set.set_dom_value(
               airport_manager_button_jquery_selector,
               STRING.LOGOUT + airport_manager_name
             );
+            airport_manager_button.css("width", CSS_VALUE.WIDTH);
           });
         }
       }
     };
 
     angularjs_app.controller(
-      ANGULARJS_CONTROLLER.LOGIN_AND_REGISTER_FORM,
+      ANGULARJS_CONTROLLER.AIRPORT_MANAGER_LOGIN_AND_REGISTRATION_FORM,
       function ($http, $scope) {
         $scope.disable_airport_manager_register_button = true;
 

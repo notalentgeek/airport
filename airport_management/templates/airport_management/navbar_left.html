@@ -1,14 +1,15 @@
 <!-- Left navigation bar. -->
 <div class="navbar-left">
-  <ul class="nav navbar-nav navbar-left" ng-controller="atc_menu">
-    <li class="dropdown">
+  <ul class="nav navbar-nav" id="mobile-atc-modals-buttons-container"
+    ng-controller="atc_menu">
+    <li class="dropdown" id="atc-modals-buttons-dropdown">
       <!-- Drop down button to show two buttons to show ATC related modal. -->
       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle"
         data-toggle="dropdown" href="#" role="button">
         atc<span class="caret"></span>
       </a>
       <!-- Buttons to show ATC form and ATC list. -->
-      <ul class="dropdown-menu" id="atc-modals-buttons-container">
+      <ul class="dropdown-menu" id="non-mobile-atc-modals-buttons-container">
         <li id="atc-list-modal-button-container">
           <a href="#" id="atc-list-modal-button"
             ng-click="show_atc_list_modal()">
@@ -22,7 +23,7 @@
         {% if user.is_authenticated and not user.is_superuser %}
           <li id="atc-registration-form-modal-button-container">
             <a href="#" id="atc-registration-form-modal-button"
-              ng-click="show_atc_form_modal()">
+              ng-click="show_atc_registration_form_modal()">
               atc registration form
             </a>
           </li>

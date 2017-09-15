@@ -14,11 +14,12 @@ var atc_registration_form_modal = function (angularjs_app) {
 
     var DOM_ID = Object.freeze({
       ATC_CODE_INPUT: "atc-code-input",
-      ATC_REGISTER_BUTTON: "atc-register-button"
+      ATC_REGISTRATION_BUTTON: "atc-registration-button",
+      CHECK_ATC_CODE_EXISTENCE_URL: "check-atc-code-existence-url"
     });
 
     var KEY = Object.freeze({
-      ATC_CODE: "atc-code"
+      ATC_CODE: "atc_code"
     });
 
     angularjs_app.controller(
@@ -29,8 +30,9 @@ var atc_registration_form_modal = function (angularjs_app) {
         $scope.check_atc_code_existence = function () {
           button_and_input_http_check(
             $scope.disable_atc_register_button,
-            DOM_ID.ATC_REGISTER_BUTTON,
+            DOM_ID.ATC_REGISTRATION_BUTTON,
             DOM_ID.ATC_CODE_INPUT,
+            DOM_ID.CHECK_ATC_CODE_EXISTENCE_URL,
             $scope.atc_code_input, $http,
             "btn-danger", "btn-primary",
             KEY.ATC_CODE,
@@ -42,16 +44,19 @@ var atc_registration_form_modal = function (angularjs_app) {
         // Callback function after HTTP request fulfilled.
         $scope.disable_atc_register_button_callback = function (value) {
           var ng_models_is_valid = (
-            $scope.ATC_REGISTRATION_FORM.atc_code_input.$valid &&
-            $scope.ATC_REGISTRATION_FORM.atc_first_name_input.$valid &&
-            $scope.ATC_REGISTRATION_FORM.atc_last_name_input.$valid
+            $scope.atc_registration_form.atc_code_input.$valid &&
+            $scope.atc_registration_form.atc_first_name_input.$valid &&
+            $scope.atc_registration_form.atc_last_name_input.$valid
           );
+
+          console.log((Boolean(ng_models_is_valid) ? true : false));
 
           /*
           If `value` is not `null` then it means this callback function was
           triggered from the HTTP request.
           */
-          if ((Boolean(value) ? true : false) && ng_models_is_valid) {
+          if ((Boolean(ng_models_is_valid) ? true : false) &&
+            ng_models_is_valid) {
             $scope.disable_atc_register_button = false;
           }
           else {
@@ -60,10 +65,10 @@ var atc_registration_form_modal = function (angularjs_app) {
         };
 
         // Reset ATC form.
-        $scope.reset_ATC_REGISTRATION_FORM = function () {
-          $scope.ATC_REGISTRATION_FORM.atc_code_input = "";
-          $scope.ATC_REGISTRATION_FORM.atc_first_name_input = "";
-          $scope.ATC_REGISTRATION_FORM.atc_last_name_input = "";
+        $scope.reset_atc_registration_form = function () {
+          $scope.atc_registration_form.atc_code_input = "";
+          $scope.atc_registration_form.atc_first_name_input = "";
+          $scope.atc_registration_form.atc_last_name_input = "";
         };
       }
     );

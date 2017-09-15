@@ -133,9 +133,9 @@ def check_atc_code_existence(request):
 
 def register_atc(request):
     try:
-        code = request.POST[KEY.ATC_FORM_CODE_INPUT]
-        first_name = request.POST[KEY.ATC_FORM_FIRST_NAME_INPUT]
-        last_name = request.POST[KEY.ATC_FORM_LAST_NAME_INPUT]
+        code = request.POST["atc_code_input"]
+        first_name = request.POST["atc_first_name_input"]
+        last_name = request.POST["atc_last_name_input"]
 
         AirTrafficController.objects.create(
             code=code,

@@ -1,11 +1,12 @@
 @media not screen and (max-width: 767px) {
-  #atc-list-modal-button {
+  #atc-list-modal-button,
+  #atc-registration-form-modal-button {
     padding-bottom: 0;
     padding-top: 0;
-    text-align: center;
   }
 }
 @media screen and (max-width: 767px) {
+  #atc-list-modal-button,
   #atc-registration-form-modal-button {
     padding-bottom: 0;
     padding-top: 0;

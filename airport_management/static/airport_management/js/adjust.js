@@ -23,47 +23,47 @@ var auto_adjust_atc_modal_buttons = function () {
   }
 
   if (document.documentElement.clientWidth < 768) {
+    auto_adjust_atc_modal_buttons_(
+      true,
+      "atc-list-modal-button",
+      "atc-list-modal-button-container",
+      "mobile-atc-modals-buttons-container",
+      "atc list"
+    );
+
     if ($("#" + "atc-registration-form-modal-button").length) {
       auto_adjust_atc_modal_buttons_(
         true,
         "atc-registration-form-modal-button",
-        "atc-registration-form-modal-button-containery",
-        CSS.ATC_MODAL_BUTTONS_MOVE_MOBILE_ID,
-        "atc form"
+        "atc-registration-form-modal-button-container",
+        "mobile-atc-modals-buttons-container",
+        "atc registration form"
       );
     }
 
-    auto_adjust_atc_modal_buttons_(
-      true,
-      CSS.ATC_LIST_MODAL_BUTTON_ID,
-      CSS.ATC_LIST_MODAL_BUTTON_CONTAINER_ID,
-      CSS.ATC_MODAL_BUTTONS_MOVE_MOBILE_ID,
-      "atc list"
-    );
-
-    $("#atc-modals-buttons-container").css("display",
+    $("#atc-modals-buttons-dropdown").css("display",
       "none");
 }
   else if (document.documentElement.clientWidth >= 768) {
+    auto_adjust_atc_modal_buttons_(
+      false,
+      "atc-list-modal-button",
+      "atc-list-modal-button-container",
+      "non-mobile-atc-modals-buttons-container",
+      "atc list"
+    );
+
     if ($("#" + "atc-registration-form-modal-button").length) {
       auto_adjust_atc_modal_buttons_(
         false,
         "atc-registration-form-modal-button",
-        "atc-registration-form-modal-button-containery",
-        CSS.ATC_MODAL_BUTTONS_MOVE_NON_MOBILE_ID,
-        "atc form"
+        "atc-registration-form-modal-button-container",
+        "non-mobile-atc-modals-buttons-container",
+        "atc registration form"
       );
     }
 
-    auto_adjust_atc_modal_buttons_(
-      false,
-      CSS.ATC_LIST_MODAL_BUTTON_ID,
-      CSS.ATC_LIST_MODAL_BUTTON_CONTAINER_ID,
-      CSS.ATC_MODAL_BUTTONS_MOVE_NON_MOBILE_ID,
-      "atc list"
-    );
-
-    $("#atc-modals-buttons-container").css("display", "");
+    $("#atc-modals-buttons-dropdown").css("display", "");
   }
 };
 
@@ -125,6 +125,8 @@ var button_and_input_http_check = function (
                                 // and enable accordingly.
   input_id,                     // The input's DOM id which used to determine if
                                 // the `button` will be disabled or not.
+  url_id,                       // DOM element where URL resides in `param`
+                                // attribute.
   input_value,                  // The value from the element with `input_id` id.
   http,                         // `$http` application object from AngularJS.
   disable_class,                // CSS class used for the `button` if it is
@@ -156,7 +158,7 @@ var button_and_input_http_check = function (
   if (button.length && input.length) {
 
     // Get URL from the used DOMs attribute `param`.
-    var url = input.attr("param");
+    var url = dom_get_and_set.get_dom_param("#" + url_id);
 
     // Make sure the input is not empty.
     if (input_value) {

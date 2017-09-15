@@ -1,19 +1,19 @@
 @media not screen and (max-width: 767px) {
-  #atc-registration-form>.register-button{
+  #atc-registration-button{
     margin-left: 0;
     width: 150px;
   }
-  #atc-registration-form>.reset-button {
+  #atc-reset-button {
     margin-right: 0;
     width: 150px;
   }
 }
 @media screen and (max-width: 767px) {
-  #atc-registration-form>.reset-button {
+  #atc-reset-button {
     margin-right: 0;
     width: 50%;
   }
-  #atc-registration-form>.register-button{
+  #atc-registration-button{
     margin-left: 0;
     width: 50%;
   }
