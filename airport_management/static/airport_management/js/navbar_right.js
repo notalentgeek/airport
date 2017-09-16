@@ -51,7 +51,7 @@ var navbar_right = function (angularjs_app) {
       Check if airport manager button exists and airport manager name can be
       retrieved.
       */
-      if (airport_manager_button.length && Boolean(airport_manager_name)) {
+      if (airport_manager_button.length && airport_manager_name) {
         // Airport manager button's border, margins, and paddings.
         var airport_manager_button_width = airport_manager_button.outerWidth();
 

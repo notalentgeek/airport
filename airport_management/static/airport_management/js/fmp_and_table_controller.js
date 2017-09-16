@@ -6,10 +6,13 @@ Controllers used in table (+ paginations) and the flight management panel
 // PENDING: Change this later please.
 navbar_left = new navbar_left(app);
 navbar_right = new navbar_right(app);
+atc_list_modal = new atc_list_modal(app);
 atc_registration_form_modal = new atc_registration_form_modal(app);
 flight_online_atcs_form_modal = new flight_online_atcs_form_modal(app);
 flight_management_panel = new flight_management_panel(app,
   flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATC_FORM_MODAL);
+
+navbar_left.atc_modals = [atc_list_modal, atc_registration_form_modal];
 
 // Controller for arrival flight table and departure flight table.
 app.controller(

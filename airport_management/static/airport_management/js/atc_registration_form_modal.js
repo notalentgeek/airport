@@ -15,11 +15,18 @@ var atc_registration_form_modal = function (angularjs_app) {
     var DOM_ID = Object.freeze({
       ATC_CODE_INPUT: "atc-code-input",
       ATC_REGISTRATION_BUTTON: "atc-registration-button",
-      CHECK_ATC_CODE_EXISTENCE_URL: "check-atc-code-existence-url"
+      CHECK_ATC_CODE_EXISTENCE_URL: "check-atc-code-existence-url",
+      MODAL_BUTTON: "atc-registration-form-modal-button",
+      MODAL_BUTTON_CONTAINER: "atc-registration-form-modal-button-container"
     });
+    this.DOM_ID = DOM_ID;
 
     var KEY = Object.freeze({
       ATC_CODE: "atc_code"
+    });
+
+    this.STRING = Object.freeze({
+      MODAL_BUTTON_TEXT: "atc registration form"
     });
 
     angularjs_app.controller(
@@ -42,21 +49,22 @@ var atc_registration_form_modal = function (angularjs_app) {
         };
 
         // Callback function after HTTP request fulfilled.
-        $scope.disable_atc_register_button_callback = function (value) {
+        $scope.disable_atc_register_button_callback = function (value) {value
+          if (value !== null && value !== undefined) {
+            $scope.disable_atc_register_button = value;
+          }
+
           var ng_models_is_valid = (
             $scope.atc_registration_form.atc_code_input.$valid &&
             $scope.atc_registration_form.atc_first_name_input.$valid &&
             $scope.atc_registration_form.atc_last_name_input.$valid
           );
 
-          console.log((Boolean(ng_models_is_valid) ? true : false));
-
           /*
           If `value` is not `null` then it means this callback function was
           triggered from the HTTP request.
           */
-          if ((Boolean(ng_models_is_valid) ? true : false) &&
-            ng_models_is_valid) {
+          if (ng_models_is_valid && !$scope.disable_atc_register_button) {
             $scope.disable_atc_register_button = false;
           }
           else {

@@ -1,72 +1,3 @@
-// Function to manually style ATC Form button according to view port.
-var auto_adjust_atc_modal_buttons = function () {
-  // Closure.
-  function auto_adjust_atc_modal_buttons_ (
-    is_mobile,
-    button_id,
-    button_container_id,
-    button_container_moved_id,
-    button_text
-  ) {
-    if (is_mobile)  {
-      $("#" + button_id).empty();
-      $("#" + button_id)
-        .append("<button class='btn btn-block btn-default'>" +
-          button_text + "</button>");
-    }
-    else {
-      $("#" + button_id).html(button_text);
-      $("#" + button_id + ">button").remove();
-    }
-    $("#" + button_container_id).detach()
-      .appendTo("#" + button_container_moved_id);
-  }
-
-  if (document.documentElement.clientWidth < 768) {
-    auto_adjust_atc_modal_buttons_(
-      true,
-      "atc-list-modal-button",
-      "atc-list-modal-button-container",
-      "mobile-atc-modals-buttons-container",
-      "atc list"
-    );
-
-    if ($("#" + "atc-registration-form-modal-button").length) {
-      auto_adjust_atc_modal_buttons_(
-        true,
-        "atc-registration-form-modal-button",
-        "atc-registration-form-modal-button-container",
-        "mobile-atc-modals-buttons-container",
-        "atc registration form"
-      );
-    }
-
-    $("#atc-modals-buttons-dropdown").css("display",
-      "none");
-}
-  else if (document.documentElement.clientWidth >= 768) {
-    auto_adjust_atc_modal_buttons_(
-      false,
-      "atc-list-modal-button",
-      "atc-list-modal-button-container",
-      "non-mobile-atc-modals-buttons-container",
-      "atc list"
-    );
-
-    if ($("#" + "atc-registration-form-modal-button").length) {
-      auto_adjust_atc_modal_buttons_(
-        false,
-        "atc-registration-form-modal-button",
-        "atc-registration-form-modal-button-container",
-        "non-mobile-atc-modals-buttons-container",
-        "atc registration form"
-      );
-    }
-
-    $("#atc-modals-buttons-dropdown").css("display", "");
-  }
-};
-
 // Function to automatically resize navigation bar components.
 var auto_adjust_navigation_bar = function () {
   var TITLE_STRINGS = ["airport management", "airport...", "...", "."];
@@ -108,8 +39,8 @@ var auto_adjust_tables = function () {
 };
 
 var auto_adjust = function () {
+  navbar_left.adjust_atc_modal_buttons();
   navbar_right.adjust_airport_manager_button();
-  auto_adjust_atc_modal_buttons();
   auto_adjust_navigation_bar();
   auto_adjust_tables();
 };
@@ -127,7 +58,8 @@ var button_and_input_http_check = function (
                                 // the `button` will be disabled or not.
   url_id,                       // DOM element where URL resides in `param`
                                 // attribute.
-  input_value,                  // The value from the element with `input_id` id.
+  input_value,                  // The value from the element with `input_id`
+                                // id.
   http,                         // `$http` application object from AngularJS.
   disable_class,                // CSS class used for the `button` if it is
                                 // disabled.

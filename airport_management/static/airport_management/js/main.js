@@ -29,6 +29,7 @@ var string_to_list = function (string) {
 /*
 Check if wrong password UI is exists. If so, show wrong password modal. This
 function only executed when the index.html rendered for the first time.
+PENDING!
 */
 var check_wrong_password_modal = (function () {
   // Modal for wrong password.
@@ -40,10 +41,10 @@ var check_wrong_password_modal = (function () {
     `string_to_bool(password_input.attr("param"))` return a boolean from Django
     for the index.html to be rendered with password wrong modal or not.
     */
-    if (password_input.attr("param")){
-      if (string_to_bool(password_input.attr("param"))) {
-        $("#" + CSS.AIRPORT_MANAGER_WRONG_PASSWORD_MODAL_ID).modal("show");
-      }
+    password_was_wrong = string_to_bool(dom_get_and_set.get_dom_param("#airport-manager-wrong-password"));
+    console.log(dom_get_and_set.get_dom_param("#airport-manager-wrong-password"));
+    if (password_was_wrong){
+      $("#airport-manager-wrong-password-modal").modal("show");
     }
   }
 })();

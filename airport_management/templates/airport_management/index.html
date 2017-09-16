@@ -40,15 +40,17 @@
       {% include "airport_management/content.html" %}
     </div>
   </div>
+  {% include "airport_management/airport_manager_wrong_password_modal.html" %}
   {% include "airport_management/atc_list_modal.html" %}
   {% include "airport_management/atc_registration_form_modal.html" %}
   {% include "airport_management/flight_online_atcs_form_modal.html" with atcs=atcs flight_atc_form_arrivaldeparture=flight_management_panel_initial_arrivaldeparture flight_atc_form_flight_id=flight_management_panel_initial_flight_id flight_atc_form_flight_online_atcs=flight_management_panel_initial_flight_online_atcs %}
   <script src="{% static 'airport_management/js/consts.js' %}"></script>
   <script src="{% static 'airport_management/js/functs.js' %}"></script>
   <script src="{% static 'airport_management/js/main.js' %}"></script>
+  <script src="{% static 'airport_management/js/atc_registration_form_modal.js' %}"></script>
+  <script src="{% static 'airport_management/js/atc_list_modal.js' %}"></script>
   <script src="{% static 'airport_management/js/flight_management_panel.js' %}"></script>
   <script src="{% static 'airport_management/js/flight_online_atcs_form_modal.js' %}"></script>
-  <script src="{% static 'airport_management/js/atc_registration_form_modal.js' %}"></script>
   <script src="{% static 'airport_management/js/navbar_left.js' %}"></script>
   <script src="{% static 'airport_management/js/navbar_right.js' %}"></script>
   <script src="{% static 'airport_management/js/fmp_and_table_controller.js' %}"></script>
