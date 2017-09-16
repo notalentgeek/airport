@@ -41,10 +41,11 @@ var check_wrong_password_modal = (function () {
     `string_to_bool(password_input.attr("param"))` return a boolean from Django
     for the index.html to be rendered with password wrong modal or not.
     */
-    password_was_wrong = string_to_bool(dom_get_and_set.get_dom_param("#airport-manager-wrong-password"));
-    console.log(dom_get_and_set.get_dom_param("#airport-manager-wrong-password"));
-    if (password_was_wrong){
-      $("#airport-manager-wrong-password-modal").modal("show");
+    if ($("#airport-manager-wrong-password").length){
+      password_was_wrong = string_to_bool(dom_get_and_set.get_dom_param("#airport-manager-wrong-password"));
+      if (password_was_wrong){
+        $("#airport-manager-wrong-password-modal").modal("show");
+      }
     }
   }
 })();
