@@ -17,7 +17,9 @@ var navbar_right = function (angularjs_app) {
       AIRPORT_MANAGER_BUTTON_CONTAINER: "airport-manager-button-container",
       AIRPORT_MANAGER_NAME: "airport-manager-name",
       AIRPORT_MANAGER_NAME_INPUT: "airport-manager-name-input",
-      AIRPORT_MANAGER_REGISTER_BUTTON: "airport-manager-register-button"
+      AIRPORT_MANAGER_REGISTER_BUTTON: "airport-manager-register-button",
+      CHECK_AIRPORT_MANAGER_NAME_EXISTENCE_URL:
+        "check-airport-manager-name-existence-url"
     });
 
     var JQUERY_SELECTOR = Object.freeze({
@@ -121,6 +123,7 @@ var navbar_right = function (angularjs_app) {
             $scope.disable_airport_manager_register_button,
             DOM_ID.AIRPORT_MANAGER_REGISTER_BUTTON,
             DOM_ID.AIRPORT_MANAGER_NAME_INPUT,
+            DOM_ID.CHECK_AIRPORT_MANAGER_NAME_EXISTENCE_URL,
             $scope.airport_manager_name_input, $http,
             "btn-danger", "btn-primary",
             KEY.AIRPORT_MANAGER_NAME,
