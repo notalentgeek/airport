@@ -1,18 +1,37 @@
-/*
-Controllers used in table (+ paginations) and the flight management panel
-(fmp).
-*/
-
-// PENDING: Change this later please.
-navbar_left = new navbar_left(app);
-navbar_right = new navbar_right(app);
+airport_manager_wrong_password_modal =
+  new airport_manager_wrong_password_modal();
 atc_list_modal = new atc_list_modal(app);
 atc_registration_form_modal = new atc_registration_form_modal(app);
+navbar_left = new navbar_left(app);
+navbar_right = new navbar_right(app);
 flight_online_atcs_form_modal = new flight_online_atcs_form_modal(app);
+
 flight_management_panel = new flight_management_panel(app,
   flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATC_FORM_MODAL);
-
 navbar_left.atc_modals = [atc_list_modal, atc_registration_form_modal];
+
+// If wrong password is `true` then give wrong password modal.
+var check_wrong_password = (function (
+  wrong_password_jquery_selector,
+  wrong_password_modal_jquery_selector
+) {
+  var airport_manager_wrong_password  = $(wrong_password_jquery_selector);
+
+  // Make sure that the wrong password message is received form the server.
+  if (airport_manager_wrong_password.length) {
+    var password_was_wrong = string_to_bool(
+      dom_get_and_set.get_dom_param(wrong_password_jquery_selector));
+
+    if (password_was_wrong) {
+      show_bootstrap_modal(wrong_password_modal_jquery_selector);
+    }
+  }
+})(
+  "#" + airport_manager_wrong_password_modal.DOM_ID
+    .AIRPORT_MANAGER_WRONG_PASSWORD,
+  "#" + airport_manager_wrong_password_modal.DOM_ID
+    .AIRPORT_MANAGER_WRONG_PASSWORD_MODAL
+);
 
 // Controller for arrival flight table and departure flight table.
 app.controller(
@@ -54,7 +73,7 @@ app.controller(
         HTTP GET request through this URL to get flight data for flight
         management panel.
         */
-        var url = $("#" + CSS.TABLE_REQUEST_FLIGHT_ID)
+        var url = $("#table-request-flight-url")
           .attr("param");
 
         var dictionary = {};
@@ -114,7 +133,7 @@ app.controller(
     $scope.pagination_request_flight_table = function (
       arrivaldeparture_enum, requested_pagination_page
     ) {
-      var url = $("#" + CSS.PAGINATION_REQUEST_FLIGHT_TABLE_ID).attr("param");
+      var url = $("#pagination-request-flight-table-url").attr("param");
 
       var arrivaldeparture_scope;
       var arrivaldeparture_scope_recompile;

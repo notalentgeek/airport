@@ -1,23 +1,18 @@
 {% load djng_tags %}
 {% load static %}
 <div id="main-content">
-
-  <!-- PENDING: Adjust the flight management panel soon. -->
   {% include "airport_management/flight_management_panel.html" with flight_management_panel_informations_non_status=flight_management_panel_initial_doms flight_management_panel_informations_status=flight_management_panel_initial_status_dom %}
 
-  <!--
-  Invisible DOM to store GET url to get new flight table when clicking on
-  pagination button.
-  -->
-  <div id="pagination-request-flight-table"
+  <!-- Invisible DOM for URLs. -->
+  <div id="pagination-request-flight-table-url"
     param="{% url 'airport_management:pagination_request_flight_table' %}">
   </div>
-  <!--
-  Invisible DOM to store GET url to get flight document when a row is clicked.
-  -->
-  <div id="table-request-flight"
+  <div id="table-request-flight-url"
     param="{% url 'airport_management:table_request_flight' %}">
   </div>
+
+
+
   <!-- Set of tables (table title, table, and table pagination). -->
   <div id="arrivaldeparture-table-set-container"
     ng-controller="arrivaldeparture_table">

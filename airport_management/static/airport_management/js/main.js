@@ -23,33 +23,6 @@ var dom_get_and_set = {
 var string_to_list = function (string) {
   return string.replace(" ", "").replace("[", "").replace("]", "").split(",");
 };
-
-// Start-up function related to DjangoTemplate.
-
-/*
-Check if wrong password UI is exists. If so, show wrong password modal. This
-function only executed when the index.html rendered for the first time.
-PENDING!
-*/
-var check_wrong_password_modal = (function () {
-  // Modal for wrong password.
-  var password_input = $("#" + CSS.AIRPORT_MANAGER_PASSWORD_INPUT_ID);
-
-  // Check if the DOM element exists in the view port.
-  if (password_input.length) {
-    /*
-    `string_to_bool(password_input.attr("param"))` return a boolean from Django
-    for the index.html to be rendered with password wrong modal or not.
-    */
-    if ($("#airport-manager-wrong-password").length){
-      password_was_wrong = string_to_bool(dom_get_and_set.get_dom_param("#airport-manager-wrong-password"));
-      if (password_was_wrong){
-        $("#airport-manager-wrong-password-modal").modal("show");
-      }
-    }
-  }
-})();
-
 /*
 JavaScript string ellipsis to prevent overflow and limit the number of
 characters.
