@@ -2,7 +2,7 @@
   #arrival-flight-table {
     margin-right: 5px;
   }
-  #arrivaldeparture-table-set-container {
+  #arrivaldeparture-table-sets-container {
     display: flex;
     flex-direction: row;
     flex: 5;
@@ -17,13 +17,13 @@
     flex-direction: column;
     height: 100%;
   }
-  .arrivaldeparture-table {
+  .arrivaldeparture-table-set {
     display: flex;
     flex-direction: column;
     flex: 1;
     height: 100%;
   }
-  .arrivaldeparture-table-content-container>div {
+  .arrivaldeparture-table-container>div {
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -34,7 +34,7 @@
   #arrival-flight-table {
     margin-bottom: 10px;
   }
-  #arrivaldeparture-table-set-container {
+  #arrivaldeparture-table-sets-container {
     display: flex;
     flex-direction: column;
     flex: 5;
@@ -48,14 +48,14 @@
     flex-direction: column;
     height: 900px;
   }
-  .arrivaldeparture-table {
+  .arrivaldeparture-table-set {
     display: flex;
     flex-direction: column;
     flex: 1;
     height: 100%;
     padding-right: 25px;
   }
-  .arrivaldeparture-table-content-container>div {
+  .arrivaldeparture-table-container>div {
     height: 100%;
     position: relative;
     overflow-y: auto;
@@ -89,20 +89,20 @@
 #pagination-request-flight-table-url {
   display: none;
 }
-.arrivaldeparture-table-content-container {
+.arrivaldeparture-table-container {
   flex: 1;
   height: 1px; /* Insert arbitrary small number here. Idk why, it just works. */
   margin-bottom: 5px;
   margin-top: 5px;
   text-align: center;
 }
-.arrivaldeparture-table-content-container td {
+.arrivaldeparture-table-container td {
   cursor: pointer;
 }
-.arrivaldeparture-table-content-container>div>table {
+.arrivaldeparture-table-container>div>table {
   position: absolute;
 }
-.arrivaldeparture-table-content-container>div>table th {
+.arrivaldeparture-table-container>div>table th {
   text-align: center;
 }
 .arrivaldeparture-table-pagination-container {

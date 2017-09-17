@@ -80,23 +80,25 @@ def index(request):
     tables_properties = [
         {
             "flight_objects":arrivalflight_paginations["objects"],
-            "number_of_pages":arrivalflight_paginations["number_of_pages"],
-            "table_set_container_id":\
+            "arrivaldeparture_table_set)_id":\
                 CSS.ARRIVAL_FLIGHT_TABLE_SET_CONTAINER_ID,
             "table_error_id":CSS.ARRIVAL_FLIGHT_TABLE_ERROR_ID,
             "table_id":CSS.ARRIVAL_FLIGHT_TABLE_ID,
             "table_pagination_id":CSS.ARRIVAL_FLIGHT_TABLE_PAGINATION_ID,
+            "table_pagination_number_of_pages_id":"arrival-flight-table-pagination-number-of-pages",
+            "table_pagination_number_of_pages": arrivalflight_paginations["number_of_pages"],
             "table_requesting_id":CSS.ARRIVAL_FLIGHT_TABLE_REQUESTING_ID,
             "table_title":"arrival table"
         },
         {
             "flight_objects":departureflight_paginations["objects"],
-            "number_of_pages":departureflight_paginations["number_of_pages"],
-            "table_set_container_id":\
+            "arrivaldeparture_table_set)_id":\
                 CSS.DEPARTURE_FLIGHT_TABLE_SET_CONTAINER_ID,
             "table_error_id":CSS.DEPARTURE_FLIGHT_TABLE_ERROR_ID,
             "table_id":CSS.DEPARTURE_FLIGHT_TABLE_ID,
             "table_pagination_id":CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID,
+            "table_pagination_number_of_pages_id":"departure-flight-table-pagination-number-of-pages",
+            "table_pagination_number_of_pages": departureflight_paginations["number_of_pages"],
             "table_requesting_id":CSS.DEPARTURE_FLIGHT_TABLE_REQUESTING_ID,
             "table_title":"departure table"
         }
@@ -303,7 +305,7 @@ def pagination_request_flight_table(request):
             pagination_page
         )
 
-        table_template = get_template("airport_management/paginated_table.html")
+        table_template = get_template("airport_management/inner_table.html")
         table_html = table_template.render({
             "flight_objects":model_paginations["objects"]
         }, request)

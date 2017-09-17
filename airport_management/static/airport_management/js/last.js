@@ -2,14 +2,15 @@ $(function () {
   // Initial setup for both pagination.
 
   // Get the controller.
-  var table_scope = get_angular_scope_by_dom_id(
-    CSS.ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID);
+  var table_scope = get_angular_scope_by_dom_id("arrivaldeparture-table-sets-container");
 
   // Get pagination pages for both paginations.
-  arrival_pagination_number_of_pages = parseInt(
-    $("#" + CSS.ARRIVAL_FLIGHT_TABLE_PAGINATION_ID).attr("param"));
-  departure_pagination_number_of_pages = parseInt(
-    $("#" + CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID).attr("param"));
+
+  arrival_pagination_number_of_pages = parseInt(dom_get_and_set.get_dom_param("#arrival-flight-table-pagination-number-of-pages"));
+  departure_pagination_number_of_pages = parseInt(dom_get_and_set.get_dom_param("#departure-flight-table-pagination-number-of-pages"));
+
+  console.log(arrival_pagination_number_of_pages);
+  console.log(departure_pagination_number_of_pages);
 
   // Create paginations.
   table_scope.arrival_flight_pagination =

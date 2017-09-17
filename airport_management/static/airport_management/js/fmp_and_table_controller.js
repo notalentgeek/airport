@@ -35,7 +35,7 @@ var check_wrong_password = (function (
 
 // Controller for arrival flight table and departure flight table.
 app.controller(
-  CONTROLLER_STRING.ARRIVALDEPARTURE_TABLE,
+  "arrivaldeparture_table_sets_container",
   function ($compile, $http, $scope) {
     /*
     AngularJS HTTP AJAX function to get flight from recently clicked object

@@ -28,7 +28,7 @@ var CSS = Object({
   AIRPORT_MANAGER_PASSWORD_INPUT_ID: "airport-manager-password-input",
   AIRPORT_MANAGER_REGISTER_BUTTON_ID: "airport-manager-register-button",
   ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID:
-    "arrivaldeparture-table-set-container",
+    "arrivaldeparture-table-sets-container",
   ARRIVAL_FLIGHT_TABLE_ERROR_ID: "arrival-flight-table-error",
   ARRIVAL_FLIGHT_TABLE_ID: "arrival-flight-table",
   ARRIVAL_FLIGHT_TABLE_PAGINATION_ID: "arrival-flight-table-pagination",

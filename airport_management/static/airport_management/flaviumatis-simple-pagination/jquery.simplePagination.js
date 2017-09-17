@@ -370,7 +370,7 @@
 								/*
 								HACK! Not good but I cannot find any other ways!
 								*/
-								var scope_angularjs_controller = angular.element(document.getElementById("arrivaldeparture-table-set-container")).scope();
+								var scope_angularjs_controller = angular.element(document.getElementById("arrivaldeparture-table-sets-container")).scope();
 								scope_angularjs_controller.pagination_request_flight_table(o.arrival_or_departure, val);
 							} else if (event.which === 27) {
 								// escape to cancel
