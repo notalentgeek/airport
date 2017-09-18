@@ -37,7 +37,7 @@ please make sure that the migrations happen with the fixtures.
 
 # Non-transit views.
 def index(request):
-    # Informations for flight management panel.
+    # information for flight management panel.
 
     """
     For the initial page set the flight management panel to only display the
@@ -60,7 +60,7 @@ def index(request):
     flight_management_panel_initial_dom = generate_flight_management_panel_dom(
         earliest_arrivalflight_from_latest_day)
 
-    # Informations for flight table.
+    # information for flight table.
 
     # Create paginations.
     arrivalflight_paginations =\
@@ -84,7 +84,7 @@ def index(request):
                 CSS.ARRIVAL_FLIGHT_TABLE_SET_CONTAINER_ID,
             "table_error_id":CSS.ARRIVAL_FLIGHT_TABLE_ERROR_ID,
             "table_id":CSS.ARRIVAL_FLIGHT_TABLE_ID,
-            "table_pagination_id":CSS.ARRIVAL_FLIGHT_TABLE_PAGINATION_ID,
+            "table_pagination_id":"arrival-flight-table-pagination",
             "table_pagination_number_of_pages_id":"arrival-flight-table-pagination-number-of-pages",
             "table_pagination_number_of_pages": arrivalflight_paginations["number_of_pages"],
             "table_requesting_id":CSS.ARRIVAL_FLIGHT_TABLE_REQUESTING_ID,
@@ -96,7 +96,7 @@ def index(request):
                 CSS.DEPARTURE_FLIGHT_TABLE_SET_CONTAINER_ID,
             "table_error_id":CSS.DEPARTURE_FLIGHT_TABLE_ERROR_ID,
             "table_id":CSS.DEPARTURE_FLIGHT_TABLE_ID,
-            "table_pagination_id":CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID,
+            "table_pagination_id":"departure-flight-table-pagination",
             "table_pagination_number_of_pages_id":"departure-flight-table-pagination-number-of-pages",
             "table_pagination_number_of_pages": departureflight_paginations["number_of_pages"],
             "table_requesting_id":CSS.DEPARTURE_FLIGHT_TABLE_REQUESTING_ID,
@@ -288,7 +288,7 @@ def table_request_flight(request):
 
     # TEST: Return dictionary instead.
     return_dictionary = {}
-    return_dictionary["html"] = flight_management_panel_html
+    return_dictionary["flight_management_panel_information_html"] = flight_management_panel_html
     return_dictionary["online_atcs"] =\
         dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATCS]
 
@@ -317,7 +317,7 @@ def pagination_request_flight_table(request):
         return HttpResponse(dumps(dictionary))
 
     # The pagination page the application is looking for.
-    pagination_page = request.GET.get(KEY.REQUESTED_PAGINATION_PAGE, "")
+    pagination_page = request.GET.get(KEY.REQUESTED_TABLE_PAGINATION_PAGE, "")
 
     """
     `requested_table` is either `1` or `2`. `1` refers to arrival flight table,

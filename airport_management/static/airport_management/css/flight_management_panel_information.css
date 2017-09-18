@@ -38,13 +38,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-#flight-management-panel-informations-status-container {
+#flight-management-panel-information-status-container {
   align-items: center;
   display: flex;
   flex: 1;
   justify-content: center;
 }
-#flight-management-panel-informations-status-container>h2 {
+#flight-management-panel-information-status-container>h2 {
   margin: 0;
   padding: 0;
 }

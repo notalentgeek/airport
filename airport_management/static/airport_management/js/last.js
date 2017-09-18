@@ -16,18 +16,18 @@ $(function () {
   table_scope.arrival_flight_pagination =
     create_pagination_for_arrivaldeparture_table(
       AOD.ARRIVAL,
-      CSS.ARRIVAL_FLIGHT_TABLE_PAGINATION_ID,
+      "arrival-flight-table-pagination",
       arrival_pagination_number_of_pages
     );
   table_scope.departure_flight_pagination =
     create_pagination_for_arrivaldeparture_table(
       AOD.DEPARTURE,
-      CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID,
+      "departure-flight-table-pagination",
       departure_pagination_number_of_pages
     );
 
   // Re-compile paginations back with AngularJS.
-  table_scope.recompile_table_pagination();
+  table_scope.recompile_table_paginations();
 
 });
 

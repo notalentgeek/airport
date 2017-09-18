@@ -2,8 +2,8 @@
 {% load static %}
 {% if user.is_authenticated and not user.is_superuser %}
   <div id="flight-management-panel" ng-controller="flight_management_panel">
-    <div id="flight-management-panel-informations-container">
-      <div id="flight-management-panel-informations">
+    <div id="flight-management-panel-information-container">
+      <div id="flight-management-panel-information">
         {% include "airport_management/flight_management_panel_informations.html" with flight_management_panel_informations_non_status=flight_management_panel_informations_non_status flight_management_panel_informations_status=flight_management_panel_informations_status %}
       </div>
     </div>

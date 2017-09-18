@@ -62,10 +62,10 @@ app.controller(
         `2` (for departure flight table).
         */
         var requested_table;
-        if (pagination_id === CSS.ARRIVAL_FLIGHT_TABLE_PAGINATION_ID) {
+        if (pagination_id === "arrival-flight-table-pagination") {
           requested_table = AOD.ARRIVAL;
         }
-        else if (pagination_id === CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID) {
+        else if (pagination_id === "departure-flight-table-pagination") {
           requested_table = AOD.DEPARTURE;
         }
 
@@ -87,7 +87,7 @@ app.controller(
           url: url
         }).then(function (data) {
           // Render back the set management panel.
-          $("#flight-management-panel-informations").html(data.data["html"]);
+          $("#flight-management-panel-information").html(data.data["flight_management_panel_information_html"]);
 
           flight_online_atcs_form_modal.set_selected_flight_properties(
             requested_table,
@@ -115,23 +115,23 @@ app.controller(
     Functions to re-compile AngularJS after the DOMs loaded and the initial
     AngularJS components had been rendered.
     */
-    $scope.recompile_table_pagination = function () {
-      $scope.recompile_arrival_table_pagination();
-      $scope.recompile_departure_table_pagination();
+    $scope.recompile_table_paginations = function () {
+      $scope.recompile_arrival_flight_table_pagination();
+      $scope.recompile_departure_flight_table_pagination();
     };
-    $scope.recompile_arrival_table_pagination = function () {
+    $scope.recompile_arrival_flight_table_pagination = function () {
       if ($scope.arrival_flight_pagination) {
         $compile($scope.arrival_flight_pagination.contents())($scope);
       }
     };
-    $scope.recompile_departure_table_pagination = function () {
+    $scope.recompile_departure_flight_table_pagination = function () {
       if ($scope.departure_flight_pagination) {
         $compile($scope.departure_flight_pagination.contents())($scope);
       }
     };
 
     $scope.pagination_request_flight_table = function (
-      arrivaldeparture_enum, requested_pagination_page
+      arrivaldeparture_enum, requested_table_pagination_page
     ) {
       var url = $("#pagination-request-flight-table-url").attr("param");
 
@@ -168,9 +168,9 @@ app.controller(
       if (arrivaldeparture_enum === AOD.ARRIVAL) {
         pagination_request_flight_table_(
           $scope.arrival_flight_pagination,
-          $scope.recompile_arrival_table_pagination,
+          $scope.recompile_arrival_flight_table_pagination,
           arrival_pagination_number_of_pages,
-          CSS.ARRIVAL_FLIGHT_TABLE_PAGINATION_ID,
+          "arrival-flight-table-pagination",
           CSS.ARRIVAL_FLIGHT_TABLE_ERROR_ID,
           CSS.ARRIVAL_FLIGHT_TABLE_ID,
           CSS.ARRIVAL_FLIGHT_TABLE_REQUESTING_ID
@@ -179,9 +179,9 @@ app.controller(
       else if (arrivaldeparture_enum === AOD.DEPARTURE) {
         pagination_request_flight_table_(
           $scope.departure_flight_pagination,
-          $scope.recompile_departure_table_pagination,
+          $scope.recompile_departure_flight_table_pagination,
           departure_pagination_number_of_pages,
-          CSS.DEPARTURE_FLIGHT_TABLE_PAGINATION_ID,
+          "departure-flight-table-pagination",
           CSS.DEPARTURE_FLIGHT_TABLE_ERROR_ID,
           CSS.DEPARTURE_FLIGHT_TABLE_ID,
           CSS.DEPARTURE_FLIGHT_TABLE_REQUESTING_ID
@@ -194,7 +194,7 @@ app.controller(
       $("#" + table_requesting_id).css("display", "");
 
       var dictionary = {};
-      dictionary[KEY.REQUESTED_PAGINATION_PAGE] = requested_pagination_page;
+      dictionary[KEY.REQUESTED_TABLE_PAGINATION_PAGE] = requested_table_pagination_page;
       dictionary[KEY.REQUESTED_TABLE] = arrivaldeparture_enum;
 
       $http({
@@ -224,7 +224,7 @@ app.controller(
                 arrivaldeparture_enum,          // Enumeration for flights.
                 "#" + pagination_id,            // ID for table pagination.
                 data.data[KEY.NUMBER_OF_PAGES], // Total pages.
-                requested_pagination_page       // Currently requested page.
+                requested_table_pagination_page       // Currently requested page.
               );
 
             // Set back the pagination pages number. Hard coded. Sorry!

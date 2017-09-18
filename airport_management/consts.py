@@ -56,7 +56,7 @@ class KEY():
     AIRPORT_MANAGER_NAME = "airport_manager_name"
     ATC_CODE = "atc_code"
     FLIGHT_ID = "flight_id"
-    REQUESTED_PAGINATION_PAGE = "requested_pagination_page"
+    REQUESTED_TABLE_PAGINATION_PAGE = "requested_table_pagination_page"
     REQUESTED_TABLE = "requested_table"
 
     # POST usually come from DOM input.

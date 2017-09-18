@@ -49,7 +49,7 @@ var atc_registration_form_modal = function (angularjs_app) {
         };
 
         // Callback function after HTTP request fulfilled.
-        $scope.disable_atc_register_button_callback = function (value) {value
+        $scope.disable_atc_register_button_callback = function (value) {
           if (value !== null && value !== undefined) {
             $scope.disable_atc_register_button = value;
           }

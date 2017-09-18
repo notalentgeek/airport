@@ -38,7 +38,7 @@ var create_pagination_for_arrivaldeparture_table = function (
 
       for (var j = 0; j < li_children.length; j ++) {
         var a_or_span = $(li_children[j]);
-        var a_page = parseInt($(a_or_span).html()) === NaN ? null : parseInt(
+        var a_page = isNaN(parseInt($(a_or_span).html())) ? null : parseInt(
           $(a_or_span).html());
 
         /*
@@ -116,11 +116,11 @@ var create_pagination_for_arrivaldeparture_table = function (
     */
     if (arrivaldeparture_enum === AOD.ARRIVAL) {
       get_angular_scope_by_dom_id("arrivaldeparture-table-sets-container")
-        .recompile_arrival_table_pagination();
+        .recompile_arrival_flight_table_pagination();
     }
     else if (arrivaldeparture_enum === AOD.DEPARTURE) {
       get_angular_scope_by_dom_id("arrivaldeparture-table-sets-container")
-        .recompile_departure_table_pagination();
+        .recompile_departure_flight_table_pagination();
     }
   }
 

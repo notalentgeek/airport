@@ -45,5 +45,15 @@ var show_bootstrap_modal = function (jquery_selector) {
   $(jquery_selector).modal("show");
 }
 
+var recompile_dom_in_angularjs_scope = function (
+  scope,
+  angularjs_scope,
+  compile
+) {
+  if (angularjs_scope.scope) {
+    compile(angularjs_scope.scope.contents())(angularjs_scope);
+  }
+};
+
 // Initiating AngularJS application.
 var app = angular.module("airport_management", ["ngSanitize"]);

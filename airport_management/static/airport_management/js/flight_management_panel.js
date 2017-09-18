@@ -16,9 +16,16 @@ var flight_management_panel = function (
     });
 
     var DOM_ID = Object.freeze({
-      FLIGHT_MANAGEMENT_PANEL: "flight-management-panel"
+      FLIGHT_MANAGEMENT_PANEL: "flight-management-panel",
+      FLIGHT_MANAGEMENT_PANEL_INFORMATIONS:
+        "flight-management-panel-information"
     });
     this.DOM_ID = DOM_ID;
+
+    // Function to check if flight management panel is exists.
+    this.is_exists = function () {
+      return $("#" + DOM_ID.FLIGHT_MANAGEMENT_PANEL).length;
+    };
 
     angularjs_app.controller(
       ANGULARJS_CONTROLLER.FLIGHT_MANAGEMENT_PANEL,
