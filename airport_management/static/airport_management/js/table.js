@@ -26,18 +26,25 @@ var table = function (
     });
     
     var AOD = Object.freeze({
-      ARRIVAL: "arrival",
-      DEPARTURE: "departure"
+      // Based from Python enumeration.
+      ARRIVAL: "1",
+      DEPARTURE: "2"
     });
-    
+
     var DOM_ID = Object.freeze({
+      ARRIVALDEPARTURE_TABLE_SETS_CONTAINER:
+        "arrivaldeparture-table-sets-container",
       ARRIVAL_FLIGHT_TABLE: "arrival-flight-table",
       ARRIVAL_FLIGHT_TABLE_ERROR: "arrival-flight-table-error",
       ARRIVAL_FLIGHT_TABLE_PAGINATION: "arrival-flight-table-pagination",
+      ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES:
+        "arrival-flight-table-pagination-number-of-pages",
       ARRIVAL_FLIGHT_TABLE_REQUESTING: "arrival-flight-table-requesting",
       DEPARTURE_FLIGHT_TABLE: "departure-flight-table",
       DEPARTURE_FLIGHT_TABLE_ERROR: "departure-flight-table-error",
       DEPARTURE_FLIGHT_TABLE_PAGINATION: "departure-flight-table-pagination",
+      DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES:
+        "departure-flight-table-pagination-number-of-pages",
       DEPARTURE_FLIGHT_TABLE_REQUESTING: "departure-flight-table-requesting",
       PAGINATION_REQUEST_FLIGHT_TABLE_URL:
         "pagination-request-flight-table-url",
@@ -45,11 +52,11 @@ var table = function (
     });
     
     var KEY = Object.freeze({
-      ARRIVAL_TABLE_PAGINATION: "arrival_flight_table_pagination",
-      ARRIVAL_TABLE_PAGINATION_NUMBER_OF_PAGES:
+      ARRIVAL_FLIGHT_TABLE_PAGINATION: "arrival_flight_table_pagination",
+      ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES:
         "arrival_flight_table_pagination_number_of_pages",
-      DEPARTURE_TABLE_PAGINATION: "departure_flight_table_pagination",
-      DEPARTURE_TABLE_PAGINATION_NUMBER_OF_PAGES:
+      DEPARTURE_FLIGHT_TABLE_PAGINATION: "departure_flight_table_pagination",
+      DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES:
         "departure_flight_table_pagination_number_of_pages",  
       FLIGHT_ID: "flight_id",
       FLIGHT_MANAGEMENT_PANEL_INFORMATION_HTML:
@@ -62,8 +69,55 @@ var table = function (
     });
     
     // The amount of pages necessary for each paginations.
-    this.pagination_number_of_pages = {};
+    var pagination_number_of_pages = {};
     
+    var initiate_table_pagination = function () {
+      // Get the table's AngularJS scope.
+      var table_scope = get_angular_scope_by_dom_id(
+        DOM_ID.ARRIVALDEPARTURE_TABLE_SETS_CONTAINER);
+
+      var initiate_table_pagination_ = function (
+        aod,
+        pagination_number_of_pages,
+        number_of_pages_dom_id,
+        number_of_pages_key,
+        table_pagination_dom_id,
+        table_pagination_key
+      ) {
+        // Set the amount of pagination pages per paginations.
+        pagination_number_of_pages[number_of_pages_key] = parseInt(
+          dom_get_and_set.get_dom_param("#" + number_of_pages_dom_id));
+
+        // Create the table pagination.
+        table_scope.flight_table_paginations[table_pagination_key] =
+          create_pagination_for_arrivaldeparture_table(
+            aod,
+            table_pagination_dom_id,
+            pagination_number_of_pages[number_of_pages_key]
+          );
+      };
+
+      initiate_table_pagination_(
+        AOD.ARRIVAL,
+        pagination_number_of_pages,
+        DOM_ID.ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES,
+        KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES,
+        DOM_ID.ARRIVAL_FLIGHT_TABLE_PAGINATION,
+        KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION
+      );
+
+      initiate_table_pagination_(
+        AOD.DEPARTURE,
+        pagination_number_of_pages,
+        DOM_ID.DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES,
+        KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES,
+        DOM_ID.DEPARTURE_FLIGHT_TABLE_PAGINATION,
+        KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION
+      );
+
+      table_scope.recompile_table_paginations();
+    };
+
     app.controller(
       ANGULARJS_CONTROLLER.ARRIVALDEPARTURE_TABLE_SETS_CONTAINER,
       function ($compile, $http, $scope) {
@@ -97,7 +151,8 @@ var table = function (
           dictionary[KEY.FLIGHT_ID] = flight_id;
     
           // URL to request new flight table.
-          var url = dom_get_and_set.get_param(DOM_ID.TABLE_REQUEST_FLIGHT_URL);
+          var url = dom_get_and_set.get_dom_param("#" + 
+            DOM_ID.TABLE_REQUEST_FLIGHT_URL);
     
           // Check if flight management panel is exists.
           if (flight_management_panel.is_exists()) {
@@ -110,7 +165,7 @@ var table = function (
               dictionary[KEY.REQUESTED_TABLE] = AOD.DEPARTURE;
             }
           }
-    
+
           // Begin the HTTP request.
           $http({
             method: "GET",
@@ -118,11 +173,11 @@ var table = function (
             url: url
           }).then(function (data) {
             // Render back the flight management panel.
-            $("#" + flight_management_panel_informations_id).html(
+            $("#" + flight_management_panel_information_id).html(
                 data.data[KEY.FLIGHT_MANAGEMENT_PANEL_INFORMATION_HTML]);
-    
+
             // Set back the current selected value to flight management panel.
-            flight_online_atcs_form_modal.set_selected_flight_propertiess(
+            flight_online_atcs_form_modal.set_selected_flight_properties(
               dictionary[KEY.REQUESTED_TABLE], dictionary[KEY.FLIGHT_ID],
               string_to_list(data.data[KEY.ONLINE_ATCS]));
           });
@@ -174,10 +229,11 @@ var table = function (
     
           if (aod === AOD.ARRIVAL) {
             pagination_request_flight_table_(
-              $scope.flight_table_paginations[KEY.ARRIVAL_TABLE_PAGINATION],
+              $scope.flight_table_paginations
+                [KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION],
               $scope.recompile_arrival_flight_table_pagination,
               this.pagination_number_of_pages
-                [KEY.ARRIVAL_TABLE_PAGINATION_NUMBER_OF_PAGES],
+                [KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES],
               DOM_ID.ARRIVAL_FLIGHT_TABLE_ERROR,
               DOM_ID.ARRIVAL_FLIGHT_TABLE,
               DOM_ID.ARRIVAL_FLIGHT_TABLE_PAGINATION,
@@ -186,10 +242,11 @@ var table = function (
           }
           else if (aod === AOD.DEPARTURE) {
             pagination_request_flight_table_(
-              $scope.flight_table_paginations[KEY.DEPARTURE_TABLE_PAGINATION],
+              $scope.flight_table_paginations
+                [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION],
               $scope.recompile_departure_flight_table_pagination,
               this.pagination_number_of_pages
-                [KEY.DEPARTURE_TABLE_PAGINATION_NUMBER_OF_PAGES],
+                [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES],
               DOM_ID.DEPARTURE_FLIGHT_TABLE_ERROR,
               DOM_ID.DEPARTURE_FLIGHT_TABLE,
               DOM_ID.DEPARTURE_FLIGHT_TABLE_PAGINATION,
@@ -262,7 +319,7 @@ var table = function (
                   there in the pagination.
                   */
                   this.pagination_number_of_pages
-                    [KEY.ARRIVAL_TABLE_PAGINATION_NUMBER_OF_PAGES] =
+                    [KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES] =
                       arrivaldeparture_table_pagination.items;
                 }
                 else if (aod === AOD.DEPARTURE) {
@@ -271,7 +328,7 @@ var table = function (
                   there in the pagination.
                   */
                   this.pagination_number_of_pages
-                    [KEY.DEPARTURE_TABLE_PAGINATION_NUMBER_OF_PAGES] =
+                    [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES] =
                       arrivaldeparture_table_pagination.items;
                 }
               }
@@ -293,15 +350,18 @@ var table = function (
     
         $scope.recompile_arrival_flight_table_pagination = function () {
           recompile_dom_in_angularjs_scope(
-            $scope.flight_table_paginations[KEY.ARRIVAL_TABLE_PAGINATION],
+            $scope.flight_table_paginations[KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION],
             $scope, $compile);
         };
         
         $scope.recompile_departure_flight_table_pagination = function () {
           recompile_dom_in_angularjs_scope(
-            $scope.flight_table_paginations[KEY.DEPARTURE_TABLE_PAGINATION],
+            $scope.flight_table_paginations[KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION],
             $scope, $compile);
         };
+        
+        // Initiate table paginations after the AngularJS elements load.
+        initiate_table_pagination();
       }
     );
   }

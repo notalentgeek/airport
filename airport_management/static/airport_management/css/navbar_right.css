@@ -25,6 +25,7 @@
     flex: 1;
     max-width: 150px;
   }
+  /* This styles makes the width in the login/logout/register form. */
   #airport-manager-logout-form {
     width: 315px;
   }

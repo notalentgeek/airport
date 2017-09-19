@@ -1,48 +1,8 @@
-// Function to automatically resize navigation bar components.
-var auto_adjust_navigation_bar = function () {
-  var TITLE_STRINGS = ["airport management", "airport...", "...", "."];
-  var WIDTH_THRESHOLDS = [935, 840, 790, 767];
-
-  // Only resize the navigation bar when there is no logged in airport manager.
-  if (!$("#" + CSS.AIRPORT_MANAGER_BUTTON_ID).length) {
-    if (
-      document.documentElement.clientWidth < WIDTH_THRESHOLDS[0] &&
-      document.documentElement.clientWidth >= WIDTH_THRESHOLDS[1]
-    ) {
-      $("#" + CSS.TITLE_ID).html(TITLE_STRINGS[1]);
-    }
-    else if (
-      document.documentElement.clientWidth < WIDTH_THRESHOLDS[1] &&
-      document.documentElement.clientWidth >= WIDTH_THRESHOLDS[2]
-    ) {
-      $("#" + CSS.TITLE_ID).html(TITLE_STRINGS[2]);
-    }
-    else if (
-      document.documentElement.clientWidth < WIDTH_THRESHOLDS[2] &&
-      document.documentElement.clientWidth >= WIDTH_THRESHOLDS[3]
-    ) {
-      $("#" + CSS.TITLE_ID).html(TITLE_STRINGS[3]);
-    }
-    else {
-      $("#" + CSS.TITLE_ID).html(TITLE_STRINGS[0]);
-    }
-  }
-};
-
-var auto_adjust_tables = function () {
-  if (document.documentElement.clientWidth <= 1000) {
-    $("." + CSS.HIDE_FOR_SMALL_WIDTH_CLASS).css("display", "none");
-  }
-  else {
-    $("." + CSS.HIDE_FOR_SMALL_WIDTH_CLASS).css("display", "");
-  }
-};
-
-var auto_adjust = function () {
+var adjust = function () {
+  inner_table.adjust_table();
   navbar_left.adjust_atc_modal_buttons();
+  navbar_left.adjust_title();
   navbar_right.adjust_airport_manager_button();
-  auto_adjust_navigation_bar();
-  auto_adjust_tables();
 };
 
 /*

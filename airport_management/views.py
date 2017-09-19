@@ -80,7 +80,7 @@ def index(request):
     tables_properties = [
         {
             "flight_objects":arrivalflight_paginations["objects"],
-            "arrivaldeparture_table_set)_id":\
+            "arrivaldeparture_table_set_id":\
                 CSS.ARRIVAL_FLIGHT_TABLE_SET_CONTAINER_ID,
             "table_error_id":CSS.ARRIVAL_FLIGHT_TABLE_ERROR_ID,
             "table_id":CSS.ARRIVAL_FLIGHT_TABLE_ID,
@@ -92,7 +92,7 @@ def index(request):
         },
         {
             "flight_objects":departureflight_paginations["objects"],
-            "arrivaldeparture_table_set)_id":\
+            "arrivaldeparture_table_set_id":\
                 CSS.DEPARTURE_FLIGHT_TABLE_SET_CONTAINER_ID,
             "table_error_id":CSS.DEPARTURE_FLIGHT_TABLE_ERROR_ID,
             "table_id":CSS.DEPARTURE_FLIGHT_TABLE_ID,
@@ -113,7 +113,7 @@ def index(request):
     `1` to call into `ArrivalFlight` model.
     """
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE] = 1
-    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS] =\
+    dictionary["flight_management_panel_information_non_status"] =\
         flight_management_panel_initial_dom[KEY.DOMS]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ID] =\
         flight_management_panel_initial_dom[KEY.FLIGHT_ID]
@@ -121,7 +121,7 @@ def index(request):
         flight_management_panel_initial_dom[KEY.LANE]
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATCS] =\
         flight_management_panel_initial_dom[KEY.ONLINE_ATC]
-    dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM] =\
+    dictionary["flight_management_panel_information_status"] =\
         flight_management_panel_initial_dom[KEY.STATUS]
     dictionary[KEY.TABLES_PROPERTIES] = tables_properties
 
@@ -255,7 +255,7 @@ def table_request_flight(request):
 
     # Get the template HTML file for the flight management panel.
     flight_management_panel_template =\
-        get_template("airport_management/flight_management_panel_informations.html")
+        get_template("airport_management/flight_management_panel_information.html")
 
     dictionary = {}
     dictionary[KEY.FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE] =\
@@ -278,8 +278,8 @@ def table_request_flight(request):
 
     # Temporary dictionary.
     dictionary_test = {};
-    dictionary_test["flight_management_panel_informations_non_status"] = flight_management_panel_initial_dom[KEY.DOMS]
-    dictionary_test["flight_management_panel_informations_status"] = flight_management_panel_initial_dom[KEY.STATUS]
+    dictionary_test["flight_management_panel_information_non_status"] = flight_management_panel_initial_dom[KEY.DOMS]
+    dictionary_test["flight_management_panel_information_status"] = flight_management_panel_initial_dom[KEY.STATUS]
 
 
     # Render the template with some parameter.

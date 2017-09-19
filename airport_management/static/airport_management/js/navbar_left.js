@@ -1,13 +1,25 @@
-var navbar_left = function (angularjs_app) {
+var navbar_left = function (
+  angularjs_app,
+  airport_manager_button_jquery_selector,
+  atc_modals
+) {
   var init_count = 1; // Singleton.
   var instances = [];
 
   function create_instance () {
-    var instance = new navbar_left(angularjs_app);
+    var instance = new navbar_left(
+      angularjs_app,
+      airport_manager_button_jquery_selector,
+      atc_modals
+    );
     return instance;
   }
 
-  function navbar_left (angularjs_app) {
+  function navbar_left (
+    angularjs_app,
+    airport_manager_button_jquery_selector,
+    atc_modals
+  ) {
     var ANGULARJS_CONTROLLER = Object.freeze({
       ATC_MENU: "atc_menu"
     });
@@ -22,7 +34,14 @@ var navbar_left = function (angularjs_app) {
         "non-mobile-atc-modals-buttons-container"
     });
 
-    this.atc_modals;
+    var STRING = Object.freeze({
+      TITLE_STRING: ["airport_management", "airport...", "...", "."]
+    });
+
+    var VALUE = Object.freeze({
+      // According to when the `TITLE_STRING` collapse.
+      WIDTH_THRESHOLD: [935, 840, 790, 767]
+    });
 
     this.adjust_atc_modal_buttons = function () {
       // Closure.
@@ -48,20 +67,51 @@ var navbar_left = function (angularjs_app) {
       // Check if the current view port rendered as a mobile view.
       var is_mobile_resolution = document.documentElement.clientWidth < 768;
 
-      if (this.atc_modals) {
-        for (var i = 0; i < this.atc_modals.length; i ++) {
-          if ($("#" + this.atc_modals[i].DOM_ID.MODAL_BUTTON_CONTAINER).length)
+      if (atc_modals) {
+        for (var i = 0; i < atc_modals.length; i ++) {
+          if ($("#" + atc_modals[i].DOM_ID.MODAL_BUTTON_CONTAINER).length)
           {
             adjust_atc_modal_buttons_(
               is_mobile_resolution ? true : false,
-              this.atc_modals[i].DOM_ID.MODAL_BUTTON,
-              this.atc_modals[i].DOM_ID.MODAL_BUTTON_CONTAINER,
+              atc_modals[i].DOM_ID.MODAL_BUTTON,
+              atc_modals[i].DOM_ID.MODAL_BUTTON_CONTAINER,
               is_mobile_resolution ?
                 DOM_ID.MOBILE_ATC_MODALS_BUTTONS_CONTAINER :
                 DOM_ID.NON_MOBILE_ATC_MODALS_BUTTONS_CONTAINER,
-              this.atc_modals[i].STRING.MODAL_BUTTON_TEXT
+              atc_modals[i].STRING.MODAL_BUTTON_TEXT
             );
           }
+        }
+      }
+    };
+
+    this.adjust_title = function () {
+      // Only resize the navigation bar when there is no user logged in.
+      if (!$(airport_manager_button_jquery_selector).length) {
+        if (
+          document.documentElement.clientWidth < VALUE.WIDTH_THRESHOLD[0] &&
+          document.documentElement.clientWidth >= VALUE.WIDTH_THRESHOLD[1]
+        ) {
+          $(airport_manager_button_jquery_selector).html(
+            STRING.TITLE_STRING[1]);
+        }
+        else if (
+          document.documentElement.clientWidth < VALUE.WIDTH_THRESHOLD[1] &&
+          document.documentElement.clientWidth >= VALUE.WIDTH_THRESHOLD[2]
+        ) {
+          $(airport_manager_button_jquery_selector).html(
+            STRING.TITLE_STRING[2]);          
+        }
+        else if (
+          document.documentElement.clientWidth < VALUE.WIDTH_THRESHOLD[2] &&
+          document.documentElement.clientWidth >= VALUE.WIDTH_THRESHOLD[3]
+        ) {
+          $(airport_manager_button_jquery_selector).html(
+            STRING.TITLE_STRING[3]);          
+        }
+        else {
+          $(airport_manager_button_jquery_selector).html(
+            STRING.TITLE_STRING[0]);
         }
       }
     };

@@ -1,7 +1,3 @@
-// Number of pages in arrival and departure paginations.
-var arrival_pagination_number_of_pages;
-var departure_pagination_number_of_pages;
-
 var dom_get_and_set = {
   get_dom_attribute: function (jquery_selector, attribute) {
     return $(jquery_selector).attr(attribute);
@@ -21,6 +17,11 @@ var dom_get_and_set = {
 };
 
 var string_to_list = function (string) {
+  // If the inputted `string` is actually a list then return it directly.
+  if (string.constructor === Array) {
+    return string;
+  }
+
   return string.replace(" ", "").replace("[", "").replace("]", "").split(",");
 };
 /*

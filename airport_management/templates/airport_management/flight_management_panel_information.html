@@ -1,6 +1,6 @@
 {% load djng_tags %}
 {% load static %}
-{% for columns in flight_management_panel_informations_non_status %}
+{% for columns in flight_management_panel_information_non_status %}
   <div class="flight-management-panel-information-non-status">
     {% for rows in columns %}
       <div>
@@ -25,6 +25,6 @@
 {% endfor %}
 <div id="flight-management-panel-information-status-container">
   <h2>
-    {{ flight_management_panel_informations_status }}
+    {{ flight_management_panel_information_status }}
   </h2>
 </div>

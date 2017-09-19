@@ -26,6 +26,7 @@ var navbar_right = function (angularjs_app) {
       AIRPORT_MANAGER_BUTTON: "#" + DOM_ID.AIRPORT_MANAGER_BUTTON_CONTAINER +
         ">input"
     });
+    this.JQUERY_SELECTOR = JQUERY_SELECTOR;
 
     var KEY = Object.freeze({
       AIRPORT_MANAGER_NAME: "airport_manager_name"
@@ -33,7 +34,8 @@ var navbar_right = function (angularjs_app) {
 
     this.adjust_airport_manager_button = function () {
       var CSS_VALUE = Object.freeze({
-        WIDTH: "285px"
+        WIDTH_FULL: "100%",
+        WIDTH_NORMAL: "285px"
       });
 
       var STRING = Object.freeze({
@@ -52,9 +54,6 @@ var navbar_right = function (angularjs_app) {
       retrieved.
       */
       if (airport_manager_button.length && airport_manager_name) {
-        // Airport manager button's border, margins, and paddings.
-        var airport_manager_button_width = airport_manager_button.outerWidth();
-
         /*
         Shorten the airport manager name into 12 characters with three dots as
         prefix. Then, check if the total characters in airport manager name is
@@ -79,7 +78,6 @@ var navbar_right = function (angularjs_app) {
           airport_manager_button.addClass("btn-warning");
           dom_get_and_set.set_dom_value(airport_manager_button_jquery_selector,
             STRING.LOGOUT + airport_manager_name);
-          airport_manager_button.css("width", "100%");
         }
         else {
           /*
@@ -93,7 +91,6 @@ var navbar_right = function (angularjs_app) {
               airport_manager_button_jquery_selector,
               STRING.LOGGED_IN + airport_manager_name
             );
-            airport_manager_button.css("width", CSS_VALUE.WIDTH);
           });
           airport_manager_button[0].addEventListener("mouseover", function () {
             airport_manager_button.removeClass("btn-success");
@@ -102,7 +99,6 @@ var navbar_right = function (angularjs_app) {
               airport_manager_button_jquery_selector,
               STRING.LOGOUT + airport_manager_name
             );
-            airport_manager_button.css("width", CSS_VALUE.WIDTH);
           });
         }
       }

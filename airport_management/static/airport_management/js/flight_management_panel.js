@@ -17,7 +17,7 @@ var flight_management_panel = function (
 
     var DOM_ID = Object.freeze({
       FLIGHT_MANAGEMENT_PANEL: "flight-management-panel",
-      FLIGHT_MANAGEMENT_PANEL_INFORMATIONS:
+      FLIGHT_MANAGEMENT_PANEL_INFORMATION:
         "flight-management-panel-information"
     });
     this.DOM_ID = DOM_ID;
