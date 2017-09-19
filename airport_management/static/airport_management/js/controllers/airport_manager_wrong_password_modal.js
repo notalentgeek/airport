@@ -21,7 +21,7 @@ var airport_manager_wrong_password_modal = function (angularjs_app) {
       
       // Make sure that the wrong password message is received form the server.
       if (airport_manager_wrong_password.length) {
-        var password_was_wrong = string_to_bool(
+        var password_was_wrong = string_operation.string_to_bool(
           dom_get_and_set.get_dom_param(
             "#" + DOM_ID.AIRPORT_MANAGER_WRONG_PASSWORD
           )
@@ -29,7 +29,7 @@ var airport_manager_wrong_password_modal = function (angularjs_app) {
     
         //If password is wrong then show the wrong password modal.
         if (password_was_wrong) {
-          show_bootstrap_modal(
+          bootstrap_operation.show_bootstrap_modal(
             "#" + DOM_ID.AIRPORT_MANAGER_WRONG_PASSWORD_MODAL
           );
         }

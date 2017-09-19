@@ -30,6 +30,12 @@ var table = function (
       ARRIVAL: "1",
       DEPARTURE: "2"
     });
+    
+    var DOM_CLASS = Object.freeze({
+      CLICKABLE: "clickable",
+      PAGINATION_BUTTON_DYNAMIC_WIDTH: "pagination-button-dynamic-width",
+      PAGINATION_BUTTON_FIXED_WIDTH: "pagination-button-fixed-width"
+    });
 
     var DOM_ID = Object.freeze({
       ARRIVALDEPARTURE_TABLE_SETS_CONTAINER:
@@ -50,7 +56,7 @@ var table = function (
         "pagination-request-flight-table-url",
       TABLE_REQUEST_FLIGHT_URL: "table-request-flight-url"
     });
-    
+
     var KEY = Object.freeze({
       ARRIVAL_FLIGHT_TABLE_PAGINATION: "arrival_flight_table_pagination",
       ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES:
@@ -67,14 +73,15 @@ var table = function (
       REQUESTED_TABLE_PAGINATION_PAGE: "requested_table_pagination_page",
       TABLE_HTML: "table_html"
     });
-    
+
     // The amount of pages necessary for each paginations.
     var pagination_number_of_pages = {};
     
     var initiate_table_pagination = function () {
       // Get the table's AngularJS scope.
-      var table_scope = get_angular_scope_by_dom_id(
-        DOM_ID.ARRIVALDEPARTURE_TABLE_SETS_CONTAINER);
+      var table_scope = angularjs_operation.get_angular_scope_by_dom_id(
+        DOM_ID.ARRIVALDEPARTURE_TABLE_SETS_CONTAINER
+      );
 
       var initiate_table_pagination_ = function (
         aod,
@@ -91,6 +98,9 @@ var table = function (
         // Create the table pagination.
         table_scope.flight_table_paginations[table_pagination_key] =
           create_pagination_for_arrivaldeparture_table(
+            AOD,
+            DOM_CLASS,
+            DOM_ID,
             aod,
             table_pagination_dom_id,
             pagination_number_of_pages[number_of_pages_key]
@@ -179,7 +189,7 @@ var table = function (
             // Set back the current selected value to flight management panel.
             flight_online_atcs_form_modal.set_selected_flight_properties(
               dictionary[KEY.REQUESTED_TABLE], dictionary[KEY.FLIGHT_ID],
-              string_to_list(data.data[KEY.ONLINE_ATCS]));
+              string_operation.string_to_list(data.data[KEY.ONLINE_ATCS]));
           });
         };
     
@@ -288,8 +298,11 @@ var table = function (
     
               // Compile the newly added HTML table back with AngularJS.
               if ($scope.table) {
-                recompile_dom_in_angularjs_scope($scope.table, $scope,
-                  $compile);
+                angularjs_operation.recompile_dom_in_angularjs_scope(
+                  $scope.table,
+                  $scope,
+                  $compile
+                );
               }
     
               // Check if the number of pages is changed.
@@ -301,6 +314,11 @@ var table = function (
                 // Create new pagination.
                 arrivaldeparture_table_pagination = 
                   create_pagination_for_arrivaldeparture_table(
+                    AOD,                            // Reference to constants.
+                    DOM_CLASS,                      // Reference to constants.
+                    DOM_ID,                         // Reference to constants.
+                    this,                           // Reference to this
+                                                    // object.
                     aod,                            // Enumeration for flight
                                                     // table.
                     "#" + table_pagination_id,      // CSS ID for table
@@ -349,15 +367,21 @@ var table = function (
         };
     
         $scope.recompile_arrival_flight_table_pagination = function () {
-          recompile_dom_in_angularjs_scope(
-            $scope.flight_table_paginations[KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION],
-            $scope, $compile);
+          angularjs_operation.recompile_dom_in_angularjs_scope(
+            $scope.flight_table_paginations
+              [KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION],
+            $scope,
+            $compile
+          );
         };
         
         $scope.recompile_departure_flight_table_pagination = function () {
-          recompile_dom_in_angularjs_scope(
-            $scope.flight_table_paginations[KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION],
-            $scope, $compile);
+          angularjs_operation.recompile_dom_in_angularjs_scope(
+            $scope.flight_table_paginations
+              [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION],
+            $scope,
+            $compile
+          );
         };
         
         // Initiate table paginations after the AngularJS elements load.

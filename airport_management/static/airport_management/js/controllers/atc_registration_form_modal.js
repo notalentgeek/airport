@@ -35,7 +35,7 @@ var atc_registration_form_modal = function (angularjs_app) {
         $scope.disable_atc_register_button = true;
 
         $scope.check_atc_code_existence = function () {
-          button_and_input_http_check(
+          check_button_and_input_with_http(
             $scope.disable_atc_register_button,
             DOM_ID.ATC_REGISTRATION_BUTTON,
             DOM_ID.ATC_CODE_INPUT,

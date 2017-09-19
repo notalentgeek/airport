@@ -120,10 +120,14 @@ var navbar_left = function (
       ANGULARJS_CONTROLLER.ATC_MENU,
       function ($scope) {
         $scope.show_atc_registration_form_modal = function () {
-          show_bootstrap_modal("#" + DOM_ID.ATC_REGISTRATION_FORM_MODAL);
+          bootstrap_operation.show_bootstrap_modal(
+            "#" + DOM_ID.ATC_REGISTRATION_FORM_MODAL
+          );
         };
         $scope.show_atc_list_modal = function () {
-          show_bootstrap_modal("#" + DOM_ID.ATC_LIST_MODAL);
+          bootstrap_operation.show_bootstrap_modal(
+            "#" + DOM_ID.ATC_LIST_MODAL
+          );
         };
       }
     );

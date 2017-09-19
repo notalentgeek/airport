@@ -32,7 +32,9 @@ var flight_management_panel = function (
       function ($scope) {
         // Function to show a modal form for assigning ATCs into a flight.
         $scope.show_flight_atc_form_modal = function () {
-          show_bootstrap_modal("#" + dom_id_flight_atc_form_modal);
+          bootstrap_operation.show_bootstrap_modal(
+            "#" + dom_id_flight_atc_form_modal
+          );
         };
 
         // Flight management panel buttons.

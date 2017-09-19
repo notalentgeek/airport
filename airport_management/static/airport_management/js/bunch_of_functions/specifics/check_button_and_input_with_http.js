@@ -1,21 +1,14 @@
-var adjust = function () {
-  inner_table.adjust_table();
-  navbar_left.adjust_atc_modal_buttons();
-  navbar_left.adjust_title();
-  navbar_right.adjust_airport_manager_button();
-};
-
 /*
 Function to disable button for any cases in input field sent to server.
 Components must be inside AngularJS controller.
 */
-var button_and_input_http_check = function (
+var check_button_and_input_with_http = function (
   disable,                      // Boolean to disable the button using
                                 // `ng-disabled`.
   button_id,                    // The button's DOM id which we want to disable
                                 // and enable accordingly.
-  input_id,                     // The input's DOM id which used to determine if
-                                // the `button` will be disabled or not.
+  input_id,                     // The input's DOM id which used to determine
+                                // if the `button` will be disabled or not.
   url_id,                       // DOM element where URL resides in `param`
                                 // attribute.
   input_value,                  // The value from the element with `input_id`
@@ -43,8 +36,10 @@ var button_and_input_http_check = function (
   disable = true;
 
   // Get access to necessary DOMs.
-  var button = $("#" + button_id);
-  var input = $("#" + input_id);
+  var button_jquery_selector = "#" + button_id;
+  var input_jquery_selector = "#" + input_id;
+  var button = $(button_jquery_selector);
+  var input = $(input_jquery_selector);
 
   // Check the availability of the mentioned DOMs.
   if (button.length && input.length) {
@@ -61,7 +56,10 @@ var button_and_input_http_check = function (
       button.removeClass(disable_class);
       button.removeClass(enable_class);
       button.addClass(disable_class);
-      button.attr("value", button_processing_string);
+      dom_get_and_set.set_dom_value(
+        button_jquery_selector,
+        button_processing_string
+      );
 
       // The value that will be sent through HTTP "GET".
       http_dict_params = {};
@@ -73,7 +71,7 @@ var button_and_input_http_check = function (
         params: http_dict_params,
         url: url
       }).then(function (data) {
-        disable = string_to_bool(data.data);
+        disable = string_operation.string_to_bool(data.data);
         callback(disable);
 
         if (data.status === 200) {
@@ -82,19 +80,28 @@ var button_and_input_http_check = function (
           in the table).
           */
           if (disable) {
-            button.attr("value", button_disabled_string);
+            dom_get_and_set.set_dom_value(
+              button_jquery_selector,
+              button_disabled_string
+            );
           }
           // When the data returned is `false` (for example unique username).
           else {
             button.removeClass(disable_class);
             button.removeClass(enable_class);
             button.addClass(enable_class);
-            button.attr("value", button_enabled_string);
+            dom_get_and_set.set_dom_value(
+              button_jquery_selector,
+              button_enabled_string
+            );
           }
         }
         // If there is a server problem.
         else {
-          button.attr("value", button_server_problem_string);
+          dom_get_and_set.set_dom_value(
+            button_jquery_selector,
+            button_server_problem_string
+          );
         }
       });
     }

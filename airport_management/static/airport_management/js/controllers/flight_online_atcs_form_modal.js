@@ -76,7 +76,9 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
         selected_flight_online_atcs] = values;
 
       // Convert the string "list" into a list of strings.
-      selected_flight_online_atcs = string_to_list(selected_flight_online_atcs);
+      selected_flight_online_atcs = string_operation.string_to_list(
+        selected_flight_online_atcs
+      );
     })();
 
     angularjs_app.controller(

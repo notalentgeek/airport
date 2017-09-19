@@ -1,6 +1,12 @@
 // Create pagination HTML.
 var create_pagination_for_arrivaldeparture_table = function (
-  arrivaldeparture_enum, pagination_id, number_of_pages, requested_page
+  table_aod,
+  table_dom_class,
+  table_dom_id,
+  aod,
+  pagination_id,
+  number_of_pages,
+  requested_page
 ) {
   // If `requested_page` is not provided then set it to `1`.
   if (!requested_page) {
@@ -28,6 +34,7 @@ var create_pagination_for_arrivaldeparture_table = function (
     // The next page.
     var next_page = current_page + 1 > number_of_pages ?
       number_of_pages : current_page + 1;
+
     // The previous page.
     var previous_page = current_page - 1 < 1 ?
       number_of_pages : current_page - 1;
@@ -47,9 +54,9 @@ var create_pagination_for_arrivaldeparture_table = function (
         or previous buttons. Since, only `<a>` that exactly point out to the
         next page will return an int.
         */
-        if (a_page || a_or_span.hasClass("clickable")) {
+        if (a_page || a_or_span.hasClass(table_dom_class.CLICKABLE)) {
           // Pagination page buttons have dynamic width.
-          li.addClass(CSS.PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS);
+          li.addClass(table_dom_class.PAGINATION_BUTTON_DYNAMIC_WIDTH);
 
           /*
           Only add `ng-click` controller to pagination buttons with number on
@@ -58,27 +65,27 @@ var create_pagination_for_arrivaldeparture_table = function (
           if (a_page) {
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + arrivaldeparture_enum +
+              "pagination_request_flight_table(" + aod +
                 ", " + a_page + ")"
             );
           }
         }
         /*
-        This is meant for the next and previous button to trigger the pagination
-        request AJAX.
+        This is meant for the next and previous button to trigger the
+        pagination request AJAX.
         */
         else if (!a_page) {
           /*
           Pagination next and previous buttons always have 10% width of their
           parent.
           */
-          li.addClass(CSS.PAGINATION_BUTTON_FIXED_WIDTH_CLASS);
+          li.addClass(table_dom_class.PAGINATION_BUTTON_FIXED_WIDTH);
 
           // Adjust the `ng-click`.
           if (a_or_span.hasClass("next")) {
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + arrivaldeparture_enum +
+              "pagination_request_flight_table(" + aod +
                 ", " + next_page + ")"
             );
           }
@@ -86,7 +93,7 @@ var create_pagination_for_arrivaldeparture_table = function (
             li.addClass("pagination-button-fixed-width");
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + arrivaldeparture_enum +
+              "pagination_request_flight_table(" + aod +
                 ", " + previous_page + ")"
             );
           }
@@ -102,30 +109,35 @@ var create_pagination_for_arrivaldeparture_table = function (
     var pagination_page_buttons_count = pagination_children.length - 2;
 
     /*
-    The next and previous buttons always occupy 10% width from their parent. The
-    other pagination buttons should occupy the max (100% - 20%) of the parent's
-    width.
+    The next and previous buttons always occupy 10% width from their parent.
+    The other pagination buttons should occupy the max (100% - 20%) of the
+    parent's width.
     */
-    $("#" + pagination_id + ">." + CSS.PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS)
-      .css("width", (80/pagination_page_buttons_count) + "%");
+    $("#" + pagination_id + ">." +
+      table_dom_class.PAGINATION_BUTTON_DYNAMIC_WIDTH).css(
+        "width",
+        (80/pagination_page_buttons_count) + "%"
+      );
 
     /*
-    Re-compile/re-render AngularJS controller for the pagination buttons. Please
-    compile it accordingly (do not re-compile all AngularJS controllers) to
-    prevent shadow DOMs.
+    Re-compile/re-render AngularJS controller for the pagination buttons.
+    Please compile it accordingly (do not re-compile all AngularJS controllers)
+    to prevent shadow DOMs.
     */
-    if (arrivaldeparture_enum === AOD.ARRIVAL) {
-      get_angular_scope_by_dom_id("arrivaldeparture-table-sets-container")
-        .recompile_arrival_flight_table_pagination();
+    if (aod === table_aod.ARRIVAL) {
+      angularjs_operation.get_angular_scope_by_dom_id(
+        table_dom_id.ARRIVALDEPARTURE_TABLE_SETS_CONTAINER
+      ).recompile_arrival_flight_table_pagination();
     }
-    else if (arrivaldeparture_enum === AOD.DEPARTURE) {
-      get_angular_scope_by_dom_id("arrivaldeparture-table-sets-container")
-        .recompile_departure_flight_table_pagination();
+    else if (aod === table_aod.DEPARTURE) {
+      angularjs_operation.get_angular_scope_by_dom_id(
+        table_dom_id.ARRIVALDEPARTURE_TABLE_SETS_CONTAINER
+      ).recompile_departure_flight_table_pagination();
     }
   }
 
   return $("#" + pagination_id).pagination({
-      arrival_or_departure: arrivaldeparture_enum,
+      arrival_or_departure: aod,
       cssStyle: "",
       currentPage: requested_page,
       itemOnPage: 8,

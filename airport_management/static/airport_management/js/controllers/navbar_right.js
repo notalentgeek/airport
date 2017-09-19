@@ -61,8 +61,10 @@ var navbar_right = function (angularjs_app) {
         use the shortened name. If not then keep using the original un-shortened
         name.
         */
-        airport_manager_name = string_overflow_ellipsis(airport_manager_name,
-          15);
+        airport_manager_name = string_operation.string_overflow_ellipsis(
+          airport_manager_name,
+          15
+        );
 
         // Change the airport display name in the view.
         dom_get_and_set.set_dom_value(airport_manager_button_jquery_selector,
@@ -115,7 +117,7 @@ var navbar_right = function (angularjs_app) {
         for airport manager is changed.
         */
         $scope.check_airport_manager_name_existence = function () {
-          button_and_input_http_check(
+          check_button_and_input_with_http(
             $scope.disable_airport_manager_register_button,
             DOM_ID.AIRPORT_MANAGER_REGISTER_BUTTON,
             DOM_ID.AIRPORT_MANAGER_NAME_INPUT,
