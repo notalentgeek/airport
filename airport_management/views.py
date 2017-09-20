@@ -64,13 +64,13 @@ def index(request):
 
     # Create paginations.
     arrivalflight_paginations =\
-        create_pagination_return_page_and_num_pages(
+        create_pagination_return_page_and_number_of_pages(
             ArrivalFlight,
             DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS,
             PAGINATION_OBJECTS_COUNT
         )
     departureflight_paginations =\
-        create_pagination_return_page_and_num_pages(
+        create_pagination_return_page_and_number_of_pages(
             DepartureFlight,
             DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS,
             PAGINATION_OBJECTS_COUNT
@@ -225,9 +225,6 @@ def flight_atc_form(request):
     flight.online_atcs.clear()
     if len(online_atcs) > 0:
         for online_atc in online_atcs:
-            print("="*50)
-            print(online_atc)
-            print("="*50)
             atc = AirTrafficController.objects.get(pk=online_atc)
             flight.online_atcs.add(atc)
     return HttpResponse("hello world")
@@ -298,7 +295,7 @@ def table_request_flight(request):
 def pagination_request_flight_table(request):
     # Closure.
     def pagination_request_flight_table_(model_objects, pagination_page):
-        model_paginations = create_pagination_return_page_and_num_pages(
+        model_paginations = create_pagination_return_page_and_number_of_pages(
             model_objects,
             DATETIME_FIELD_FOR_ARRIVALDEPARTURE_MODELS,
             PAGINATION_OBJECTS_COUNT,
@@ -366,7 +363,7 @@ def check_existence(
     return HttpResponse(model.objects.filter(**{ key_name_filter:value })
         .exists())
 
-def create_pagination_return_page_and_num_pages(
+def create_pagination_return_page_and_number_of_pages(
     model,
     order_field, # Table of which pagination will be sorted into (to prevent
                  # warning).
@@ -376,7 +373,7 @@ def create_pagination_return_page_and_num_pages(
     paginator = Paginator(model.objects.all().order_by(order_field), amount)
     dictionary = {}
     dictionary[KEY.NUMBER_OF_PAGES] = paginator.num_pages
-    dictionary[KEY.OBJECTS] = paginator.page(returned_page).object_list
+    dictionary[KEY.ARRIVALDEPARTUREFLIGHT_OBJECTS] = paginator.page(returned_page).object_list
 
     return dictionary
 
