@@ -1,94 +1,187 @@
-# Enumeration class to refer to `ArrivalFlight` or `DepartureFlight`.
-class AOD():
-    ARRIVAL = 1
-    DEPARTURE = 2
+from collections import namedtuple
 
-# Enumeration for all CSS id and class used for front-end.
-class CSS():
-    # CSS IDs.
-    AIRPORT_MANAGER_BUTTON_ID = "airport-manager-button"
-    AIRPORT_MANAGER_WRONG_PASSWORD_MODAL_ID =\
-        "airport-manager-wrong-password-modal"
-    AIRPORT_MANAGER_NAME_INPUT_ID = "airport-manager-name-input"
-    AIRPORT_MANAGER_PASSWORD_INPUT_ID = "airport-manager-password-input"
-    AIRPORT_MANAGER_REGISTER_BUTTON_ID = "airport-manager-register-button"
-    ARRIVALDEPARTURE_TABLE_SET_CONTAINER_ID =\
-        "arrivaldeparture-table-sets-container"
-    ARRIVAL_FLIGHT_TABLE_ERROR_ID = "arrival-flight-table-error"
-    ARRIVAL_FLIGHT_TABLE_ID = "arrival-flight-table"
-    ARRIVAL_FLIGHT_TABLE_PAGINATION_ID = "arrival-flight-table-pagination"
-    ARRIVAL_FLIGHT_TABLE_REQUESTING_ID = "arrival-flight-table-requesting"
-    ARRIVAL_FLIGHT_TABLE_SET_CONTAINER_ID = "arrival-flight-table-set-container"
-    ATC_FORM_CODE_INPUT_ID = "atc-code-input"
-    ATC_FORM_MODAL_BUTTON_CONTAINER_ID = "atc-form-modal-button-container"
-    ATC_FORM_MODAL_BUTTON_ID = "atc-form-modal-button"
-    ATC_FORM_MODAL_ID = "atc-form-modal"
-    ATC_FORM_REGISTER_BUTTON_ID = "atc-form-register-button"
-    ATC_LIST_MODAL_BUTTON_CONTAINER_ID = "atc-list-modal-button-container"
-    ATC_LIST_MODAL_BUTTON_ID = "atc-list-modal-button"
-    ATC_LIST_MODAL_ID = "atc-list-modal"
-    ATC_MODAL_BUTTONS_CONTAINER_HIDE_MOBILE_ID =\
-        "atc-menu"
-    ATC_MODAL_BUTTONS_MOVE_MOBILE_ID = "atc-modal-buttons-move-mobile"
-    ATC_MODAL_BUTTONS_MOVE_NON_MOBILE_ID = "atc-modals-buttons-container"
-    DEPARTURE_FLIGHT_TABLE_ERROR_ID = "departure-flight-table-error"
-    DEPARTURE_FLIGHT_TABLE_ID = "departure-flight-table"
-    DEPARTURE_FLIGHT_TABLE_PAGINATION_ID = "departure-flight-table-pagination"
-    DEPARTURE_FLIGHT_TABLE_REQUESTING_ID = "departure-flight-table-requesting"
-    DEPARTURE_FLIGHT_TABLE_SET_CONTAINER_ID =\
-        "departure-flight-table-set-container"
-    FLIGHT_MANAGEMENT_PANEL_CONTENT_ID = "flight-management-panel-content"
-    FLIGHT_MANAGEMENT_PANEL_ID = "flight-management-panel"
-    PAGINATION_REQUEST_FLIGHT_TABLE_ID = "pagination-request-flight-table"
-    TABLE_REQUEST_FLIGHT_ID = "table-request-flight"
-    TITLE_ID =  "title"
+AOD = namedtuple("AOD", "ARRIVAL DEPARTURE")
+AOD = AOD(
+    ARRIVAL="1",
+    DEPARTURE="2"
+)
+DOM_CLASS = namedtuple(
+    "CLASS",
+    "\
+        FMP_INFORMATION_NON_STATUS_KEY \
+        FMP_INFORMATION_NON_STATUS_VALUE \
+    "
+)
+DOM_CLASS = DOM_CLASS(
+    FMP_INFORMATION_NON_STATUS_KEY="fmp-information-non-status-key",
+    FMP_INFORMATION_NON_STATUS_VALUE="fmp-information-non-status-value"
+)
+DOM_ID = namedtuple(
+    "DOM_ID",
+    "\
+        ARRIVAL_FLIGHT_TABLE \
+        ARRIVAL_FLIGHT_TABLE_ERROR \
+        ARRIVAL_FLIGHT_TABLE_PAGINATION \
+        ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES \
+        ARRIVAL_FLIGHT_TABLE_REQUESTING \
+        DEPARTURE_FLIGHT_TABLE \
+        DEPARTURE_FLIGHT_TABLE_ERROR \
+        DEPARTURE_FLIGHT_TABLE_PAGINATION \
+        DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES \
+        DEPARTURE_FLIGHT_TABLE_REQUESTING \
+    "
+)
+DOM_ID = DOM_ID(
+    ARRIVAL_FLIGHT_TABLE="arrival-flight-table",
+    ARRIVAL_FLIGHT_TABLE_ERROR="arrival-flight-table-error",
+    ARRIVAL_FLIGHT_TABLE_PAGINATION="arrival-flight-table-pagination",
+    ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES=\
+        "arrival-flight-table-pagination-number-of-pages",
+    ARRIVAL_FLIGHT_TABLE_REQUESTING="arrival-flight-table-requesting",
+    DEPARTURE_FLIGHT_TABLE="departure-flight-table",
+    DEPARTURE_FLIGHT_TABLE_ERROR="departure-flight-table-error",
+    DEPARTURE_FLIGHT_TABLE_PAGINATION="departure-flight-table-pagination",
+    DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES=\
+        "departure-flight-table-pagination-number-of-pages",
+    DEPARTURE_FLIGHT_TABLE_REQUESTING="departure-flight-table-requesting"
+)
+KEY = namedtuple(
+    "KEY",
+    "\
+        AIRPORT_MANAGER \
+        AIRPORT_MANAGER_LOGIN_OR_REGISTER_BUTTON \
+        AIRPORT_MANAGER_NAME \
+        AIRPORT_MANAGER_NAME_INPUT \
+        AIRPORT_MANAGER_PASSWORD_INPUT \
+        ARRIVALDEPARTUREFLIGHT_OBJECTS \
+        ARRIVAL_FLIGHT_TABLE_PAGINATION \
+        ATC_CODE \
+        ATC_CODE_INPUT \
+        ATC_FIRST_NAME_INPUT \
+        ATC_LAST_NAME_INPUT \
+        ATC_OBJECTS \
+        CLASS \
+        DEPARTURE_FLIGHT_TABLE_PAGINATION \
+        FLIGHT_ATC_FORM_ARRIVALDEPARTURE \
+        FLIGHT_ATC_FORM_FLIGHT_ID \
+        FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS \
+        FLIGHT_ID \
+        FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES \
+        FLIGHT_OBJECTS \
+        FLIGHT_ONLINE_ATC_CHECK_BOXES \
+        FMP_DOM \
+        FMP_NON_STATUS_ARRIVALDEPARTURE \
+        FMP_NON_STATUS_DOM_PARAMETERS \
+        FMP_NON_STATUS_FLIGHT_ID \
+        FMP_NON_STATUS_FLIGHT_LANE \
+        FMP_NON_STATUS_ONLINE_ATCS \
+        FMP_STATUS \
+        NUMBER_OF_PAGES \
+        OBJECTS \
+        REQUESTED_TABLE \
+        TABLES_PROPERTIES \
+        TABLE_ERROR_ID \
+        TABLE_HTML \
+        TABLE_ID \
+        TABLE_PAGINATION_ID \
+        TABLE_PAGINATION_NUMBER_OF_PAGES \
+        TABLE_PAGINATION_NUMBER_OF_PAGES_ID \
+        TABLE_TITLE \
+        TABLE_REQUESTING_ID \
+        TEXT \
+    "
+)
 
-    # CSS classes.
-    FLIGHT_MANAGEMENT_PANEL_KEY_CLASS = "flight-management-panel-information-non-status-key"
-    FLIGHT_MANAGEMENT_PANEL_VALUE_CLASS = "flight-management-panel-information-non-status-value"
-    HIDE_FOR_SMALL_WIDTH_CLASS = "hide-for-small-width"
-    PAGINATION_BUTTON_DYNAMIC_WIDTH_CLASS = "pagination-button-dynamic-width"
-    PAGINATION_BUTTON_FIXED_WIDTH_CLASS = "pagination-button-fixed-width"
-
-# GET and POST keys.
-class KEY():
-    # GET.
-    AIRPORT_MANAGER_NAME = "airport_manager_name"
-    ATC_CODE = "atc_code"
-    FLIGHT_ID = "flight_id"
-    REQUESTED_TABLE_PAGINATION_PAGE = "requested_table_pagination_page"
-    REQUESTED_TABLE = "requested_table"
-
-    # POST usually come from DOM input.
-    AIRPORT_MANAGER_PASSWORD_INPUT = "airport_manager_password_input"
-    AIRPORT_MANAGER_NAME_INPUT = "airport_manager_name_input"
-    AIRPORT_MANAGER_SUBMIT_BUTTON = "airport_manager_submit_button"
-    ATC_FORM_CODE_INPUT = "atc_form_code_input"
-    ATC_FORM_FIRST_NAME_INPUT = "atc_form_first_name_input"
-    ATC_FORM_LAST_NAME_INPUT = "atc_form_last_name_input"
-
-    # Sent key to the client.
-    AIRPORT_MANAGER = "airport_manager"
-    ATCS = "atcs"
-    CLASS = "class"
-    DOMS = "doms"
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_ARRIVALDEPARTURE =\
-        "flight_management_panel_initial_arrivaldeparture"
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_DOMS =\
-        "flight_management_panel_initial_doms"
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ID =\
-        "flight_management_panel_initial_flight_id"
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_LANE =\
-        "flight_management_panel_initial_flight_lane"
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_FLIGHT_ONLINE_ATCS =\
-        "flight_management_panel_initial_flight_online_atcs"
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_STATUS_DOM =\
-        "flight_management_panel_initial_status_dom"
-    LANE = "lane"
-    NUMBER_OF_PAGES = "number_of_pages"
-    OBJECTS = "objects"
-    ONLINE_ATC = "online_atc"
-    STATUS = "status"
-    TABLE_HTML = "html_table"
-    TABLES_PROPERTIES = "tables_properties"
-    TEXT = "text"
+KEY = KEY(
+    AIRPORT_MANAGER="airport_manager",
+    AIRPORT_MANAGER_LOGIN_OR_REGISTER_BUTTON=\
+        "airport_manager_login_or_register_button",
+    AIRPORT_MANAGER_NAME="airport_manager_name",
+    AIRPORT_MANAGER_NAME_INPUT="airport_manager_name_input",
+    AIRPORT_MANAGER_PASSWORD_INPUT="airport_manager_password_input",
+    ARRIVALDEPARTUREFLIGHT_OBJECTS="arrivaldepartureflight_objects",
+    ARRIVAL_FLIGHT_TABLE_PAGINATION="arrival_flight_table_pagination",
+    ATC_CODE="atc_code",
+    ATC_CODE_INPUT="atc_code_input",
+    ATC_FIRST_NAME_INPUT="atc_first_name_input",
+    ATC_LAST_NAME_INPUT="atc_last_name_input",
+    ATC_OBJECTS="atc_objects",
+    CLASS="class",
+    DEPARTURE_FLIGHT_TABLE_PAGINATION="departure_flight_table_pagination",
+    FLIGHT_ATC_FORM_ARRIVALDEPARTURE="flight_atc_form_arrivaldeparture",
+    FLIGHT_ATC_FORM_FLIGHT_ID="flight_atc_form_flight_id",
+    FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS="flight_atc_form_flight_online_atcs",
+    FLIGHT_ID="flight_id",
+    FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES=\
+        "flight_management_panel_initial_properties",
+    FLIGHT_OBJECTS="flight_objects",
+    FLIGHT_ONLINE_ATC_CHECK_BOXES="flight_online_atc_check_boxes",
+    FMP_DOM="fmp_dom",
+    FMP_NON_STATUS_ARRIVALDEPARTURE="fmp_non_status_arrivaldeparture",
+    FMP_NON_STATUS_DOM_PARAMETERS="fmp_non_status_dom_parameters",
+    FMP_NON_STATUS_FLIGHT_ID="fmp_non_status_flight_id",
+    FMP_NON_STATUS_FLIGHT_LANE="fmp_non_status_flight_lane",
+    FMP_NON_STATUS_ONLINE_ATCS="fmp_non_status_online_atcs",
+    FMP_STATUS="fmp_status",
+    NUMBER_OF_PAGES="number_of_pages",
+    OBJECTS="objects",
+    REQUESTED_TABLE="requested_table",
+    TABLES_PROPERTIES="tables_properties",
+    TABLE_ERROR_ID="table_error_id",
+    TABLE_HTML="table_html",
+    TABLE_ID="table_id",
+    TABLE_PAGINATION_ID="table_pagination_id",
+    TABLE_PAGINATION_NUMBER_OF_PAGES="table_pagination_number_of_pages",
+    TABLE_PAGINATION_NUMBER_OF_PAGES_ID="table_pagination_number_of_pages_id",
+    TABLE_REQUESTING_ID="table_requesting_id",
+    TABLE_TITLE="table_title",
+    TEXT="text"
+)
+MODAL_FIELD = namedtuple(
+    "MODEL_FIELD",
+    "\
+        AIRPORT_MANAGER_NAME \
+        ATC_CODE \
+        SCHEDULED_DATETIME \
+    "
+)
+MODAL_FIELD = MODAL_FIELD(
+    AIRPORT_MANAGER_NAME="username",
+    ATC_CODE="code",
+    SCHEDULED_DATETIME="scheduled_datetime"
+)
+STRING = namedtuple(
+    "STRING",
+    "\
+        AIRPORT_MANAGER_GROUP \
+        ARRIVAL_TABLE_TITLE \
+        DEPARTURE_TABLE_TITLE \
+        FLIGHT_AIRPORT_KEY \
+        FLIGHT_CODE_KEY \
+        FLIGHT_DAY_KEY \
+        FLIGHT_SCHEDULE_KEY \
+        LOGIN \
+        NO_ATC \
+        NO_ATC_AND_NO_LANE \
+        NO_LANE \
+        REGISTER \
+    "
+)
+STRING = STRING(
+    AIRPORT_MANAGER_GROUP="airport_manager_group",
+    ARRIVAL_TABLE_TITLE="arrival table",
+    DEPARTURE_TABLE_TITLE="departure table",
+    FLIGHT_AIRPORT_KEY="airport: ",
+    FLIGHT_CODE_KEY="code: ",
+    FLIGHT_DAY_KEY="day: ",
+    FLIGHT_SCHEDULE_KEY="schedule: ",
+    LOGIN="login",
+    NO_ATC="no atc",
+    NO_ATC_AND_NO_LANE="no atc and not lane",
+    NO_LANE="no lane",
+    REGISTER="register"
+)
+VALUE = namedtuple("VALUE", "PAGINATION_OBJECTS_COUNT_PER_PAGE")
+VALUE = VALUE(
+    PAGINATION_OBJECTS_COUNT_PER_PAGE=100
+)
