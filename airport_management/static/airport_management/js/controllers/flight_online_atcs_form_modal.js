@@ -13,16 +13,16 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
     });
 
     var DOM_ID = Object.freeze({
+      FLIGHT_ATCS_FORM_MODAL: "flight-atcs-form-modal",
       FLIGHT_ATC_FORM_ARRIVALDEPARTURE: "flight-atc-form-arrivaldeparture",
       FLIGHT_ATC_FORM_FLIGHT_ID: "flight-atc-form-flight-id",
       FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS: "flight-atc-form-flight-online-atcs",
-      FLIGHT_ATC_FORM_MODAL: "flight-atc-form-modal",
-      FLIGHT_ONLINE_ATCS_CHECK_BOX_: "flight-online-atc-check-box-"
+      FLIGHT_ONLINE_ATC_CHECK_BOXES_: "flight-online-atc-check-boxes-"
     });
     this.DOM_ID = DOM_ID;
 
     var DOM_CLASS = Object.freeze({
-      FLIGHT_ONLINE_ATCS_CHECK_BOX: "flight-online-atc-check-box"
+      FLIGHT_ONLINE_ATCS_CHECK_BOX: "flight-online-atc-check-boxes"
     });
 
     var JQUERY_SELECTOR_FOR_FORM = Object.freeze([
@@ -79,6 +79,8 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
       selected_flight_online_atcs = string_operation.string_to_list(
         selected_flight_online_atcs
       );
+
+      console.log(selected_flight_online_atcs);
     })();
 
     angularjs_app.controller(
@@ -93,8 +95,8 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
             false);
         };
 
-        // Listener for when `this.DOM_ID.FLIGHT_ATC_FORM_MODAL` opened.
-        $("#" + DOM_ID.FLIGHT_ATC_FORM_MODAL).on(
+        // Listener for when `this.DOM_ID.FLIGHT_ATCS_FORM_MODAL` opened.
+        $("#" + DOM_ID.FLIGHT_ATCS_FORM_MODAL).on(
           "show.bs.modal",
           function (event) {
             // PENDING: Please wait until HTTP request is finished.
@@ -104,7 +106,7 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
 
             // Only checked back check boxes whom has its designated ATC online.
             for (var i = 0; i < selected_flight_online_atcs.length; i ++) {
-              $("#" + DOM_ID.FLIGHT_ONLINE_ATCS_CHECK_BOX_ +
+              $("#" + DOM_ID.FLIGHT_ONLINE_ATC_CHECK_BOXES_ +
                 selected_flight_online_atcs[i]).prop("checked", true);
             }
           }

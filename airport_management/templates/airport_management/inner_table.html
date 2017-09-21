@@ -11,24 +11,30 @@
   </tr>
 </thead>
 <tbody>
-  {% for flight_object in flight_objects  %}
+  {% for arrivaldeparture_object in table_properties.arrivaldepartureflight_objects  %}
     <!--
     `'{{ data.id }}'` should be enclosed in quote because it need to be
     perceived as a string.
     -->
-    <tr ng-click="table_request_flight('{{ flight_object.id }}',
+    <tr ng-click="table_requests_flight('{{ arrivaldeparture_object.id }}',
       '{{ table_properties.table_pagination_id }}')">
-      <td>{{ flight_object.flight_code }}</td>
-      <td class="hide-for-small-width">{{ flight_object.carrier }}</td>
-      <td class="hide-for-small-width">{{ flight_object.airport }}</td>
-      <td class="hide-for-small-width">{{ flight_object.day }}</td>
-      <td id="scheduled-datetime-column">
-        <div>{{ flight_object.scheduled_datetime }}</div>
+      <td>{{ arrivaldeparture_object.flight_code }}</td>
+      <td class="hide-for-small-width">
+        {{ arrivaldeparture_object.carrier }}
       </td>
-      <td>{{ flight_object.lane }}</td>
+      <td class="hide-for-small-width">
+        {{ arrivaldeparture_object.airport }}
+      </td>
+      <td class="hide-for-small-width">
+        {{ arrivaldeparture_object.day }}
+      </td>
+      <td id="scheduled-datetime-column">
+        <div>{{ arrivaldeparture_object.scheduled_datetime }}</div>
+      </td>
+      <td>{{ arrivaldeparture_object.lane }}</td>
       <td><a href="#">atcs</a></td>
       <td class="flight-status-container">
-        <div>{{ flight_object.status }}</div>
+        <div>{{ arrivaldeparture_object.status }}</div>
       </td>
     </tr>
   {% endfor %}

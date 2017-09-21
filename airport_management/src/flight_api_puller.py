@@ -43,7 +43,8 @@ success return back the `elements`.
 def get_next_api_pagination(url, headers, key, elements, params={}):
     try:
         # Get the response.
-        response = requests.request("GET", url, headers=headers, params=params)
+        response = requests.request("GET", url, headers=headers,
+            params=params)
 
         # Check for proper response code.
         if response.status_code == 200:
@@ -55,8 +56,8 @@ def get_next_api_pagination(url, headers, key, elements, params={}):
             All links returned with link relation. Link relation (`rel`) can
             be "next", "previous", "first", "last".
             """
-            return_links = [link_pagination.split("; ") for link_pagination in\
-                response.headers["Link"].replace("<", "").replace(">", "")\
+            return_links = [link_pagination.split("; ") for link_pagination\
+                in response.headers["Link"].replace("<", "").replace(">", "")\
                 .split(", ")]
 
             for return_link in return_links:

@@ -1,13 +1,14 @@
 {% load djng_tags %}
 {% load static %}
 <div id="main-content">
-  {% include "airport_management/flight_management_panel.html" with flight_management_panel_informations_non_status=flight_management_panel_initial_doms flight_management_panel_informations_status=flight_management_panel_initial_status_dom %}
+  <!-- Flight management panel. -->
+  {% include "airport_management/flight_management_panel.html" %}
   <!-- Invisible DOM for URLs. -->
   <div id="pagination-request-flight-table-url"
     param="{% url 'airport_management:pagination_request_flight_table' %}">
   </div>
   <div id="table-request-flight-url"
-    param="{% url 'airport_management:table_request_flight' %}">
+    param="{% url 'airport_management:table_requests_flight' %}">
   </div>
   <!-- Set of tables and its components (table titles and paginations). -->
   <div id="arrivaldeparture-table-sets-container"
@@ -30,12 +31,12 @@
             </div>
             <!-- Requesting table. -->
             <div id="{{ table_properties.table_requesting_id }}">
-              <i>server problem</i>
+              <i>processing</i>
             </div>
             <!-- Table. -->
             <table class="table table-condensed table-hover"
               id="{{ table_properties.table_id }}">
-              {% include "airport_management/inner_table.html" with flight_objects=table_properties.flight_objects %}
+              {% include "airport_management/inner_table.html" %}
             </table>
           </div>
         </div>

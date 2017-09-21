@@ -1,14 +1,14 @@
 @media not screen and (max-width: 767px) {
-  .flight-management-panel-information-non-status-key,
-  .flight-management-panel-information-non-status-value {
+  .fmp-information-non-status-key,
+  .fmp-information-non-status-value {
     flex: 1;
   }
 }
 @media screen and (max-width: 767px) {
-  .flight-management-panel-information-non-status-key {
+  .fmp-information-non-status-key {
     flex: 1;
   }
-  .flight-management-panel-information-non-status-value {
+  .fmp-information-non-status-value {
     flex: 2;
   }
 }

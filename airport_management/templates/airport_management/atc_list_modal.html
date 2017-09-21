@@ -16,11 +16,11 @@
             <th>last name</th>
           </thead>
           <tbody>
-            {% for atc in atcs %}
+            {% for atc_object in atc_objects %}
               <tr>
-                <td>{{ atc.code }}</td>
-                <td>{{ atc.first_name }}</td>
-                <td>{{ atc.last_name }}</td>
+                <td>{{ atc_object.code }}</td>
+                <td>{{ atc_object.first_name }}</td>
+                <td>{{ atc_object.last_name }}</td>
               </tr>
             {% endfor %}
           </tbody>

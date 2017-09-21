@@ -1,6 +1,6 @@
 {% load djng_tags %}
 {% load static %}
-<div class="modal fade" id="flight-atc-form-modal" role="dialog">
+<div class="modal fade" id="flight-atcs-form-modal" role="dialog">
   <div class="modal-dialog">
     <form action="{% url 'airport_management:flight_atc_form' %}"
       id="flight-atc-form" method="POST" ng-controller="flight_atc_form">
@@ -25,16 +25,16 @@
             value="{{ flight_atc_form_flight_online_atcs }}" />
           <!-- Table displays selection of ATCS. -->
           <table>
-            {% for atc in atcs %}
+            {% for atc_object in atc_objects %}
               <tr>
                 <td class="td-with-checkbox">
-                  <input class="flight-online-atc-check-box"
-                    id="flight-online-atc-check-box-{{ atc.id }}"
-                    type="checkbox" name="flight_online_atc_check_box"
-                    value="{{ atc.id }}"/>
+                  <input class="flight-online-atc-check-boxes"
+                    id="flight-online-atc-check-boxes-{{ atc_object.id }}"
+                    type="checkbox" name="flight_online_atc_check_boxes"
+                    value="{{ atc_object.id }}"/>
                 </td>
                 <td class="td-without-checkbox">
-                  <div>{{ atc.code }}</div>
+                  <div>{{ atc_object.code }}</div>
                 </td>
               </tr>
             {% endfor %}

@@ -10,11 +10,11 @@
       {% csrf_token %}
       <div id="airport-manager-button-container">
         <div id="airport-manager-name"
-          param="{{ airport_manager_name }}"
+          param="{{ airport_manager.username }}"
           style="display: none;">
         </div>
         <input class="btn btn-block btn-success" type="submit"
-          value="hello! {{ airport_manager_name }}" />
+          value="hello! {{ airport_manager.username }}" />
       </div>
     </form>
   {% else %}

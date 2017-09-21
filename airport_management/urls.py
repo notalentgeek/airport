@@ -36,8 +36,8 @@ urlpatterns = [
         name="flight_atc_form"
     ),
     url(
-        r"^table_request_flight/$",
-        views.table_request_flight,
-        name="table_request_flight"
+        r"^table_requests_flight/$",
+        views.table_requests_flight,
+        name="table_requests_flight"
     )
 ]

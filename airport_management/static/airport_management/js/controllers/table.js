@@ -65,10 +65,9 @@ var table = function (
       DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES:
         "departure_flight_table_pagination_number_of_pages",  
       FLIGHT_ID: "flight_id",
-      FLIGHT_MANAGEMENT_PANEL_INFORMATION_HTML:
-        "flight_management_panel_information_html",
+      FMP_DOM: "fmp_dom",
       NUMBER_OF_PAGES: "number_of_pages",
-      ONLINE_ATCS: "online_atcs",
+      FMP_NON_STATUS_ONLINE_ATCS: "fmp_non_status_online_atcs",
       REQUESTED_TABLE: "requested_table",
       REQUESTED_TABLE_PAGINATION_PAGE: "requested_table_pagination_page",
       TABLE_HTML: "table_html"
@@ -151,7 +150,7 @@ var table = function (
         CAUTION: The `flight_id` is the database column for flight ID, but the
         `table_pagination_id` is the CSS ID, not database.
         */
-        $scope.table_request_flight = function (
+        $scope.table_requests_flight = function (
           flight_id,          // The flight ID that was just clicked by the
                               // user.
           table_pagination_id // The pagination CSS ID.
@@ -184,12 +183,14 @@ var table = function (
           }).then(function (data) {
             // Render back the flight management panel.
             $("#" + flight_management_panel_information_id).html(
-                data.data[KEY.FLIGHT_MANAGEMENT_PANEL_INFORMATION_HTML]);
+                data.data[KEY.FMP_DOM]);
 
             // Set back the current selected value to flight management panel.
             flight_online_atcs_form_modal.set_selected_flight_properties(
               dictionary[KEY.REQUESTED_TABLE], dictionary[KEY.FLIGHT_ID],
-              string_operation.string_to_list(data.data[KEY.ONLINE_ATCS]));
+              string_operation.string_to_list(
+                data.data[KEY.FMP_NON_STATUS_ONLINE_ATCS]
+              ));
           });
         };
     

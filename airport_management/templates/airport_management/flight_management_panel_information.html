@@ -1,14 +1,14 @@
 {% load djng_tags %}
 {% load static %}
-{% for columns in flight_management_panel_information_non_status %}
+{% for columns in fmp_non_status_dom_parameters %}
   <div class="flight-management-panel-information-non-status">
     {% for rows in columns %}
       <div>
         {% for cell in rows %}
           <!--
           The class for `{{ cell.class }}` is either
-          `flight-management-panel-information-non-status-key` or
-          `flight-management-panel-information-non-status-value`.
+          `fmp-information-non-status-key` or
+          `fmp-information-non-status-value`.
           -->
           <div class="{{ cell.class }}">
             <div>
@@ -25,6 +25,6 @@
 {% endfor %}
 <div id="flight-management-panel-information-status-container">
   <h2>
-    {{ flight_management_panel_information_status }}
+    {{ fmp_non_status_online_atcs }}
   </h2>
 </div>

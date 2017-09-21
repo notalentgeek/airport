@@ -26,7 +26,7 @@ Flight management panel located in the top of the table sets and just below
 navigation bar.
 */
 flight_management_panel = new flight_management_panel(app,
-  flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATC_FORM_MODAL);
+  flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATCS_FORM_MODAL);
 
 // Navigation bars.
 
