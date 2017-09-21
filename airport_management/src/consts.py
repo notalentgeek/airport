@@ -1,3 +1,8 @@
+"""
+This file is just collection of constants. I use this to maintain (kinda)
+reference to DOM ID.
+"""
+
 from collections import namedtuple
 
 AOD = namedtuple("AOD", "ARRIVAL DEPARTURE")
@@ -62,6 +67,8 @@ KEY = namedtuple(
         ATC_OBJECTS \
         CLASS \
         DEPARTURE_FLIGHT_TABLE_PAGINATION \
+        DOM_ID \
+        DOM_PARAMETERS \
         FLIGHT_ATC_FORM_ARRIVALDEPARTURE \
         FLIGHT_ATC_FORM_FLIGHT_ID \
         FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS \
@@ -79,6 +86,7 @@ KEY = namedtuple(
         NUMBER_OF_PAGES \
         OBJECTS \
         REQUESTED_TABLE \
+        REQUESTED_TABLE_PAGINATION_PAGE \
         TABLES_PROPERTIES \
         TABLE_ERROR_ID \
         TABLE_HTML \
@@ -86,6 +94,7 @@ KEY = namedtuple(
         TABLE_PAGINATION_ID \
         TABLE_PAGINATION_NUMBER_OF_PAGES \
         TABLE_PAGINATION_NUMBER_OF_PAGES_ID \
+        TABLE_PROPERTIES_ARRIVALDEPARTUREFLIGHT_OBJECTS \
         TABLE_TITLE \
         TABLE_REQUESTING_ID \
         TEXT \
@@ -108,6 +117,8 @@ KEY = KEY(
     ATC_OBJECTS="atc_objects",
     CLASS="class",
     DEPARTURE_FLIGHT_TABLE_PAGINATION="departure_flight_table_pagination",
+    DOM_ID="dom_id",
+    DOM_PARAMETERS="dom_parameters",
     FLIGHT_ATC_FORM_ARRIVALDEPARTURE="flight_atc_form_arrivaldeparture",
     FLIGHT_ATC_FORM_FLIGHT_ID="flight_atc_form_flight_id",
     FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS="flight_atc_form_flight_online_atcs",
@@ -126,6 +137,7 @@ KEY = KEY(
     NUMBER_OF_PAGES="number_of_pages",
     OBJECTS="objects",
     REQUESTED_TABLE="requested_table",
+    REQUESTED_TABLE_PAGINATION_PAGE="requested_table_pagination_page",
     TABLES_PROPERTIES="tables_properties",
     TABLE_ERROR_ID="table_error_id",
     TABLE_HTML="table_html",
@@ -133,6 +145,8 @@ KEY = KEY(
     TABLE_PAGINATION_ID="table_pagination_id",
     TABLE_PAGINATION_NUMBER_OF_PAGES="table_pagination_number_of_pages",
     TABLE_PAGINATION_NUMBER_OF_PAGES_ID="table_pagination_number_of_pages_id",
+    TABLE_PROPERTIES_ARRIVALDEPARTUREFLIGHT_OBJECTS=\
+        "table_properties.arrivaldepartureflight_objects",
     TABLE_REQUESTING_ID="table_requesting_id",
     TABLE_TITLE="table_title",
     TEXT="text"

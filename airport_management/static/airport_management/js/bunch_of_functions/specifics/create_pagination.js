@@ -49,10 +49,10 @@ var create_pagination_for_arrivaldeparture_table = function (
           $(a_or_span).html());
 
         /*
-        This if statement is to make sure that inside `a_or_spane` is an `<a>`.
-        If `a_page` returns a `NaN` then it is a `<span>` or an `<a>` for next
-        or previous buttons. Since, only `<a>` that exactly point out to the
-        next page will return an int.
+        This if statement is to make sure that inside `a_or_spane` is an
+        `<a>`. If `a_page` returns a `NaN` then it is a `<span>` or an `<a>`
+        for next or previous buttons. Since, only `<a>` that exactly point out
+        to the next page will return an int.
         */
         if (a_page || a_or_span.hasClass(table_dom_class.CLICKABLE)) {
           // Pagination page buttons have dynamic width.
@@ -65,8 +65,7 @@ var create_pagination_for_arrivaldeparture_table = function (
           if (a_page) {
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + aod +
-                ", " + a_page + ")"
+              "pagination_request_flight_table(" + aod + ", " + a_page + ")"
             );
           }
         }
@@ -85,16 +84,16 @@ var create_pagination_for_arrivaldeparture_table = function (
           if (a_or_span.hasClass("next")) {
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + aod +
-                ", " + next_page + ")"
+              "pagination_request_flight_table(" + aod + ", " + 
+                next_page + ")"
             );
           }
           else if (a_or_span.hasClass("prev")) {
             li.addClass("pagination-button-fixed-width");
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + aod +
-                ", " + previous_page + ")"
+              "pagination_request_flight_table(" + aod + ", " + 
+                previous_page + ")"
             );
           }
         }

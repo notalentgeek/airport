@@ -81,11 +81,11 @@
   width: 100%;
 }
 #arrival-flight-table-error,
+#arrival-flight-table-pagination-number-of-pages,
 #arrival-flight-table-requesting,
 #departure-flight-table-error,
-#departure-flight-table-requesting {
-  display: none;
-}
+#departure-flight-table-pagination-number-of-pages,
+#departure-flight-table-requesting,
 #pagination-request-flight-table-url {
   display: none;
 }

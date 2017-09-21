@@ -39,13 +39,16 @@ navbar_left = new navbar_left(app,
   [atc_list_modal, atc_registration_form_modal]  
 );
 
-// Initiate both arrival flight table and departure flight table. 
-table = new table(app,
-  flight_management_panel.DOM_ID.FLIGHT_MANAGEMENT_PANEL_INFORMATION,
-  flight_online_atcs_form_modal);
-
 // Initiate the inner part of the both tables.
 inner_table = new inner_table();
+
+// Initiate both arrival flight table and departure flight table. 
+table = new table(
+  app,
+  flight_management_panel.DOM_ID.FLIGHT_MANAGEMENT_PANEL_INFORMATION,
+  flight_online_atcs_form_modal,
+  inner_table
+);
 
 // Functions that need to be initiated after all views ready.
 airport_manager_wrong_password_modal.check_wrong_password();

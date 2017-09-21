@@ -1,7 +1,8 @@
 var table = function (
   angularjs_app,
   flight_management_panel_information_id,
-  flight_online_atcs_form_modal
+  flight_online_atcs_form_modal,
+  inner_table
 ) {
   var init_count = 1; // Singleton.
   var instances = [];
@@ -137,8 +138,8 @@ var table = function (
         $scope.table;
     
         /*
-        AngularJS HTTP AJAX function to get flight from recently clicked object
-        in the table.
+        AngularJS HTTP AJAX function to get flight from recently clicked
+        object in the table.
     
         The controller is located in flight table because the `ng-click` event
         is in the table's row and not in the flight management panel AngularJS
@@ -162,7 +163,7 @@ var table = function (
           // URL to request new flight table.
           var url = dom_get_and_set.get_dom_param("#" + 
             DOM_ID.TABLE_REQUEST_FLIGHT_URL);
-    
+
           // Check if flight management panel is exists.
           if (flight_management_panel.is_exists()) {
             if (table_pagination_id ===
@@ -193,14 +194,14 @@ var table = function (
               ));
           });
         };
-    
+
         $scope.pagination_request_flight_table = function (
           aod, requested_table_pagination_page
         ) {
           // Undefined variables.
           var arrivaldeparture_table_pagination;
           var arrivaldeparture_table_pagination_recompile;
-          var pagination_number_of_pages;
+          var pagination_number_of_pages_local;
     
           // Undefined variables to hold CSS IDs.
           var table_error_id;
@@ -221,7 +222,7 @@ var table = function (
           var pagination_request_flight_table_ = function (
             arrivaldeparture_table_pagination_,
             arrivaldeparture_table_pagination_recompile_,
-            pagination_number_of_pages_,
+            pagination_number_of_pages_local_,
             table_error_id_,
             table_id_,
             table_pagination_id_,
@@ -231,19 +232,20 @@ var table = function (
               arrivaldeparture_table_pagination_;
             arrivaldeparture_table_pagination_recompile =
               arrivaldeparture_table_pagination_recompile_;
-            pagination_number_of_pages = pagination_number_of_pages_;
+            pagination_number_of_pages_local =
+              pagination_number_of_pages_local_;
             table_error_id = table_error_id_;
             table_id = table_id_;
             table_pagination_id = table_pagination_id_;
             table_requesting_id = table_requesting_id_;
-          };
-    
-          if (aod === AOD.ARRIVAL) {
+          };      
+
+          if (aod == AOD.ARRIVAL) {
             pagination_request_flight_table_(
               $scope.flight_table_paginations
                 [KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION],
               $scope.recompile_arrival_flight_table_pagination,
-              this.pagination_number_of_pages
+              pagination_number_of_pages
                 [KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES],
               DOM_ID.ARRIVAL_FLIGHT_TABLE_ERROR,
               DOM_ID.ARRIVAL_FLIGHT_TABLE,
@@ -251,12 +253,12 @@ var table = function (
               DOM_ID.ARRIVAL_FLIGHT_TABLE_REQUESTING
             );
           }
-          else if (aod === AOD.DEPARTURE) {
+          else if (aod == AOD.DEPARTURE) {
             pagination_request_flight_table_(
               $scope.flight_table_paginations
                 [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION],
               $scope.recompile_departure_flight_table_pagination,
-              this.pagination_number_of_pages
+              pagination_number_of_pages
                 [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES],
               DOM_ID.DEPARTURE_FLIGHT_TABLE_ERROR,
               DOM_ID.DEPARTURE_FLIGHT_TABLE,
@@ -284,7 +286,7 @@ var table = function (
             $("#" + table_id).css("display", "");
             $("#" + table_requesting_id).css("display", "none");
           };
-    
+
           $http({
             method: "GET",
             params: dictionary,
@@ -293,7 +295,7 @@ var table = function (
             if (data.status === 200) {
               // Set the table style when the request is successful.
               success_table_style();
-    
+
               // Set the inner HTML of the arrival table or departure table.
               $("#" + table_id).html(data.data[KEY.TABLE_HTML]);
     
@@ -308,7 +310,7 @@ var table = function (
     
               // Check if the number of pages is changed.
               if (data.data[KEY.NUMBER_OF_PAGES] !=
-                pagination_number_of_pages) {
+                pagination_number_of_pages_local) {
                 // Destroy the old pagination.ea
                 $("#" + table_pagination_id).pagination("destroy");
     
@@ -337,7 +339,7 @@ var table = function (
                   `items` in pagination object refer to how many pages are
                   there in the pagination.
                   */
-                  this.pagination_number_of_pages
+                  pagination_number_of_pages
                     [KEY.ARRIVAL_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES] =
                       arrivaldeparture_table_pagination.items;
                 }
@@ -346,11 +348,14 @@ var table = function (
                   `items` in pagination object refer to how many pages are
                   there in the pagination.
                   */
-                  this.pagination_number_of_pages
+                  tagination_number_of_pages
                     [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES] =
                       arrivaldeparture_table_pagination.items;
                 }
               }
+              
+              // Adjust the inner table.
+              inner_table.adjust_table();
             }
             else {
               error_table_style();

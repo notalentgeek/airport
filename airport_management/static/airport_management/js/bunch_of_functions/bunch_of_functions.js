@@ -29,8 +29,8 @@ var angularjs_operation = {
     angularjs_scope,
     compile
   ) {
-    if (angularjs_scope.scope) {
-      compile(angularjs_scope.scope.contents())(angularjs_scope);
+    if (scope) {
+      compile(scope.contents())(angularjs_scope);
     }
   }
 };
