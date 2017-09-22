@@ -79,10 +79,10 @@ def index(request):
     parameters[KEY.ATC_OBJECTS] = AirTrafficController.objects.all()
 
     """ Parameters to help set initial flight online ATCs form. """
-    parameters[KEY.FLIGHT_ATC_FORM_ARRIVALDEPARTURE] = AOD.ARRIVAL
-    parameters[KEY.FLIGHT_ATC_FORM_FLIGHT_ID] =\
+    parameters[KEY.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE] = AOD.ARRIVAL
+    parameters[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID] =\
         earliest_arrivalflight_from_the_latest_day.id
-    parameters[KEY.FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS] =\
+    parameters[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS] =\
         get_list_from_object_field(
             earliest_arrivalflight_from_the_latest_day.online_atcs, "id")
 

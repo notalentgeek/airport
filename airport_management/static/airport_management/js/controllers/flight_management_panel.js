@@ -1,6 +1,7 @@
 var flight_management_panel = function (
   angularjs_app,
-  dom_id_flight_atc_form_modal
+  dom_id_flight_lane_form_modal,
+  dom_id_flight_online_atc_form_modal
 ) {
   var init_count = 1; // Singleton.
   var instances = [];
@@ -30,10 +31,21 @@ var flight_management_panel = function (
     angularjs_app.controller(
       ANGULARJS_CONTROLLER.FLIGHT_MANAGEMENT_PANEL,
       function ($scope) {
-        // Function to show a modal form for assigning ATCs into a flight.
-        $scope.show_flight_atc_form_modal = function () {
+        /*
+        Function to show a modal form for assigning ATCs into a flight.
+
+        PENDING: Change `...online_atc...` into `...online_atcs...`.
+        */
+        $scope.show_flight_lane_form_modal = function () {
           bootstrap_operation.show_bootstrap_modal(
-            "#" + dom_id_flight_atc_form_modal
+            "#" + dom_id_flight_lane_form_modal
+          );
+        };
+
+        // Function to show a modal form for assigning ATCs into a flight.
+        $scope.show_flight_online_atc_form_modal = function () {
+          bootstrap_operation.show_bootstrap_modal(
+            "#" + dom_id_flight_online_atc_form_modal
           );
         };
 
@@ -41,14 +53,12 @@ var flight_management_panel = function (
         $scope.flight_management_panel_buttons = [
           {
             bootstrap_color_class: "btn-default",
-            ng_click: function () {
-              console.log("functionality is not yet done.");
-            },
+            ng_click: $scope.show_flight_lane_form_modal,
             text: "add/change<br />lane"
           },
           {
             bootstrap_color_class: "btn-default",
-            ng_click: $scope.show_flight_atc_form_modal,
+            ng_click: $scope.show_flight_online_atc_form_modal,
             text: "add/change<br />online atc"
           },
         ];

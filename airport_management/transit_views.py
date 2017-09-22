@@ -3,8 +3,8 @@ Transit views. The views is not necessarily display a HTML template but
 just GET or POST through database.
 """
 
-from .models import AirTrafficController
-from .src.consts import KEY, MODAL_FIELD, STRING
+from .models import AirTrafficController, ArrivalFlight, DepartureFlight
+from .src.consts import AOD, KEY, MODAL_FIELD, STRING
 from .src.database_operation import check_existence, create_or_get_group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -33,9 +33,9 @@ def check_airport_manager_name_existence(request):
         MODAL_FIELD.AIRPORT_MANAGER_NAME)
 
 """ Function to add online ATCs to a corresponding flight. """
-def flight_atc_form(request):
-    arrivaldeparture = request.POST[KEY.FLIGHT_ATC_FORM_ARRIVALDEPARTURE]
-    flight_id = request.POST[KEY.FLIGHT_ATC_FORM_FLIGHT_ID]
+def flight_online_atc_form(request):
+    arrivaldeparture = request.POST[KEY.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE]
+    flight_id = request.POST[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID]
     online_atcs = request.POST.getlist(KEY.FLIGHT_ONLINE_ATC_CHECK_BOXES)
 
     model = None

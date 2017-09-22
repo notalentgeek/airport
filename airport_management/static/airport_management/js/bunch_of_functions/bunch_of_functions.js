@@ -42,6 +42,20 @@ var bootstrap_operation = {
 };
 
 var string_operation = {
+  // Function to escape `RegExp` forbidden characters.
+  escape_regexp: function (string) {
+    return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g);
+  },
+  /*
+  JavaScript `replace()` only replace once not all. This `replace_all()`
+  function can be used similar to Python's replace.
+
+  CAUTION: This function cannot replace special characters that are forbidden
+  to use in RegularExpression. See `escape_regexp` to know those characters.
+  */
+  replace_all: function (string, find, replace) {
+    return string.replace(new RegExp(this.escape_regexp(find), "g"), replace);
+  },
   /*
   Limit string display from "long string" to "long str...". Use this because
   I do not understand how CSS ellipsis works.
@@ -76,9 +90,12 @@ var string_operation = {
     if (string.constructor === Array) {
       return string;
     }
-  
-    return string.replace(" ", "").replace("[", "").replace("]", "")
-      .split(",");
+
+    string = string.replace("[", "");
+    string = string.replace("]", "");
+    string = string_operation.replace_all(string, " ", "");
+
+    return string.split(",");
   }
 };
 

@@ -31,9 +31,9 @@ urlpatterns = [
     url(r"^register_atc/$", transit_views.register_atc,
         name="register_atc"),
     url(
-        r"^flight_atc_form/$",
-        transit_views.flight_atc_form,
-        name="flight_atc_form"
+        r"^flight_online_atc_form/$",
+        transit_views.flight_online_atc_form,
+        name="flight_online_atc_form"
     ),
     url(
         r"^flight_lane_form/$",

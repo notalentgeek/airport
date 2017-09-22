@@ -1,22 +1,22 @@
-#flight-atc-form-arrivaldeparture,
-#flight-atc-form-flight-id,
-#flight-atc-form-flight-online-atcs {
+#flight-online-atc-form-arrivaldeparture,
+#flight-online-atc-form-flight-id,
+#flight-online-atc-form-flight-online-atcs {
   display: none;
 }
-#flight-atcs-form-modal .modal-body {
+#flight-online-atcs-form-modal .modal-body {
   max-height: 50vh;
   overflow-x: hidden;
   overflor-y: auto;
 }
-#flight-atcs-form-modal .modal-footer {
+#flight-online-atcs-form-modal .modal-footer {
   display: flex;
   flex-direction: row;
 }
-#flight-atcs-form-modal .modal-footer>input {
+#flight-online-atcs-form-modal .modal-footer>input {
   flex: 1;
   margin: 0;
 }
-#flight-atcs-form-modal .modal-header {
+#flight-online-atcs-form-modal .modal-header {
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
   -webkit-border-top-left-radius: 5px;
@@ -27,19 +27,19 @@
   border-top-right-radius: 5px;
   padding:9px 15px;
 }
-#flight-atcs-form-modal .td-with-checkbox {
+#flight-online-atcs-form-modal .td-with-checkbox {
   padding: 2.5px;
 }
-#flight-atcs-form-modal .td-with-checkbox>input {
+#flight-online-atcs-form-modal .td-with-checkbox>input {
   height: 30px;
   width: 30px;
 }
-#flight-atcs-form-modal .td-without-checkbox {
+#flight-online-atcs-form-modal .td-without-checkbox {
   padding: 2.5px;
   position: absolute;
   width: 80%;
 }
-#flight-atcs-form-modal .td-without-checkbox>div {
+#flight-online-atcs-form-modal .td-without-checkbox>div {
   max-width: 100%;
   overflow: hidden;
   padding: 7.5px;

@@ -1,9 +1,9 @@
 {% load djng_tags %}
 {% load static %}
-<div class="modal fade" id="flight-atcs-form-modal" role="dialog">
+<div class="modal fade" id="flight-online-atcs-form-modal" role="dialog">
   <div class="modal-dialog">
-    <form action="{% url 'airport_management:flight_atc_form' %}"
-      id="flight-atc-form" method="POST" ng-controller="flight_atc_form">
+    <form action="{% url 'airport_management:flight_online_atc_form' %}"
+      id="flight-online-atc-form" method="POST" ng-controller="flight_online_atc_form">
       {% csrf_token %}
       <div class="modal-content">
         <div class="modal-header">
@@ -14,15 +14,15 @@
         </div>
         <div class="modal-body">
           <!-- Invisible inputs to be sent to URL as well. -->
-          <input id="flight-atc-form-arrivaldeparture"
-            name="flight_atc_form_arrivaldeparture" type="text"
-            value="{{ flight_atc_form_arrivaldeparture }}" />
-          <input id="flight-atc-form-flight-id"
-            name="flight_atc_form_flight_id" type="text"
-            value="{{ flight_atc_form_flight_id }}" />
-          <input id="flight-atc-form-flight-online-atcs"
-            name="flight_atc_form_flight_online_atcs" type="text"
-            value="{{ flight_atc_form_flight_online_atcs }}" />
+          <input id="flight-online-atc-form-arrivaldeparture"
+            name="flight_online_atc_form_arrivaldeparture" type="text"
+            value="{{ flight_online_atc_form_arrivaldeparture }}" />
+          <input id="flight-online-atc-form-flight-id"
+            name="flight_online_atc_form_flight_id" type="text"
+            value="{{ flight_online_atc_form_flight_id }}" />
+          <input id="flight-online-atc-form-flight-online-atcs"
+            name="flight_online_atc_form_flight_online_atcs" type="text"
+            value="{{ flight_online_atc_form_flight_online_atcs }}" />
           <!-- Table displays selection of ATCS. -->
           <table>
             {% for atc_object in atc_objects %}

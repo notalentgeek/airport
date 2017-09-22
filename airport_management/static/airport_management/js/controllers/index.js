@@ -1,7 +1,13 @@
 // Initiating AngularJS application.
 var app = angular.module("airport_management", ["ngSanitize"]);
 
-// Initiate controllers and set the views.
+/*
+Initiate controllers and set the views.
+
+PENDING: Make a setter function for every class that has other object as
+parameters. Those objects should not be inputted from parameters but setter
+functions.
+*/
 
 // Initiate all modal views first.
 
@@ -28,8 +34,11 @@ flight_lane_form_modal = new flight_lane_form_modal(app);
 Flight management panel located in the top of the table sets and just below
 navigation bar.
 */
-flight_management_panel = new flight_management_panel(app,
-  flight_online_atcs_form_modal.DOM_ID.FLIGHT_ATCS_FORM_MODAL);
+flight_management_panel = new flight_management_panel(
+  app,
+  flight_lane_form_modal.DOM_ID.FLIGHT_LANE_FORM_MODAL,
+  flight_online_atcs_form_modal.DOM_ID.FLIGHT_ONLINE_ATCS_FORM_MODAL
+);
 
 // Navigation bars.
 

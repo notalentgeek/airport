@@ -69,9 +69,9 @@ KEY = namedtuple(
         DEPARTURE_FLIGHT_TABLE_PAGINATION \
         DOM_ID \
         DOM_PARAMETERS \
-        FLIGHT_ATC_FORM_ARRIVALDEPARTURE \
-        FLIGHT_ATC_FORM_FLIGHT_ID \
-        FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS \
+        FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE \
+        FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID \
+        FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS \
         FLIGHT_ID \
         FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES \
         FLIGHT_OBJECTS \
@@ -119,9 +119,11 @@ KEY = KEY(
     DEPARTURE_FLIGHT_TABLE_PAGINATION="departure_flight_table_pagination",
     DOM_ID="dom_id",
     DOM_PARAMETERS="dom_parameters",
-    FLIGHT_ATC_FORM_ARRIVALDEPARTURE="flight_atc_form_arrivaldeparture",
-    FLIGHT_ATC_FORM_FLIGHT_ID="flight_atc_form_flight_id",
-    FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS="flight_atc_form_flight_online_atcs",
+    FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE=\
+        "flight_online_atc_form_arrivaldeparture",
+    FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID="flight_online_atc_form_flight_id",
+    FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS=\
+        "flight_online_atc_form_flight_online_atcs",
     FLIGHT_ID="flight_id",
     FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES=\
         "flight_management_panel_initial_properties",

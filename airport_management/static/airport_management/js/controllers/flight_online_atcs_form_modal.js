@@ -9,14 +9,16 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
 
   function flight_online_atcs_form_modal (angularjs_app) {
     var ANGULARJS_CONTROLLER = Object.freeze({
-      FLIGHT_ATC_FORM: "flight_atc_form"
+      FLIGHT_ONLINE_ATC_FORM: "flight_online_atc_form"
     });
 
     var DOM_ID = Object.freeze({
-      FLIGHT_ATCS_FORM_MODAL: "flight-atcs-form-modal",
-      FLIGHT_ATC_FORM_ARRIVALDEPARTURE: "flight-atc-form-arrivaldeparture",
-      FLIGHT_ATC_FORM_FLIGHT_ID: "flight-atc-form-flight-id",
-      FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS: "flight-atc-form-flight-online-atcs",
+      FLIGHT_ONLINE_ATCS_FORM_MODAL: "flight-online-atcs-form-modal",
+      FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE:
+        "flight-online-atc-form-arrivaldeparture",
+      FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID: "flight-online-atc-form-flight-id",
+      FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS:
+        "flight-online-atc-form-flight-online-atcs",
       FLIGHT_ONLINE_ATC_CHECK_BOXES_: "flight-online-atc-check-boxes-"
     });
     this.DOM_ID = DOM_ID;
@@ -26,9 +28,9 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
     });
 
     var JQUERY_SELECTOR_FOR_FORM = Object.freeze([
-      "#" + DOM_ID.FLIGHT_ATC_FORM_ARRIVALDEPARTURE,
-      "#" + DOM_ID.FLIGHT_ATC_FORM_FLIGHT_ID,
-      "#" + DOM_ID.FLIGHT_ATC_FORM_FLIGHT_ONLINE_ATCS
+      "#" + DOM_ID.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE,
+      "#" + DOM_ID.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID,
+      "#" + DOM_ID.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS
     ]);
 
     var selected_arrivaldeparture;
@@ -82,7 +84,7 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
     })();
 
     angularjs_app.controller(
-      ANGULARJS_CONTROLLER.FLIGHT_ATC_FORM,
+      ANGULARJS_CONTROLLER.FLIGHT_ONLINE_ATC_FORM,
       function ($scope) {
         // List variable to help put all check boxes into `ng-model` array.
         $scope.atc_check_boxes = {};
@@ -93,8 +95,8 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
             false);
         };
 
-        // Listener for when `this.DOM_ID.FLIGHT_ATCS_FORM_MODAL` opened.
-        $("#" + DOM_ID.FLIGHT_ATCS_FORM_MODAL).on(
+        // Listener for when `this.DOM_ID.FLIGHT_ONLINE_ATCS_FORM_MODAL` opened.
+        $("#" + DOM_ID.FLIGHT_ONLINE_ATCS_FORM_MODAL).on(
           "show.bs.modal",
           function (event) {
             // PENDING: Please wait until HTTP request is finished.

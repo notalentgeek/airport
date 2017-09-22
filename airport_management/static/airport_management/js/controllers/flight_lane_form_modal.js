@@ -12,6 +12,11 @@ var flight_lane_form_modal = function (angularjs_app) {
       FLIGHT_LANE_FORM: "flight_lane_form"
     });
 
+    var DOM_ID = Object.freeze({
+      FLIGHT_LANE_FORM_MODAL: "flight-lane-form-modal"
+    });
+    this.DOM_ID = DOM_ID;
+
     angularjs_app.controller(
       ANGULARJS_CONTROLLER.FLIGHT_LANE_FORM,
       function ($scope) {
