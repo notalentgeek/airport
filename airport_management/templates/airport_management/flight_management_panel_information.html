@@ -24,7 +24,11 @@
   </div>
 {% endfor %}
 <div id="flight-management-panel-information-status-container">
+  <script>
+    console.log("{{ fmp_status }}");
+  </script>
+  </script>
   <h2>
-    {{ fmp_non_status_online_atcs }}
+    {{ fmp_status }}
   </h2>
 </div>

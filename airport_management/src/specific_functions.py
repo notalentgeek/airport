@@ -63,11 +63,15 @@ def generate_flight_management_panel_dom_parameters(arrivaldeparture_flight):
     dictionary[KEY.FMP_NON_STATUS_DOM_PARAMETERS] =\
         flight_management_panel_dom
     dictionary[KEY.FMP_NON_STATUS_FLIGHT_ID] = arrivaldeparture_flight.id
-    dictionary[KEY.FMP_NON_STATUS_LANE] = arrivaldeparture_flight.lane
+    dictionary[KEY.FMP_NON_STATUS_LANE] =\
+        arrivaldeparture_flight.lane.id if arrivaldeparture_flight.lane\
+            != None else None
     dictionary[KEY.FMP_NON_STATUS_ONLINE_ATCS] =\
         list(arrivaldeparture_flight.online_atcs.values_list("id", flat=True))
     dictionary[KEY.FMP_STATUS] = get_flight_status_as_a_string(
-        arrivaldeparture_flight.online_atcs, arrivaldeparture_flight.lane)
+        dictionary[KEY.FMP_NON_STATUS_ONLINE_ATCS],
+        dictionary[KEY.FMP_NON_STATUS_LANE]
+    )
 
     return dictionary
 
@@ -76,14 +80,14 @@ Function to return string so that `ArrivalDepartureFlight.status` can be
 easily understandable.
 """
 def get_flight_status_as_a_string(with_atc, with_lane):
-    if not with_atc and not with_lane:
+    if not bool(with_atc) and not bool(with_lane):
         return STRING.NO_ATC_AND_NO_LANE
-    elif not with_atc and with_lane:
+    elif not bool(with_atc) and bool(with_lane):
         return STRING.NO_ATC
-    elif with_atc and not with_lane:
+    elif bool(with_atc) and not bool(with_lane):
         return STRING.NO_LANE
 
-    return ""
+    return STRING.SET
 
 def set_flight_management_panel_non_status_and_status(
     dictionary,
@@ -91,6 +95,6 @@ def set_flight_management_panel_non_status_and_status(
     status
 ):
     dictionary[KEY.FMP_NON_STATUS_DOM_PARAMETERS] = non_status_dom
-    dictionary[KEY.FMP_NON_STATUS_ONLINE_ATCS] = status
+    dictionary[KEY.FMP_STATUS] = status
 
     return dictionary

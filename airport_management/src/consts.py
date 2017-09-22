@@ -190,6 +190,7 @@ STRING = namedtuple(
         NO_ATC \
         NO_ATC_AND_NO_LANE \
         NO_LANE \
+        SET \
         REGISTER \
     "
 )
@@ -203,8 +204,9 @@ STRING = STRING(
     FLIGHT_SCHEDULE_KEY="schedule: ",
     LOGIN="login",
     NO_ATC="no atc",
-    NO_ATC_AND_NO_LANE="no atc and not lane",
+    NO_ATC_AND_NO_LANE="no atc and no lane",
     NO_LANE="no lane",
+    SET="flight is set",
     REGISTER="register"
 )
 VALUE = namedtuple("VALUE", "PAGINATION_OBJECTS_COUNT_PER_PAGE")
