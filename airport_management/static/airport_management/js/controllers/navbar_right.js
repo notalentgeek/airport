@@ -72,8 +72,8 @@ var navbar_right = function (angularjs_app) {
 
         /*
         Adjust this button for touch device. `is_touch_device()` check, after
-        the web application is fully rendered, if the web browser supports touch
-        input or not.
+        the web application is fully rendered, if the web browser supports
+        touch input or not.
         */
         if (is_touch_device()) {
           airport_manager_button.removeClass("btn-success");
@@ -112,9 +112,9 @@ var navbar_right = function (angularjs_app) {
         $scope.disable_airport_manager_register_button = true;
 
         /*
-        Function to check if airport manager name is already exists in database
-        or not. This function executed as soon the value in the username input
-        for airport manager is changed.
+        Function to check if airport manager name is already exists in
+        database or not. This function executed as soon the value in the
+        username input for airport manager is changed.
         */
         $scope.check_airport_manager_name_existence = function () {
           check_button_and_input_with_http(
