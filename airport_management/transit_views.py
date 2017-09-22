@@ -10,7 +10,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+""" Delete `HttpResponse` after developing modal form to add lane. """
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 def airport_manager_login_and_registration_form(request):
@@ -30,6 +31,32 @@ def check_atc_code_existence(request):
 def check_airport_manager_name_existence(request):
     return check_existence(request, KEY.AIRPORT_MANAGER_NAME, User,
         MODAL_FIELD.AIRPORT_MANAGER_NAME)
+
+""" Function to add online ATCs to a corresponding flight. """
+def flight_atc_form(request):
+    arrivaldeparture = request.POST[KEY.FLIGHT_ATC_FORM_ARRIVALDEPARTURE]
+    flight_id = request.POST[KEY.FLIGHT_ATC_FORM_FLIGHT_ID]
+    online_atcs = request.POST.getlist(KEY.FLIGHT_ONLINE_ATC_CHECK_BOXES)
+
+    model = None
+    if str(arrivaldeparture) == str(AOD.ARRIVAL):
+        model = ArrivalFlight
+    if str(arrivaldeparture) == str(AOD.DEPARTURE):
+        model = DepartureFlight
+
+    flight = model.objects.get(pk=flight_id)
+    flight.online_atcs.clear()
+    
+    if len(online_atcs) > 0:
+        for online_atc in online_atcs:
+            atc = AirTrafficController.objects.get(pk=online_atc)
+            flight.online_atcs.add(atc)
+
+    return HttpResponseRedirect(reverse("airport_management:index"))
+
+""" Function to add lane to corresponding flight. """
+def flight_lane_form(request):
+    return HttpResponse()
 
 def login_airport_manager(request):
     airport_manager = authenticate(

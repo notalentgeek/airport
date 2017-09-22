@@ -16,6 +16,17 @@
   flex: 1;
   margin: 0;
 }
+#flight-atcs-form-modal .modal-header {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  background-color: #5CB85C;
+  border-bottom:1px solid #EEEEEE;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding:9px 15px;
+}
 #flight-atcs-form-modal .td-with-checkbox {
   padding: 2.5px;
 }

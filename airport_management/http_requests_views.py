@@ -11,28 +11,6 @@ from django.template.loader import get_template
 from django.urls import reverse
 from json import dumps
 
-""" Dealing with client request to add ATCs in a flight object. """
-def flight_atc_form(request):
-    arrivaldeparture = request.POST[KEY.FLIGHT_ATC_FORM_ARRIVALDEPARTURE]
-    flight_id = request.POST[KEY.FLIGHT_ATC_FORM_FLIGHT_ID]
-    online_atcs = request.POST.getlist(KEY.FLIGHT_ONLINE_ATC_CHECK_BOXES)
-
-    model = None
-    if str(arrivaldeparture) == str(AOD.ARRIVAL):
-        model = ArrivalFlight
-    if str(arrivaldeparture) == str(AOD.DEPARTURE):
-        model = DepartureFlight
-
-    flight = model.objects.get(pk=flight_id)
-    flight.online_atcs.clear()
-    
-    if len(online_atcs) > 0:
-        for online_atc in online_atcs:
-            atc = AirTrafficController.objects.get(pk=online_atc)
-            flight.online_atcs.add(atc)
-
-    return HttpResponseRedirect(reverse("airport_management:index"))
-
 """ Processing HTTP request from AngularJS. """
 def table_requests_flight(request):
     """ The `id` of the arrival and departure flight we are looking for. """

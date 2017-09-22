@@ -32,8 +32,13 @@ urlpatterns = [
         name="register_atc"),
     url(
         r"^flight_atc_form/$",
-        http_requests_views.flight_atc_form,
+        transit_views.flight_atc_form,
         name="flight_atc_form"
+    ),
+    url(
+        r"^flight_lane_form/$",
+        transit_views.flight_lane_form,
+        name="flight_lane_form"
     ),
     url(
         r"^pagination_request_flight_table/$",

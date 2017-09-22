@@ -38,6 +38,16 @@
             <!-- Table. -->
             <table class="table table-condensed table-hover"
               id="{{ table_properties.table_id }}">
+              <!--
+              CAUTION: The include value needs to be inputted as parameters
+              because there will be values comes directly to this template.
+              Usually the values come from index.html inheritted
+              systematically to this inner_table.html. But there will be
+              occasion that the values goes directly to inner_table.html.
+              Whereas the values inputted directly cannot has "." in it.
+              Hence I need to put it in another variables `dom_id` and
+              `objects` as arguments.
+              -->
               {% include "airport_management/inner_table.html" with dom_id=table_properties.table_pagination_id objects=table_properties.arrivaldepartureflight_objects %}
             </table>
           </div>

@@ -1,0 +1,28 @@
+{% load djng_tags %}
+{% load static %}
+<div class="fade modal" id="flight-lane-form-modal" role="dialog">
+  <div class="modal-dialog">
+    <form action="{% url 'airport_management:flight_lane_form' %}"
+      id="flight-lane-form" method="POST" ng-controller="flight_lane_form">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal" type="button" >
+            &times;
+          </button>
+          <h4 class="modal-title">set lane</h4>
+        </div>
+        <div class="modal-body">
+          <p>hello world</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal" type="button">
+            Close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  $("#flight-lane-form-modal").modal("show");
+</script>

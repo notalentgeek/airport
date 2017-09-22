@@ -21,6 +21,9 @@ registered flight.
 */
 flight_online_atcs_form_modal = new flight_online_atcs_form_modal(app);
 
+// Modal page used to control lane of the ongoing flight.
+flight_lane_form_modal = new flight_lane_form_modal(app);
+
 /*
 Flight management panel located in the top of the table sets and just below
 navigation bar.
@@ -42,7 +45,12 @@ navbar_left = new navbar_left(app,
 // Initiate the inner part of the both tables.
 inner_table = new inner_table();
 
-// Initiate both arrival flight table and departure flight table. 
+/*
+Initiate both arrival flight table and departure flight table.
+
+PENDING: inner_table.js should be initiated after the table.js. Hence, it
+should not be appeared as an argument, but more from setter function.
+*/ 
 table = new table(
   app,
   flight_management_panel.DOM_ID.FLIGHT_MANAGEMENT_PANEL_INFORMATION,
