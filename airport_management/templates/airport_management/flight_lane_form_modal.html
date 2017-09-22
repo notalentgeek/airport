@@ -12,15 +12,20 @@
           <h4 class="modal-title">set lane</h4>
         </div>
         <div class="modal-body">
+          <script>
+            console.log("{{ lane_objects }}");
+          </script>
           <table>
-            <tr>
-              <td class="td-with-radio">
-                <input type="radio" name="flight_online_lane_radio" />
-              </td>
-              <td class="td-without-radio">
-                <div>test lane</div>
-              </td>
-            </tr>
+            {% for lane_object in lane_objects %}
+              <tr>
+                <td class="td-with-radio">
+                  <input type="radio" name="flight_online_lane_radio" />
+                </td>
+                <td class="td-without-radio">
+                  <div>{{ lane_object.name }}</div>
+                </td>
+              </tr>
+            {% endfor %}
           </table>
         </div>
         <div class="modal-footer">

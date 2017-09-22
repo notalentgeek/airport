@@ -83,6 +83,7 @@ KEY = namedtuple(
         FMP_NON_STATUS_FLIGHT_LANE \
         FMP_NON_STATUS_ONLINE_ATCS \
         FMP_STATUS \
+        LANE_OBJECTS \
         NUMBER_OF_PAGES \
         OBJECTS \
         REQUESTED_TABLE \
@@ -136,6 +137,7 @@ KEY = KEY(
     FMP_NON_STATUS_FLIGHT_LANE="fmp_non_status_flight_lane",
     FMP_NON_STATUS_ONLINE_ATCS="fmp_non_status_online_atcs",
     FMP_STATUS="fmp_status",
+    LANE_OBJECTS="lane_objects",
     NUMBER_OF_PAGES="number_of_pages",
     OBJECTS="objects",
     REQUESTED_TABLE="requested_table",

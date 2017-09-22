@@ -1,4 +1,4 @@
-from .models import AirTrafficController, ArrivalFlight, DepartureFlight
+from .models import AirTrafficController, ArrivalFlight, DepartureFlight, Lane
 from .src.consts import AOD, DOM_ID, KEY, MODAL_FIELD, STRING, VALUE
 from .src.database_operation import\
     get_earliest_object_from_a_day, \
@@ -75,8 +75,11 @@ def index(request):
     """ Assigning airport manager into client's render view. """
     parameters[KEY.AIRPORT_MANAGER] = request.user
 
-    """ Assigning all ATCs in to client's render view. """
+    """ Assigning all ATCs into client's render view. """
     parameters[KEY.ATC_OBJECTS] = AirTrafficController.objects.all()
+
+    """ Assigning all Lanes into client's render view. """
+    parameters[KEY.LANE_OBJECTS] = Lane.objects.all();
 
     """ Parameters to help set initial flight online ATCs form. """
     parameters[KEY.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE] = AOD.ARRIVAL
