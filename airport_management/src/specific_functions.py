@@ -63,7 +63,7 @@ def generate_flight_management_panel_dom_parameters(arrivaldeparture_flight):
     dictionary[KEY.FMP_NON_STATUS_DOM_PARAMETERS] =\
         flight_management_panel_dom
     dictionary[KEY.FMP_NON_STATUS_FLIGHT_ID] = arrivaldeparture_flight.id
-    dictionary[KEY.FMP_NON_STATUS_FLIGHT_LANE] = arrivaldeparture_flight.lane
+    dictionary[KEY.FMP_NON_STATUS_LANE] = arrivaldeparture_flight.lane
     dictionary[KEY.FMP_NON_STATUS_ONLINE_ATCS] =\
         list(arrivaldeparture_flight.online_atcs.values_list("id", flat=True))
     dictionary[KEY.FMP_STATUS] = get_flight_status_as_a_string(

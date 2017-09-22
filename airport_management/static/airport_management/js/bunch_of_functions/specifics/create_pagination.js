@@ -65,7 +65,7 @@ var create_pagination_for_arrivaldeparture_table = function (
           if (a_page) {
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + aod + ", " + a_page + ")"
+              "pagination_requests_flight_table(" + aod + ", " + a_page + ")"
             );
           }
         }
@@ -84,7 +84,7 @@ var create_pagination_for_arrivaldeparture_table = function (
           if (a_or_span.hasClass("next")) {
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + aod + ", " + 
+              "pagination_requests_flight_table(" + aod + ", " + 
                 next_page + ")"
             );
           }
@@ -92,7 +92,7 @@ var create_pagination_for_arrivaldeparture_table = function (
             li.addClass("pagination-button-fixed-width");
             a_or_span.attr(
               "ng-click",
-              "pagination_request_flight_table(" + aod + ", " + 
+              "pagination_requests_flight_table(" + aod + ", " + 
                 previous_page + ")"
             );
           }

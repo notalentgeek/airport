@@ -85,9 +85,18 @@ def index(request):
     parameters[KEY.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE] = AOD.ARRIVAL
     parameters[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID] =\
         earliest_arrivalflight_from_the_latest_day.id
-    parameters[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS] =\
+    parameters[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS_ID] =\
         get_list_from_object_field(
             earliest_arrivalflight_from_the_latest_day.online_atcs, "id")
+
+    """ Parameters to help to set initial flight lane form. """
+    parameters[KEY.FLIGHT_LANE_FORM_ARRIVALDEPARTURE] =\
+        parameters[KEY.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE]
+    parameters[KEY.FLIGHT_LANE_FORM_FLIGHT_ID] =\
+        parameters[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID]
+    parameters[KEY.FLIGHT_LANE_FORM_FLIGHT_ONLINE_ATCS] =\
+        "" if earliest_arrivalflight_from_the_latest_day.lane ==\
+            None else earliest_arrivalflight_from_the_latest_day.lane.id
 
     """ Both arrival flight table and departure flight table properties. """
     parameters[KEY.TABLES_PROPERTIES] = [

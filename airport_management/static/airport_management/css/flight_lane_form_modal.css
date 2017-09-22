@@ -1,3 +1,8 @@
+#flight-lane-form-arrivaldeparture,
+#flight-lane-form-flight-id,
+#flight-lane-form-flight-lane-id {
+  display: none;
+}
 #flight-lane-form-modal .modal-body {
   max-height: 50vh;
   overflow-x: hidden;

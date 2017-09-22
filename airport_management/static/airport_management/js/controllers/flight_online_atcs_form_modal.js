@@ -17,8 +17,8 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
       FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE:
         "flight-online-atc-form-arrivaldeparture",
       FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID: "flight-online-atc-form-flight-id",
-      FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS:
-        "flight-online-atc-form-flight-online-atcs",
+      FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS_ID:
+        "flight-online-atc-form-flight-online-atcs-id",
       FLIGHT_ONLINE_ATC_CHECK_BOXES_: "flight-online-atc-check-boxes-"
     });
     this.DOM_ID = DOM_ID;
@@ -30,18 +30,18 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
     var JQUERY_SELECTOR_FOR_FORM = Object.freeze([
       "#" + DOM_ID.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE,
       "#" + DOM_ID.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID,
-      "#" + DOM_ID.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS
+      "#" + DOM_ID.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS_ID
     ]);
 
     var selected_arrivaldeparture;
     var selected_flight_id;
-    var selected_flight_online_atcs;
+    var selected_flight_online_atcs_id;
 
     var set_selected_flight_properties_to_variables = function (
       arrival_departure, flight_id, flight_online_atcs) {
       selected_arrivaldeparture = arrival_departure;
       selected_flight_id = flight_id;
-      selected_flight_online_atcs = flight_online_atcs;
+      selected_flight_online_atcs_id = flight_online_atcs;
     };
 
     var set_selected_flight_properties_to_dom = function (
@@ -75,11 +75,11 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
       reference instead of value.
       */
       [selected_arrivaldeparture, selected_flight_id,
-        selected_flight_online_atcs] = values;
+        selected_flight_online_atcs_id] = values;
 
       // Convert the string "list" into a list of strings.
-      selected_flight_online_atcs = string_operation.string_to_list(
-        selected_flight_online_atcs
+      selected_flight_online_atcs_id = string_operation.string_to_list(
+        selected_flight_online_atcs_id
       );
     })();
 
@@ -105,9 +105,9 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
             $scope.reset_atc_check_boxes();
 
             // Only checked back check boxes whom has its designated ATC online.
-            for (var i = 0; i < selected_flight_online_atcs.length; i ++) {
+            for (var i = 0; i < selected_flight_online_atcs_id.length; i ++) {
               $("#" + DOM_ID.FLIGHT_ONLINE_ATC_CHECK_BOXES_ +
-                selected_flight_online_atcs[i]).prop("checked", true);
+                selected_flight_online_atcs_id[i]).prop("checked", true);
             }
           }
         );

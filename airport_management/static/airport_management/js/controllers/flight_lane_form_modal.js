@@ -13,14 +13,70 @@ var flight_lane_form_modal = function (angularjs_app) {
     });
 
     var DOM_ID = Object.freeze({
+      FLIGHT_LANE_FORM_ARRIVALDEPARTURE: "flight-lane-form-arrivaldeparture",
+      FLIGHT_LANE_FORM_FLIGHT_ID: "flight-lane-form-flight-id",
+      FLIGHT_LANE_FORM_FLIGHT_LANE: "flight-lane-form-flight-lane",
       FLIGHT_LANE_FORM_MODAL: "flight-lane-form-modal"
     });
     this.DOM_ID = DOM_ID;
 
+    var JQUERY_SELECTOR_FOR_FORM = Object.freeze([
+      "#" + DOM_ID.FLIGHT_LANE_FORM_ARRIVALDEPARTURE,
+      "#" + DOM_ID.FLIGHT_LANE_FORM_FLIGHT_ID,
+      "#" + DOM_ID.FLIGHT_LANE_FORM_FLIGHT_LANE
+    ]);
+
+    var selected_arrivaldeparture;
+    var selected_flight_id;
+    var selected_flight_lane_id;
+
+    var set_selected_flight_properties_to_variables = function (
+      arrival_departure, flight_id, flight_lane) {
+      selected_arrivaldeparture = arrival_departure;
+      selected_flight_id = flight_id;
+      selected_flight_lane_id = flight_lane;
+    };
+
+    var set_selected_flight_properties_to_dom = function (
+      arrival_departure, flight_id, flight_lane) {
+      values = [arrival_departure, flight_id, flight_lane];
+      if (JQUERY_SELECTOR_FOR_FORM.length === values.length) {
+        for (var i = 0; i < JQUERY_SELECTOR_FOR_FORM.length; i ++) {
+          dom_get_and_set.set_dom_value(JQUERY_SELECTOR_FOR_FORM[i], values[i]);
+        }
+      }
+    };
+
+    this.set_selected_flight_properties = function (
+      arrival_departure, flight_id, flight_lane) {
+      set_selected_flight_properties_to_dom(arrival_departure, flight_id,
+        flight_lane);
+      set_selected_flight_properties_to_variables(arrival_departure,
+        flight_id, flight_lane);
+    };
+
+    var get_selected_flight_properties_from_dom = (function () {
+      values = [];
+
+      for (var i = 0; i < JQUERY_SELECTOR_FOR_FORM.length; i ++) {
+        values.push(dom_get_and_set.get_dom_value(
+          JQUERY_SELECTOR_FOR_FORM[i]));
+      }
+
+      /*
+      Variable destructing! With this method primitives can be put as
+      reference instead of value.
+      */
+      [selected_arrivaldeparture, selected_flight_id,
+        selected_flight_lane_id] = values;
+    })();
+
     angularjs_app.controller(
       ANGULARJS_CONTROLLER.FLIGHT_LANE_FORM,
       function ($scope) {
-        
+        $scope.reset_lane_check_boxes = function () {
+          console.log("this functionality is not yet implemented");
+        };
       }
     );
   }

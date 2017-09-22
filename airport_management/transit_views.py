@@ -13,6 +13,7 @@ from django.db import IntegrityError
 """ Delete `HttpResponse` after developing modal form to add lane. """
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.utils.datastructures import MultiValueDictKeyError
 
 def airport_manager_login_and_registration_form(request):
     if request.POST[KEY.AIRPORT_MANAGER_LOGIN_OR_REGISTER_BUTTON] ==\
@@ -56,7 +57,17 @@ def flight_online_atc_form(request):
 
 """ Function to add lane to corresponding flight. """
 def flight_lane_form(request):
-    return HttpResponse()
+    lane_id = None
+
+    try: 
+        lane_id = request.POST["flight_lane_radio"]
+    except MultiValueDictKeyError as error:
+        print(error)
+
+    print(request.POST)
+    print(lane_id)
+
+    return HttpResponseRedirect(reverse("airport_management:index"))
 
 def login_airport_manager(request):
     airport_manager = authenticate(

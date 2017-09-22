@@ -59,12 +59,14 @@ def table_requests_flight(request):
     """ This is the dictionary that will be returned. """
     dictionary = {}
     dictionary[KEY.FMP_DOM] = flight_management_panel_html
+    dictionary[KEY.FMP_NON_STATUS_LANE] =\
+        flight_management_panel_initial_dom[KEY.FMP_NON_STATUS_LANE]
     dictionary[KEY.FMP_NON_STATUS_ONLINE_ATCS] =\
         flight_management_panel_initial_dom[KEY.FMP_NON_STATUS_ONLINE_ATCS]
 
     return HttpResponse(dumps(dictionary))
 
-def pagination_request_flight_table(request):
+def pagination_requests_flight_table(request):
     """ Closure. """
     def pagination_request_flight_table_(model_objects, pagination_page):
         model_paginations = create_pagination_return_page_and_number_of_pages(

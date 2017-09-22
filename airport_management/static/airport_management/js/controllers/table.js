@@ -1,6 +1,7 @@
 var table = function (
   angularjs_app,
   flight_management_panel_information_id,
+  flight_lane_form_modal,
   flight_online_atcs_form_modal,
   inner_table
 ) {
@@ -67,8 +68,9 @@ var table = function (
         "departure_flight_table_pagination_number_of_pages",  
       FLIGHT_ID: "flight_id",
       FMP_DOM: "fmp_dom",
-      NUMBER_OF_PAGES: "number_of_pages",
+      FMP_NON_STATUS_LANE: "fmp_non_status_lane",
       FMP_NON_STATUS_ONLINE_ATCS: "fmp_non_status_online_atcs",
+      NUMBER_OF_PAGES: "number_of_pages",
       REQUESTED_TABLE: "requested_table",
       REQUESTED_TABLE_PAGINATION_PAGE: "requested_table_pagination_page",
       TABLE_HTML: "table_html"
@@ -186,7 +188,13 @@ var table = function (
             $("#" + flight_management_panel_information_id).html(
                 data.data[KEY.FMP_DOM]);
 
-            // Set back the current selected value to flight management panel.
+            /*
+            Set back the current selected value to flight management panel's
+            ATCs modal and lane modal.
+            */
+            flight_lane_form_modal.set_selected_flight_properties(
+              dictionary[KEY.REQUESTED_TABLE], dictionary[KEY.FLIGHT_ID],
+              data.data[KEY.FMP_NON_STATUS_LANE]);
             flight_online_atcs_form_modal.set_selected_flight_properties(
               dictionary[KEY.REQUESTED_TABLE], dictionary[KEY.FLIGHT_ID],
               string_operation.string_to_list(
@@ -195,7 +203,7 @@ var table = function (
           });
         };
 
-        $scope.pagination_request_flight_table = function (
+        $scope.pagination_requests_flight_table = function (
           aod, requested_table_pagination_page
         ) {
           // Undefined variables.

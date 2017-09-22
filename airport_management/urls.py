@@ -41,9 +41,9 @@ urlpatterns = [
         name="flight_lane_form"
     ),
     url(
-        r"^pagination_request_flight_table/$",
-        http_requests_views.pagination_request_flight_table,
-        name="pagination_request_flight_table"
+        r"^pagination_requests_flight_table/$",
+        http_requests_views.pagination_requests_flight_table,
+        name="pagination_requests_flight_table"
     ),
     url(
         r"^table_requests_flight/$",

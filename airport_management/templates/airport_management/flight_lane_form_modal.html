@@ -4,6 +4,7 @@
   <div class="modal-dialog">
     <form action="{% url 'airport_management:flight_lane_form' %}"
       id="flight-lane-form" method="POST" ng-controller="flight_lane_form">
+      {% csrf_token %}
       <div class="modal-content">
         <div class="modal-header">
           <button class="close" data-dismiss="modal" type="button" >
@@ -12,14 +13,22 @@
           <h4 class="modal-title">set lane</h4>
         </div>
         <div class="modal-body">
-          <script>
-            console.log("{{ lane_objects }}");
-          </script>
+          <!-- Invisible inputs to be sent to URL as well. -->
+          <input id="flight-lane-form-arrivaldeparture"
+            name="flight_lane_form_arrivaldeparture" type="text"
+            value="{{ flight_lane_form_arrivaldeparture }}" />
+          <input id="flight-lane-form-flight-id"
+            name="flight_lane_form_flight_id" type="text"
+            value="{{ flight_lane_form_flight_id }}" />
+          <input id="flight-lane-form-flight-lane-id"
+            name="flight_lane_form_flight_lane_id" type="text"
+            value="{{ flight_lane_form_flight_lane_id }}" />
           <table>
             {% for lane_object in lane_objects %}
               <tr>
                 <td class="td-with-radio">
-                  <input type="radio" name="flight_online_lane_radio" />
+                  <input type="radio" name="flight_lane_radio" 
+                    value="{{ lane_object.id }}" />
                 </td>
                 <td class="td-without-radio">
                   <div>{{ lane_object.name }}</div>
@@ -29,9 +38,9 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-default" data-dismiss="modal" type="button">
-            Close
-          </button>
+          <input class="btn btn-block btn-default" type="button" value="reset"
+            ng-click="reset_lane_check_boxes()">
+          <input class="btn btn-block btn-success" type="submit" value="set">
         </div>
       </div>
     </form>
