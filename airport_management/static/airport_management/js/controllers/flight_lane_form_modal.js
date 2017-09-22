@@ -15,15 +15,16 @@ var flight_lane_form_modal = function (angularjs_app) {
     var DOM_ID = Object.freeze({
       FLIGHT_LANE_FORM_ARRIVALDEPARTURE: "flight-lane-form-arrivaldeparture",
       FLIGHT_LANE_FORM_FLIGHT_ID: "flight-lane-form-flight-id",
-      FLIGHT_LANE_FORM_FLIGHT_LANE: "flight-lane-form-flight-lane",
-      FLIGHT_LANE_FORM_MODAL: "flight-lane-form-modal"
+      FLIGHT_LANE_FORM_FLIGHT_LANE_ID: "flight-lane-form-flight-lane-id",
+      FLIGHT_LANE_FORM_MODAL: "flight-lane-form-modal",
+      FLIGHT_LANE_RADIO_: "flight-lane-radio-"
     });
     this.DOM_ID = DOM_ID;
 
     var JQUERY_SELECTOR_FOR_FORM = Object.freeze([
       "#" + DOM_ID.FLIGHT_LANE_FORM_ARRIVALDEPARTURE,
       "#" + DOM_ID.FLIGHT_LANE_FORM_FLIGHT_ID,
-      "#" + DOM_ID.FLIGHT_LANE_FORM_FLIGHT_LANE
+      "#" + DOM_ID.FLIGHT_LANE_FORM_FLIGHT_LANE_ID
     ]);
 
     var selected_arrivaldeparture;
@@ -74,9 +75,15 @@ var flight_lane_form_modal = function (angularjs_app) {
     angularjs_app.controller(
       ANGULARJS_CONTROLLER.FLIGHT_LANE_FORM,
       function ($scope) {
-        $scope.reset_lane_check_boxes = function () {
-          console.log("this functionality is not yet implemented");
-        };
+        $("#" + DOM_ID.FLIGHT_LANE_FORM_MODAL).on(
+          "show.bs.modal",
+          function (event) {
+            // PENDING: Please wait until HTTP request is finished.
+
+            $("#" + DOM_ID.FLIGHT_LANE_RADIO_ +
+              selected_flight_lane_id).prop("checked", true);
+          }
+        );
       }
     );
   }

@@ -27,7 +27,8 @@
             {% for lane_object in lane_objects %}
               <tr>
                 <td class="td-with-radio">
-                  <input type="radio" name="flight_lane_radio" 
+                  <input id="flight-lane-radio-{{ lane_object.id }}"
+                    type="radio" name="flight_lane_radio"
                     value="{{ lane_object.id }}" />
                 </td>
                 <td class="td-without-radio">
@@ -38,8 +39,6 @@
           </table>
         </div>
         <div class="modal-footer">
-          <input class="btn btn-block btn-default" type="button" value="reset"
-            ng-click="reset_lane_check_boxes()">
           <input class="btn btn-block btn-success" type="submit" value="set">
         </div>
       </div>

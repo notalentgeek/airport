@@ -75,7 +75,8 @@ KEY = namedtuple(
         FLIGHT_ID \
         FLIGHT_LANE_FORM_ARRIVALDEPARTURE \
         FLIGHT_LANE_FORM_FLIGHT_ID \
-        FLIGHT_LANE_FORM_FLIGHT_ONLINE_ATCS \
+        FLIGHT_LANE_FORM_FLIGHT_LANE_ID \
+        FLIGHT_LANE_RADIO \
         FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES \
         FLIGHT_OBJECTS \
         FLIGHT_ONLINE_ATC_CHECK_BOXES \
@@ -123,19 +124,20 @@ KEY = KEY(
     DEPARTURE_FLIGHT_TABLE_PAGINATION="departure_flight_table_pagination",
     DOM_ID="dom_id",
     DOM_PARAMETERS="dom_parameters",
+    FLIGHT_ID="flight_id",
+    FLIGHT_LANE_FORM_ARRIVALDEPARTURE="flight_lane_form_arrivaldeparture",
+    FLIGHT_LANE_FORM_FLIGHT_ID="flight_lane_form_flight_id",
+    FLIGHT_LANE_FORM_FLIGHT_LANE_ID="flight_lane_form_flight_lane_id",
+    FLIGHT_LANE_RADIO="flight_lane_radio",
+    FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES=\
+        "flight_management_panel_initial_properties",
+    FLIGHT_OBJECTS="flight_objects",
+    FLIGHT_ONLINE_ATC_CHECK_BOXES="flight_online_atc_check_boxes",
     FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE=\
         "flight_online_atc_form_arrivaldeparture",
     FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID="flight_online_atc_form_flight_id",
     FLIGHT_ONLINE_ATC_FORM_FLIGHT_ONLINE_ATCS_ID=\
         "flight_online_atc_form_flight_online_atcs_id",
-    FLIGHT_ID="flight_id",
-    FLIGHT_LANE_FORM_ARRIVALDEPARTURE="flight_lane_form_arrivaldeparture",
-    FLIGHT_LANE_FORM_FLIGHT_ID="flight_lane_form_flight_id",
-    FLIGHT_LANE_FORM_FLIGHT_ONLINE_ATCS="flight_lane_form_flight_lane",
-    FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES=\
-        "flight_management_panel_initial_properties",
-    FLIGHT_OBJECTS="flight_objects",
-    FLIGHT_ONLINE_ATC_CHECK_BOXES="flight_online_atc_check_boxes",
     FMP_DOM="fmp_dom",
     FMP_NON_STATUS_ARRIVALDEPARTURE="fmp_non_status_arrivaldeparture",
     FMP_NON_STATUS_DOM_PARAMETERS="fmp_non_status_dom_parameters",

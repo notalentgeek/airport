@@ -94,7 +94,7 @@ def index(request):
         parameters[KEY.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE]
     parameters[KEY.FLIGHT_LANE_FORM_FLIGHT_ID] =\
         parameters[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID]
-    parameters[KEY.FLIGHT_LANE_FORM_FLIGHT_ONLINE_ATCS] =\
+    parameters[KEY.FLIGHT_LANE_FORM_FLIGHT_LANE_ID] =\
         "" if earliest_arrivalflight_from_the_latest_day.lane ==\
             None else earliest_arrivalflight_from_the_latest_day.lane.id
 

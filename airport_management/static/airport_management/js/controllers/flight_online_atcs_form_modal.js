@@ -81,6 +81,8 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
       selected_flight_online_atcs_id = string_operation.string_to_list(
         selected_flight_online_atcs_id
       );
+
+      console.log(selected_flight_online_atcs_id);
     })();
 
     angularjs_app.controller(

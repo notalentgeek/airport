@@ -3,7 +3,7 @@ Transit views. The views is not necessarily display a HTML template but
 just GET or POST through database.
 """
 
-from .models import AirTrafficController, ArrivalFlight, DepartureFlight
+from .models import AirTrafficController, ArrivalFlight, DepartureFlight, Lane
 from .src.consts import AOD, KEY, MODAL_FIELD, STRING
 from .src.database_operation import check_existence, create_or_get_group
 from django.contrib import messages
@@ -37,7 +37,7 @@ def check_airport_manager_name_existence(request):
 def flight_online_atc_form(request):
     arrivaldeparture = request.POST[KEY.FLIGHT_ONLINE_ATC_FORM_ARRIVALDEPARTURE]
     flight_id = request.POST[KEY.FLIGHT_ONLINE_ATC_FORM_FLIGHT_ID]
-    online_atcs = request.POST.getlist(KEY.FLIGHT_ONLINE_ATC_CHECK_BOXES)
+    online_atc_ids = request.POST.getlist(KEY.FLIGHT_ONLINE_ATC_CHECK_BOXES)
 
     model = None
     if str(arrivaldeparture) == str(AOD.ARRIVAL):
@@ -48,24 +48,35 @@ def flight_online_atc_form(request):
     flight = model.objects.get(pk=flight_id)
     flight.online_atcs.clear()
     
-    if len(online_atcs) > 0:
-        for online_atc in online_atcs:
-            atc = AirTrafficController.objects.get(pk=online_atc)
+    if len(online_atc_ids) > 0:
+        for online_atc_id in online_atc_ids:
+            atc = AirTrafficController.objects.get(pk=online_atc_id)
             flight.online_atcs.add(atc)
 
     return HttpResponseRedirect(reverse("airport_management:index"))
 
 """ Function to add lane to corresponding flight. """
 def flight_lane_form(request):
+    arrivaldeparture = request.POST[KEY.FLIGHT_LANE_FORM_ARRIVALDEPARTURE]
+    flight_id = request.POST[KEY.FLIGHT_LANE_FORM_FLIGHT_ID]
     lane_id = None
+    lane = None
 
-    try: 
-        lane_id = request.POST["flight_lane_radio"]
+    try:
+        lane_id = request.POST[KEY.FLIGHT_LANE_RADIO]
+        lane = Lane.objects.get(pk=lane_id)
     except MultiValueDictKeyError as error:
         print(error)
 
-    print(request.POST)
-    print(lane_id)
+    model = None
+    if str(arrivaldeparture) == str(AOD.ARRIVAL):
+        model = ArrivalFlight
+    if str(arrivaldeparture) == str(AOD.DEPARTURE):
+        model = DepartureFlight
+
+    flight = model.objects.get(pk=flight_id)
+    flight.lane = lane
+    flight.save()
 
     return HttpResponseRedirect(reverse("airport_management:index"))
 
