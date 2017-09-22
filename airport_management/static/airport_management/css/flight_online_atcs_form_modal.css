@@ -6,7 +6,7 @@
 #flight-online-atcs-form-modal .modal-body {
   max-height: 50vh;
   overflow-x: hidden;
-  overflor-y: auto;
+  overflow-y: auto;
 }
 #flight-online-atcs-form-modal .modal-footer {
   display: flex;

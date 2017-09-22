@@ -1,3 +1,16 @@
+#flight-lane-form-modal .modal-body {
+  max-height: 50vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#flight-lane-form-modal .modal-footer {
+  display: flex;
+  flex-direction: row;
+}
+#flight-lane-form-modal .modal-footer>input {
+  flex: 1;
+  margin: 0;
+}
 #flight-lane-form-modal .modal-header {
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
@@ -9,3 +22,23 @@
     border-top-right-radius: 5px;
     padding:9px 15px;
   }
+#flight-lane-form-modal .td-with-radio {
+  padding: 2.5px;
+}
+#flight-lane-form-modal .td-with-radio>input {
+  height: 30px;
+  width: 30px;
+}
+#flight-lane-form-modal .td-without-radio {
+  padding: 2.5px;
+  position: absolute;
+  width: 80%;
+}
+#flight-lane-form-modal .td-without-radio>div {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 7.5px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
