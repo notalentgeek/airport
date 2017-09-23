@@ -30,7 +30,7 @@
       <td id="scheduled-datetime-column">
         <div>{{ object.scheduled_datetime }}</div>
       </td>
-      <td>{{ object.lane }}</td>
+      <td><a href="#" ng-click="show_flight_lane_form_modal('{{ object.id }}', '{{ dom_id }}')">{{ object.lane }}</a></td>
       <td><a href="#">atcs</a></td>
       <td class="flight-status-container">
         <div>{{ object.status }}</div>

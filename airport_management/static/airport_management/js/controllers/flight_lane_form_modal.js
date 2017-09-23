@@ -43,7 +43,10 @@ var flight_lane_form_modal = function (angularjs_app) {
       values = [arrival_departure, flight_id, flight_lane];
       if (JQUERY_SELECTOR_FOR_FORM.length === values.length) {
         for (var i = 0; i < JQUERY_SELECTOR_FOR_FORM.length; i ++) {
-          dom_get_and_set.set_dom_value(JQUERY_SELECTOR_FOR_FORM[i], values[i]);
+          dom_get_and_set.set_dom_value(
+            JQUERY_SELECTOR_FOR_FORM[i],
+            values[i]
+          );
         }
       }
     };
@@ -74,7 +77,13 @@ var flight_lane_form_modal = function (angularjs_app) {
 
     angularjs_app.controller(
       ANGULARJS_CONTROLLER.FLIGHT_LANE_FORM,
-      function ($scope) {
+      function ($scope) {       
+        // Function to reset all ATC check boxes.
+        $scope.reset_lane_radios = function () {
+          $("." + DOM_CLASS.FLIGHT_ONLINE_ATCS_CHECK_BOX).prop("checked",
+            false);
+        };
+
         $("#" + DOM_ID.FLIGHT_LANE_FORM_MODAL).on(
           "show.bs.modal",
           function (event) {

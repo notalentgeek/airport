@@ -86,9 +86,6 @@ var flight_online_atcs_form_modal = function (angularjs_app) {
     angularjs_app.controller(
       ANGULARJS_CONTROLLER.FLIGHT_ONLINE_ATC_FORM,
       function ($scope) {
-        // List variable to help put all check boxes into `ng-model` array.
-        $scope.atc_check_boxes = {};
-
         // Function to reset all ATC check boxes.
         $scope.reset_atc_check_boxes = function () {
           $("." + DOM_CLASS.FLIGHT_ONLINE_ATCS_CHECK_BOX).prop("checked",

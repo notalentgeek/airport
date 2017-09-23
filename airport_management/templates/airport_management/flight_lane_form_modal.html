@@ -27,7 +27,8 @@
             {% for lane_object in lane_objects %}
               <tr>
                 <td class="td-with-radio">
-                  <input id="flight-lane-radio-{{ lane_object.id }}"
+                  <input class="flight-lane-radios"
+                    id="flight-lane-radio-{{ lane_object.id }}"
                     type="radio" name="flight_lane_radio"
                     value="{{ lane_object.id }}" />
                 </td>

@@ -1,8 +1,8 @@
 var table = function (
   angularjs_app,
-  flight_management_panel_information_id,
   flight_lane_form_modal,
   flight_online_atcs_form_modal,
+  flight_management_panel,
   inner_table
 ) {
   var init_count = 1; // Singleton.
@@ -11,16 +11,20 @@ var table = function (
   function create_instance () {
     var instance = new table(
       angularjs_app,
-      flight_management_panel_information_id,
-      flight_online_atcs_form_modal
+      flight_lane_form_modal,
+      flight_online_atcs_form_modal,
+      flight_management_panel,
+      inner_table
     );
     return instance;
   }
 
   function table (
     angularjs_app,
-    flight_management_panel_information_id,
-    flight_online_atcs_form_modal
+    flight_lane_form_modal,
+    flight_online_atcs_form_modal,
+    flight_management_panel,
+    inner_table
   ) {
     var ANGULARJS_CONTROLLER = Object.freeze({
       ARRIVALDEPARTURE_TABLE_SETS_CONTAINER:
@@ -154,9 +158,10 @@ var table = function (
         `table_pagination_id` is the CSS ID, not database.
         */
         $scope.table_requests_flight = function (
-          flight_id,          // The flight ID that was just clicked by the
-                              // user.
-          table_pagination_id // The pagination CSS ID.
+          flight_id,           // The flight ID that was just clicked by the
+                               // user.
+          table_pagination_id, // The pagination CSS ID.
+          follow_up            // Follow up function, may or may not exists.
         ) {
           // Dictionary that will be sent though HTTP.
           var dictionary = {};
@@ -165,6 +170,8 @@ var table = function (
           // URL to request new flight table.
           var url = dom_get_and_set.get_dom_param("#" + 
             DOM_ID.TABLE_REQUEST_FLIGHT_URL);
+
+          console.log(flight_management_panel);
 
           // Check if flight management panel is exists.
           if (flight_management_panel.is_exists()) {
@@ -185,8 +192,9 @@ var table = function (
             url: url
           }).then(function (data) {
             // Render back the flight management panel.
-            $("#" + flight_management_panel_information_id).html(
-                data.data[KEY.FMP_DOM]);
+            $("#" + flight_management_panel.DOM_ID
+              .FLIGHT_MANAGEMENT_PANEL_INFORMATION)
+                .html(data.data[KEY.FMP_DOM]);
 
             /*
             Set back the current selected value to flight management panel's
@@ -195,11 +203,17 @@ var table = function (
             flight_lane_form_modal.set_selected_flight_properties(
               dictionary[KEY.REQUESTED_TABLE], dictionary[KEY.FLIGHT_ID],
               data.data[KEY.FMP_NON_STATUS_LANE]);
+
             flight_online_atcs_form_modal.set_selected_flight_properties(
               dictionary[KEY.REQUESTED_TABLE], dictionary[KEY.FLIGHT_ID],
               string_operation.string_to_list(
                 data.data[KEY.FMP_NON_STATUS_ONLINE_ATCS]
               ));
+            
+            // Execute `follow_up` function if it is exists.
+            if (follow_up) {
+              follow_up();
+            }
           });
         };
 
@@ -356,7 +370,7 @@ var table = function (
                   `items` in pagination object refer to how many pages are
                   there in the pagination.
                   */
-                  tagination_number_of_pages
+                  pagination_number_of_pages
                     [KEY.DEPARTURE_FLIGHT_TABLE_PAGINATION_NUMBER_OF_PAGES] =
                       arrivaldeparture_table_pagination.items;
                 }
@@ -396,6 +410,24 @@ var table = function (
             $scope,
             $compile
           );
+        };
+
+        $scope.show_flight_lane_form_modal = function (flight_id, table_pagination_id) {
+          var arrivaldeparture_table_sets_container_scope = angularjs_operation.get_angular_scope_by_dom_id("arrivaldeparture-table-sets-container");
+          var flight_management_panel_scope = angularjs_operation.get_angular_scope_by_dom_id("flight-management-panel");
+          //console.log(flight_id);
+          //console.log(table_pagination_id);
+          //console.log(arrivaldeparture_table_sets_container_scope);
+          //console.log(flight_management_panel_scope);
+          arrivaldeparture_table_sets_container_scope.table_requests_flight(
+            flight_id,
+            table_pagination_id,
+            flight_management_panel_scope.show_flight_lane_form_modal
+          );
+        };
+
+        // Function to show a modal form for assigning ATCs into a flight.
+        $scope.show_flight_online_atc_form_modal = function () {
         };
         
         // Initiate table paginations after the AngularJS elements load.

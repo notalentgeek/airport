@@ -62,9 +62,9 @@ should not be appeared as an argument, but more from setter function.
 */ 
 table = new table(
   app,
-  flight_management_panel.DOM_ID.FLIGHT_MANAGEMENT_PANEL_INFORMATION,
   flight_lane_form_modal,
   flight_online_atcs_form_modal,
+  flight_management_panel,
   inner_table
 );
 
