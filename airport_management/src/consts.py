@@ -76,7 +76,7 @@ KEY = namedtuple(
         FLIGHT_LANE_FORM_ARRIVALDEPARTURE \
         FLIGHT_LANE_FORM_FLIGHT_ID \
         FLIGHT_LANE_FORM_FLIGHT_LANE_ID \
-        FLIGHT_LANE_RADIO \
+        FLIGHT_LANE_RADIOS \
         FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES \
         FLIGHT_OBJECTS \
         FLIGHT_ONLINE_ATC_CHECK_BOXES \
@@ -128,7 +128,7 @@ KEY = KEY(
     FLIGHT_LANE_FORM_ARRIVALDEPARTURE="flight_lane_form_arrivaldeparture",
     FLIGHT_LANE_FORM_FLIGHT_ID="flight_lane_form_flight_id",
     FLIGHT_LANE_FORM_FLIGHT_LANE_ID="flight_lane_form_flight_lane_id",
-    FLIGHT_LANE_RADIO="flight_lane_radio",
+    FLIGHT_LANE_RADIOS="flight_lane_radios",
     FLIGHT_MANAGEMENT_PANEL_INITIAL_PROPERTIES=\
         "flight_management_panel_initial_properties",
     FLIGHT_OBJECTS="flight_objects",

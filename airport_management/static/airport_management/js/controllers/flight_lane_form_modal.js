@@ -17,9 +17,13 @@ var flight_lane_form_modal = function (angularjs_app) {
       FLIGHT_LANE_FORM_FLIGHT_ID: "flight-lane-form-flight-id",
       FLIGHT_LANE_FORM_FLIGHT_LANE_ID: "flight-lane-form-flight-lane-id",
       FLIGHT_LANE_FORM_MODAL: "flight-lane-form-modal",
-      FLIGHT_LANE_RADIO_: "flight-lane-radio-"
+      FLIGHT_LANE_RADIOS_: "flight-lane-radios-"
     });
     this.DOM_ID = DOM_ID;
+
+    var DOM_CLASS = Object.freeze({
+      FLIGHT_LANE_RADIOS: "flight-lane-radios"
+    });
 
     var JQUERY_SELECTOR_FOR_FORM = Object.freeze([
       "#" + DOM_ID.FLIGHT_LANE_FORM_ARRIVALDEPARTURE,
@@ -80,8 +84,7 @@ var flight_lane_form_modal = function (angularjs_app) {
       function ($scope) {       
         // Function to reset all ATC check boxes.
         $scope.reset_lane_radios = function () {
-          $("." + DOM_CLASS.FLIGHT_ONLINE_ATCS_CHECK_BOX).prop("checked",
-            false);
+          $("." + DOM_CLASS.FLIGHT_LANE_RADIOS).prop("checked", false);
         };
 
         $("#" + DOM_ID.FLIGHT_LANE_FORM_MODAL).on(
@@ -89,8 +92,14 @@ var flight_lane_form_modal = function (angularjs_app) {
           function (event) {
             // PENDING: Please wait until HTTP request is finished.
 
-            $("#" + DOM_ID.FLIGHT_LANE_RADIO_ +
-              selected_flight_lane_id).prop("checked", true);
+            /*
+            Reset all radio buttons, in case the newly selected flight has
+            no lane assigned just yet.
+            */
+            $scope.reset_lane_radios();
+
+            $("#" + DOM_ID.FLIGHT_LANE_RADIOS_ + selected_flight_lane_id)
+              .prop("checked", true);
           }
         );
       }

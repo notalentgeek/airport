@@ -63,7 +63,7 @@ def flight_lane_form(request):
     lane = None
 
     try:
-        lane_id = request.POST[KEY.FLIGHT_LANE_RADIO]
+        lane_id = request.POST[KEY.FLIGHT_LANE_RADIOS]
         lane = Lane.objects.get(pk=lane_id)
     except MultiValueDictKeyError as error:
         print(error)

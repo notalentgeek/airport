@@ -3,6 +3,7 @@ var table = function (
   flight_lane_form_modal,
   flight_online_atcs_form_modal,
   flight_management_panel,
+  table,
   inner_table
 ) {
   var init_count = 1; // Singleton.
@@ -14,6 +15,7 @@ var table = function (
       flight_lane_form_modal,
       flight_online_atcs_form_modal,
       flight_management_panel,
+      table,
       inner_table
     );
     return instance;
@@ -24,6 +26,7 @@ var table = function (
     flight_lane_form_modal,
     flight_online_atcs_form_modal,
     flight_management_panel,
+    table,
     inner_table
   ) {
     var ANGULARJS_CONTROLLER = Object.freeze({
@@ -412,22 +415,36 @@ var table = function (
           );
         };
 
-        $scope.show_flight_lane_form_modal = function (flight_id, table_pagination_id) {
-          var arrivaldeparture_table_sets_container_scope = angularjs_operation.get_angular_scope_by_dom_id("arrivaldeparture-table-sets-container");
-          var flight_management_panel_scope = angularjs_operation.get_angular_scope_by_dom_id("flight-management-panel");
-          //console.log(flight_id);
-          //console.log(table_pagination_id);
-          //console.log(arrivaldeparture_table_sets_container_scope);
-          //console.log(flight_management_panel_scope);
+        $scope.show_flight_modal = function (flight_id, table_pagination_id,
+          lane_or_online_atcs) {
+          // Scope to other controllers.
+          var arrivaldeparture_table_sets_container_scope = angularjs_operation
+            .get_angular_scope_by_dom_id(
+              DOM_ID.ARRIVALDEPARTURE_TABLE_SETS_CONTAINER
+            );
+          var flight_management_panel_scope = angularjs_operation
+            .get_angular_scope_by_dom_id(
+              flight_management_panel.DOM_ID.FLIGHT_MANAGEMENT_PANEL
+            );
+
           arrivaldeparture_table_sets_container_scope.table_requests_flight(
             flight_id,
             table_pagination_id,
-            flight_management_panel_scope.show_flight_lane_form_modal
+            lane_or_online_atcs === true ?
+              flight_management_panel_scope.show_flight_lane_form_modal :
+              flight_management_panel_scope.show_flight_online_atc_form_modal
           );
         };
 
+        $scope.show_flight_lane_form_modal = function (
+          flight_id, table_pagination_id) {
+            $scope.show_flight_modal(flight_id, table_pagination_id, true);
+        };
+
         // Function to show a modal form for assigning ATCs into a flight.
-        $scope.show_flight_online_atc_form_modal = function () {
+        $scope.show_flight_online_atc_form_modal = function (
+          flight_id, table_pagination_id) {
+            $scope.show_flight_modal(flight_id, table_pagination_id, false);
         };
         
         // Initiate table paginations after the AngularJS elements load.
