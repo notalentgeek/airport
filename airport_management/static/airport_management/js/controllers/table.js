@@ -174,8 +174,6 @@ var table = function (
           var url = dom_get_and_set.get_dom_param("#" + 
             DOM_ID.TABLE_REQUEST_FLIGHT_URL);
 
-          console.log(flight_management_panel);
-
           // Check if flight management panel is exists.
           if (flight_management_panel.is_exists()) {
             if (table_pagination_id ===
