@@ -28,6 +28,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    width: 100%;
   }
 }
 @media screen and (max-width: 767px) {
@@ -57,9 +58,9 @@
   }
   .arrivaldeparture-table-container>div {
     height: 100%;
-    position: relative;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
   }
 }
 #arrival-flight-table-pagination,
@@ -95,12 +96,17 @@
   margin-bottom: 5px;
   margin-top: 5px;
   text-align: center;
+  width: 100%;
+}
+body, html {
+  width: 100%;
 }
 .arrivaldeparture-table-container td {
   cursor: pointer;
 }
 .arrivaldeparture-table-container>div>table {
   position: absolute;
+  width: 99%; /* Need to be `99%` because `100%` causes an overflow on x. */
 }
 .arrivaldeparture-table-container>div>table th {
   text-align: center;

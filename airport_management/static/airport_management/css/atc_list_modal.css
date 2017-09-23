@@ -12,8 +12,8 @@
 /* To handle table overflowing. */
 #atc-list-modal .modal-body {
   max-height: 50vh;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 #atc-list-table th {
   text-align: center;
