@@ -13,6 +13,8 @@ from subprocess import call
 from sys import argv
 import datetime
 
+
+# Local AOD enumeration to return either `"A"` or `"D"` instead of `1` or `2`.
 class AOD(Enum):
     ARRIVAL = "A"
     DEPARTURE = "D"
@@ -27,12 +29,12 @@ Periodically pull data from the API into the database, update the flight
 statuses, and create backup fixtures.
 """
 #@periodic_task(run_every=crontab(minute="*/15"))
+#@periodic_task(run_every=crontab(minute=0, hour="0"))
 #@periodic_task(run_every=timedelta(minutes=10))
 #@periodic_task(run_every=timedelta(minutes=2))
-#@periodic_task(run_every=timedelta(minutes=5))
+@periodic_task(run_every=timedelta(minutes=5))
 #@periodic_task(run_every=timedelta(seconds=1))
 #@periodic_task(run_every=timedelta(seconds=5))
-@periodic_task(run_every=crontab(minute=0, hour="0"))
 def flight_api_pull():
     flights = get_public_flight_api()
 
@@ -82,9 +84,9 @@ PENDING: I think this part could be improved, because here, the `update()`
 function runs twice.
 """
 def flight_update_status_based_on_atc_and_lane(flight_objects):
-    flight_objects.filter(Q(lane__isnull=True) | Q(online_atc__isnull=True))
+    flight_objects.filter(Q(lane__isnull=True) | Q(online_atc__isnull=True))\
         .update(status=False)
-    flight_objects.filter(lane__isnull=False, online_atc__isnull=False)
+    flight_objects.filter(lane__isnull=False, online_atc__isnull=False)\
         .update(status=True)
 
 # Function to get flight objects, create new or update the value, then save it.
