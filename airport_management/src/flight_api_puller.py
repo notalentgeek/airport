@@ -1,3 +1,10 @@
+"""
+Flight API puller.
+PENDING: It still need to be refactored, especially to manage a lot of strings
+so that they can be re-used and referenced later.
+"""
+
+
 from datetime import datetime, timedelta
 from pytz import timezone
 import requests, sys

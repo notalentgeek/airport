@@ -10,6 +10,29 @@ AOD = AOD(
     ARRIVAL="1",
     DEPARTURE="2"
 )
+API_KEY = namedtuple(
+    "API_KEY",
+    "\
+        AIRPORT \
+        ARRIVAL \
+        CARRIER \
+        DEPARTURE \
+        DIRECTION \
+        FLIGHT_CODE \
+        ID \
+        SCHEDULED_DATETIME \
+    "
+)
+API_KEY = API_KEY(
+    AIRPORT="airport",
+    ARRIVAL="A",
+    CARRIER="carrier",
+    DEPARTURE="D",
+    DIRECTION="direction",
+    FLIGHT_CODE="flight_code",
+    ID="id",
+    SCHEDULED_DATETIME="scheduled_datetime"
+)
 DOM_CLASS = namedtuple(
     "CLASS",
     "\
@@ -180,36 +203,56 @@ STRING = namedtuple(
     "STRING",
     "\
         AIRPORT_MANAGER_GROUP \
+        APPLICATION_NAME \
+        ARRIVAL_FLIGHT_JSON_FIXTURES \
         ARRIVAL_TABLE_TITLE \
+        DEPARTURE_FLIGHT_JSON_FIXTURES \
         DEPARTURE_TABLE_TITLE \
+        FIXTURES \
         FLIGHT_AIRPORT_KEY \
         FLIGHT_CODE_KEY \
         FLIGHT_DAY_KEY \
         FLIGHT_SCHEDULE_KEY \
         LOGIN \
+        MANAGE_PY \
         NO_ATC \
         NO_ATC_AND_NO_LANE \
         NO_LANE \
-        SET \
         REGISTER \
+        SET \
+        TIMEZONE \
     "
 )
 STRING = STRING(
     AIRPORT_MANAGER_GROUP="airport_manager_group",
+    APPLICATION_NAME="airport_management",
+    ARRIVAL_FLIGHT_JSON_FIXTURES="arrival_flight.json",
     ARRIVAL_TABLE_TITLE="arrival table",
+    DEPARTURE_FLIGHT_JSON_FIXTURES="departure_flight.json",
     DEPARTURE_TABLE_TITLE="departure table",
+    FIXTURES="fixtures",
     FLIGHT_AIRPORT_KEY="airport: ",
     FLIGHT_CODE_KEY="code: ",
     FLIGHT_DAY_KEY="day: ",
     FLIGHT_SCHEDULE_KEY="schedule: ",
     LOGIN="login",
+    MANAGE_PY="manage.py",
     NO_ATC="no atc",
     NO_ATC_AND_NO_LANE="no atc and no lane",
     NO_LANE="no lane",
+    REGISTER="register",
     SET="flight is set",
-    REGISTER="register"
+    TIMEZONE="Europe/Amsterdam"
 )
 VALUE = namedtuple("VALUE", "PAGINATION_OBJECTS_COUNT_PER_PAGE")
 VALUE = VALUE(
     PAGINATION_OBJECTS_COUNT_PER_PAGE=100
+)
+
+PATH = namedtuple("PATH", "APPLICATION_FIXTURES")
+PATH = PATH(
+    APPLICATION_FIXTURES="{0}/{1}/{0}".format(
+        STRING.APPLICATION_NAME,
+        STRING.FIXTURES
+    )
 )

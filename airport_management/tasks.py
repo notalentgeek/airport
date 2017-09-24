@@ -1,11 +1,12 @@
 from .models import ArrivalFlight, DepartureFlight
 from .src.flight_api_puller import get_public_flight_api
+from .src.consts import API_KEY, PATH, STRING
 from celery.decorators import periodic_task
 from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
+from collections import namedtuple
 from datetime import timedelta
 from django.db.models import Q
-from enum import Enum
 from os import remove
 from os.path import dirname, join, normcase, normpath, realpath
 from pytz import timezone
@@ -13,143 +14,175 @@ from subprocess import call
 from sys import argv
 import datetime
 
-
-# Local AOD enumeration to return either `"A"` or `"D"` instead of `1` or `2`.
-class AOD(Enum):
-    ARRIVAL = "A"
-    DEPARTURE = "D"
-
-# PENDING: Get the timezone determined automatically.
-TIMEZONE = timezone("Europe/Amsterdam")
-
 logger = get_task_logger(__name__)
 
-"""
-Periodically pull data from the API into the database, update the flight
-statuses, and create backup fixtures.
-"""
+""" Celery task to periodically pull API in the midnight."""
 #@periodic_task(run_every=crontab(minute="*/15"))
 #@periodic_task(run_every=crontab(minute=0, hour="0"))
-#@periodic_task(run_every=timedelta(minutes=10))
+#@periodic_task(run_every=timedelta(minutes=15))
 #@periodic_task(run_every=timedelta(minutes=2))
-@periodic_task(run_every=timedelta(minutes=5))
+#@periodic_task(run_every=timedelta(minutes=5))
 #@periodic_task(run_every=timedelta(seconds=1))
 #@periodic_task(run_every=timedelta(seconds=5))
+@periodic_task(run_every=timedelta(minutes=10))
 def flight_api_pull():
+    """
     flights = get_public_flight_api()
 
-    # Iterate through all available flights.
     for flight in flights:
-        if flight["direction"] == AOD.ARRIVAL:
-            get_input_save(ArrivalFlight, flight)
-        elif flight["direction"] == AOD.DEPARTURE:
-            get_input_save(DepartureFlight, flight)
+        if flight[API_KEY.DIRECTION] == API_KEY.ARRIVAL:
+            get_input_then_save(ArrivalFlight, flight)
+        if flight[API_KEY.DIRECTION] == API_KEY.DEPARTURE:
+            get_input_then_save(DepartureFlight, flight)
+    """
 
-    # Update all flight statuses.
-    update_all_flight_statuses()
+    # Update all flights status.
+    update_all_flights_status()
 
-    # Create backup from arrival table and departure table into fixtures.
-    create_backup_arrivaldeparture_flight_fixtures()
+    # Create backup fixtures.
+    create_backup_fixtures()
 
 """
-Task to periodically marked which flight has properly arrived or departed. The
-parameters are to have both ATC and lane set when the corresponding flight
-arrives or departed.
+Task to periodically marked which flights has properly arrived/departed. The
+parameters are to have both ATCs and a lane set when the actual arriving/
+departing time passed.
 """
 @periodic_task(run_every=timedelta(minutes=1))
-def check_flight_statuses():
-    # Get the date and time for current operation.
-    now = TIMEZONE.localize(datetime.datetime.now())
+def check_this_minute_flights_status():
+    tz = timezone(STRING.TIMEZONE)
+    now = tz.localize(datetime.datetime.now())
+    now_plus_1_min = now + timedelta(minutes=1)
 
-    # Get the date and time for current operation with additional one minute.
-    now_1_min = now + timedelta(minutes=1)
+    """ PENDING: Please make some closures for this function. """
 
     """
-    Get all flights that from this minutes and smaller then another one
-    minute.
+    Arrival and departure time filter based on the time and if "proper" flag
+    is already set.
     """
-    arrival_flights = return_all_objects_in_this_minute(ArrivalFlight, now,
-        now_1_min, { "status__isnull": True })
-    departure_flights = return_all_objects_in_this_minute(DepartureFlight, now,
-        now_1_min, { "status__isnull": True })
+    arrival_filter = ArrivalFlight.objects.filter(status__isnull=True,
+        scheduled_datetime__lt=now_plus_1_min)
+    departure_filter = DepartureFlight.objects.filter(status__isnull=True,
+        scheduled_datetime__lt=now_plus_1_min)
 
-    flight_update_status_based_on_atc_and_lane(arrival_flights)
-    flight_update_status_based_on_atc_and_lane(departure_flights)
+    """
+    Arrival and departure time filter based on conditions (lane and online
+    ATCs exist).
+    """
+    arrival_filter_not_proper = arrival_filter.filter(
+        Q(lane__isnull=True) |
+        Q(online_atcs__isnull=True)
+    )
+    arrival_filter_proper = arrival_filter.filter(
+        Q(lane__isnull=False) &
+        Q(online_atcs__isnull=False)
+    )
+    departure_filter_not_proper = departure_filter.filter(
+        Q(lane__isnull=True) |
+        Q(online_atcs__isnull=True)
+    )
+    departure_filter_proper = departure_filter.filter(
+        Q(lane__isnull=False) &
+        Q(online_atcs__isnull=False)
+    )
 
+    arrival_filter_not_proper.update(status=False)
+    arrival_filter_proper.update(status=True)
+    departure_filter_not_proper.update(status=False)
+    departure_filter_proper.update(status=True)
+
+def normcase_normpath(path):
+    return normcase(normpath(path))
+
+""" Create/update fixtures everytime API saved into database. """
+def create_backup_fixtures():
+    """ Path to the root of this Django project (not this Django application).
+    This can be done because the location of manage.py that is always in the
+    root of a Django project. """
+    file_executed_location = dirname(realpath(argv[0]))
+
+    """ Path to manage.py. """
+    manage_py_path = join(file_executed_location, STRING.MANAGE_PY)
+    manage_py_path = normcase_normpath(manage_py_path)
+
+    """ Path to manage.py. """
+    fixtures_directory = normcase_normpath(PATH.APPLICATION_FIXTURES)
+
+    """ Path to arrival flight fixtures. """
+    arrival_fixture_path = join(fixtures_directory,
+        STRING.ARRIVAL_FLIGHT_JSON_FIXTURES)
+    arrival_fixture_path = join(file_executed_location,
+        arrival_fixture_path)
+
+    """ Path to departure flight fixtures. """
+    departure_fixture_path = join(fixtures_directory,
+        STRING.DEPARTURE_FLIGHT_JSON_FIXTURES)
+    departure_fixture_path = join(file_executed_location,
+        departure_fixture_path)
+
+    """ Create the fixtures back from database. """
+    call(["python3 -B {} dumpdata airport_management.ArrivalFlight --indent \
+        4 > {}".format(manage_py_path, arrival_fixture_path)], shell=True)
+    call(["python3 -B {} dumpdata airport_management.DepartureFlight \
+        --indent 4 > {}".format(manage_py_path, departure_fixture_path)],
+        shell=True)
+
+""" Function to get an element from the primary key (`pk`), but if there is
+none, create a new instance of its modal.
 """
-Function to update flight status based on the availability of `lane` and
-`atc_online`.
+def get_or_create(model, pk_value):
+    get_model = model.objects.filter(pk=pk_value)
 
-PENDING: I think this part could be improved, because here, the `update()`
-function runs twice.
-"""
-def flight_update_status_based_on_atc_and_lane(flight_objects):
-    flight_objects.filter(Q(lane__isnull=True) | Q(online_atc__isnull=True))\
-        .update(status=False)
-    flight_objects.filter(lane__isnull=False, online_atc__isnull=False)\
-        .update(status=True)
-
-# Function to get flight objects, create new or update the value, then save it.
-def get_input_save(model, flight_dict):
-    flight_object = get_or_create_object(model, flight_dict["id"])
-    flight_object = set_model_for_arrivaldeparture_flight(flight_object,
-        flight_dict)
-    flight_object.save()
-
-    return flight_object
-
-"""
-Function to get an element from the primary key (`pk`), but if there is none
-create a new instance of its model.
-"""
-def get_or_create_object(model, pk_value):
-    object_ = model.objects.filter(pk=pk_value)
-    if object_.exists():
+    if get_model.exists():
         """
-        Only get the first element. Although filtering using `pk` will always
-        return an element.
+        Only get the first element. Although, filtering using `pk` will always
+        return an element, because `px` is an unique ID field.
         """
-        return object_[0]
+        return get_model[0]
     else:
-        # Assign newly created model.
+        """
+        If there is no document exists return  a newly created model.
+        """
         return model()
 
 """
-Function to return all objects in a table with `datetime` parameter in this
-minute.
+Function to get the flight document, input or update new value, then save it.
 """
-def return_all_objects_in_this_minute(model, now, now_1_min, additional_dict):
-    return model.objects.filter(
-        scheduled_datetime__gte=now,
-        scheduled_datetime__lt=now_1_min,
-        **{ additional_dict }
+def get_input_then_save(arrivaldeparture_flight, flight_data):
+    model = get_or_create(arrivaldeparture_flight, flight_data[API_KEY.ID])
+    model = input_to_model_for_arrivaldeparture_flight(model, flight_data)
+    model.save()
+    return model
+
+def input_to_model_for_arrivaldeparture_flight(arrivaldeparture_flight,
+    flight_data):
+    arrivaldeparture_flight.id = flight_data["id"]
+    arrivaldeparture_flight.direction = flight_data["direction"]
+    arrivaldeparture_flight.flight_code = flight_data["flight_code"]
+    arrivaldeparture_flight.airport = flight_data["airport"]
+    arrivaldeparture_flight.scheduled_datetime =\
+        flight_data["scheduled_datetime"]
+    arrivaldeparture_flight.day = flight_data["day"]
+
+    """ I found that not every document has `"carrier"` filled. """
+    if "carrier" in flight_data:
+        arrivaldeparture_flight.carrier = flight_data["carrier"]
+
+    return arrivaldeparture_flight
+
+def update_all_flights_status():
+    tz = timezone(STRING.TIMEZONE)
+    now = tz.localize(datetime.datetime.now())
+
+    """ Get all past flight which has blank `status`. """
+    not_proper_arrival = ArrivalFlight.objects.filter(
+        scheduled_datetime__lt=now,
+        status__isnull=True
+    )
+    not_proper_departure = DepartureFlight.objects.filter(
+        scheduled_datetime__lt=now,
+        status__isnull=True
     )
 
-# Set the `ArrivalDepartureFlight` document with values.
-def set_model_for_arrivaldeparture_flight(flight_object, flight_dict):
-    flight_object.airport = flight_dict["airport"]
-    flight_object.day = flight_dict["day"]
-    flight_object.direction = flight_dict["direction"]
-    flight_object.flight_code = flight_dict["flight_code"]
-    flight_object.id = flight_dict["id"]
-    flight_object.scheduled_datetime = flight_dict["scheduled_datetime"]
-
-    if "carrier" in flight_dict:
-        flight_object.carrier = flight_dict["carrier"]
-
-    return flight_object
-
-# Update all flight statuses.
-def update_all_flight_statuses():
-    def update_all_flight_statuses_(model):
-        model.objects.filter(
-            scheduled_datetime__lt=now,
-            status__isnull=True
-       ).update(status=False)
-
-    # Get the date and time for current operation.
-    now = TIMEZONE.localize(datetime.datetime.now())
-
-    # Get all flights which has no status, then update it.
-    update_all_flight_statuses_(ArrivalFlight)
-    update_all_flight_statuses_(DepartureFlight)
+    """ Set all flights without status set to `False`. """
+    not_proper_arrival.update(status=False)
+    not_proper_departure.update(status=False)
