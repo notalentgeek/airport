@@ -3,9 +3,8 @@ var table = function (
   flight_lane_form_modal,
   flight_online_atcs_form_modal,
   flight_management_panel,
-  table,
   inner_table
-) {
+) {  
   var init_count = 1; // Singleton.
   var instances = [];
 
@@ -15,7 +14,6 @@ var table = function (
       flight_lane_form_modal,
       flight_online_atcs_form_modal,
       flight_management_panel,
-      table,
       inner_table
     );
     return instance;
@@ -26,7 +24,6 @@ var table = function (
     flight_lane_form_modal,
     flight_online_atcs_form_modal,
     flight_management_panel,
-    table,
     inner_table
   ) {
     var ANGULARJS_CONTROLLER = Object.freeze({
@@ -106,7 +103,7 @@ var table = function (
 
         // Create the table pagination.
         table_scope.flight_table_paginations[table_pagination_key] =
-          create_pagination_for_arrivaldeparture_table(
+          create_pagination(
             AOD,
             DOM_CLASS,
             DOM_ID,
@@ -114,6 +111,14 @@ var table = function (
             table_pagination_dom_id,
             pagination_number_of_pages[number_of_pages_key]
           );
+
+        /*
+        Because this is the first time pagination initiated, set the
+        current page to the last page.
+        */
+        var total_page = $("#" + table_pagination_dom_id)
+          .pagination("getPagesCount");
+        $("#" + table_pagination_dom_id).pagination("selectPage", total_page);
       };
 
       initiate_table_pagination_(
@@ -339,7 +344,7 @@ var table = function (
     
                 // Create new pagination.
                 arrivaldeparture_table_pagination = 
-                  create_pagination_for_arrivaldeparture_table(
+                  create_pagination(
                     AOD,                            // Reference to constants.
                     DOM_CLASS,                      // Reference to constants.
                     DOM_ID,                         // Reference to constants.

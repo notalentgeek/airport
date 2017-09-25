@@ -117,17 +117,18 @@ var navbar_right = function (angularjs_app) {
         username input for airport manager is changed.
         */
         $scope.check_airport_manager_name_existence = function () {
-          check_button_and_input_with_http(
-            $scope.disable_airport_manager_register_button,
-            DOM_ID.AIRPORT_MANAGER_REGISTER_BUTTON,
-            DOM_ID.AIRPORT_MANAGER_NAME_INPUT,
-            DOM_ID.CHECK_AIRPORT_MANAGER_NAME_EXISTENCE_URL,
-            $scope.airport_manager_name_input, $http,
-            "btn-danger", "btn-primary",
-            KEY.AIRPORT_MANAGER_NAME,
-            "processing...", "name exists", "register", "server problem",
-            $scope.disable_airport_manager_register_button_callback
-          );
+          $scope.disable_airport_manager_register_button =
+            check_button_and_input_with_http(
+              $scope.disable_airport_manager_register_button,
+              DOM_ID.AIRPORT_MANAGER_REGISTER_BUTTON,
+              DOM_ID.AIRPORT_MANAGER_NAME_INPUT,
+              DOM_ID.CHECK_AIRPORT_MANAGER_NAME_EXISTENCE_URL,
+              $scope.airport_manager_name_input, $http,
+              "btn-danger", "btn-primary",
+              KEY.AIRPORT_MANAGER_NAME,
+              "processing...", "name exists", "register", "server problem",
+              $scope.disable_airport_manager_register_button_callback
+            );
         };
 
         // Callback function after HTTP request fulfilled.

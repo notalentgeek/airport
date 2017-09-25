@@ -35,17 +35,18 @@ var atc_registration_form_modal = function (angularjs_app) {
         $scope.disable_atc_register_button = true;
 
         $scope.check_atc_code_existence = function () {
-          check_button_and_input_with_http(
-            $scope.disable_atc_register_button,
-            DOM_ID.ATC_REGISTRATION_BUTTON,
-            DOM_ID.ATC_CODE_INPUT,
-            DOM_ID.CHECK_ATC_CODE_EXISTENCE_URL,
-            $scope.atc_code_input, $http,
-            "btn-danger", "btn-primary",
-            KEY.ATC_CODE,
-            "processing...", "atc code exists", "register", "server problem",
-            $scope.disable_atc_register_button_callback
-          );
+          $scope.disable_atc_register_button =
+            check_button_and_input_with_http(
+              $scope.disable_atc_register_button,
+              DOM_ID.ATC_REGISTRATION_BUTTON,
+              DOM_ID.ATC_CODE_INPUT,
+              DOM_ID.CHECK_ATC_CODE_EXISTENCE_URL,
+              $scope.atc_code_input, $http,
+              "btn-danger", "btn-primary",
+              KEY.ATC_CODE,
+              "processing...", "atc code exists", "register", "server problem",
+              $scope.disable_atc_register_button_callback
+            );
         };
 
         // Callback function after HTTP request fulfilled.

@@ -1,5 +1,5 @@
 // Create pagination HTML.
-var create_pagination_for_arrivaldeparture_table = function (
+var create_pagination = function (
   table_aod,
   table_dom_class,
   table_dom_id,

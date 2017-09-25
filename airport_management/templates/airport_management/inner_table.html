@@ -16,7 +16,18 @@
     `'{{ data.id }}'` should be enclosed in quote because it need to be
     perceived as a string.
     -->
-    <tr ng-click="table_requests_flight('{{ object.id }}', '{{ dom_id }}')">
+    <tr
+      style="background-color:
+        {% if object.status is False %}
+          #D9534F
+        {% elif object.status is True %}
+          #5CB85C
+        {% endif %}
+      ;"
+      {% if user.is_authenticated and not user.is_superuser %}
+        ng-click="table_requests_flight('{{ object.id }}', '{{ dom_id }}')"
+      {% endif %}
+    >
       <td>{{ object.flight_code }}</td>
       <td class="hide-for-small-width">
         {{ object.carrier }}
@@ -35,20 +46,28 @@
         The `ng-click` function is the one located in table's controller in
         table.js.
         -->
-        <a href="#"
-          ng-click="show_flight_lane_form_modal('{{ object.id }}', '{{ dom_id }}')">
+        {% if user.is_authenticated and not user.is_superuser %}
+          <a href="#"
+            ng-click="show_flight_lane_form_modal('{{ object.id }}', '{{ dom_id }}')">
+            {{ object.lane }}
+          </a>
+        {% else %}
           {{ object.lane }}
-        </a>
+        {% endif %}
       </td>
       <td>
         <!--
         The `ng-click` function is the one located in table's controller in
         table.js.
         -->
-        <a href="#"
-          ng-click="show_flight_online_atc_form_modal('{{ object.id }}', '{{ dom_id }}')">
+        {% if user.is_authenticated and not user.is_superuser %}
+          <a href="#"
+            ng-click="show_flight_online_atc_form_modal('{{ object.id }}', '{{ dom_id }}')">
+            atcs
+          </a>
+        {% else %}
           atcs
-        </a>
+        {% endif %}
       </td>
       <td class="flight-status-container">
         <div>{{ object.status }}</div>

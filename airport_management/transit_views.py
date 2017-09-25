@@ -122,7 +122,7 @@ def register_airport_manager(request):
         """
         Add the newly created airport manager into airport manager group.
         """
-        airport_manager_group = get_or_create_group(
+        airport_manager_group = create_or_get_group(
             STRING.AIRPORT_MANAGER_GROUP
         )
         airport_manager.groups.add(airport_manager_group)

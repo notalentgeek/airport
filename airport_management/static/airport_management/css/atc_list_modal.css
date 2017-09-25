@@ -15,6 +15,6 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
-#atc-list-table th {
+#atc-list-table th, #atc-list-table tr {
   text-align: center;
 }
