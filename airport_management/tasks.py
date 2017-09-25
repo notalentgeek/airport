@@ -134,6 +134,11 @@ def check_this_minute_flights_status():
     departure_filter_not_proper.update(status=False)
     departure_filter_proper.update(status=True)
 
+""" Backup to fixtures every 10 minutes. """
+@periodic_task(run_every=timedelta(minutes=10))
+def create_backup_fixtures_():
+    create_backup_fixtures()
+
 def normcase_normpath(path):
     return normcase(normpath(path))
 
