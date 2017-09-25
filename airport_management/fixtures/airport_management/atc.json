@@ -1,0 +1,11 @@
+[
+{
+    "model": "airport_management.airtrafficcontroller",
+    "pk": 1,
+    "fields": {
+        "code": "asd",
+        "first_name": "asd",
+        "last_name": "asd"
+    }
+}
+]
