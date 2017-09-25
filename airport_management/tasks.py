@@ -1,12 +1,16 @@
 from .models import ArrivalFlight, DepartureFlight
-from .src.flight_api_puller import get_public_flight_api
 from .src.consts import API_KEY, PATH, STRING
+from .src.flight_api_puller import get_public_flight_api
 from celery.decorators import periodic_task
+from celery.five import monotonic
 from celery.task.schedules import crontab
 from celery.utils.log import get_task_logger
 from collections import namedtuple
+from contextlib import contextmanager
 from datetime import timedelta
+from django.core.cache import cache
 from django.db.models import Q
+from hashlib import md5
 from os import remove
 from os.path import dirname, join, normcase, normpath, realpath
 from pytz import timezone
@@ -14,7 +18,43 @@ from subprocess import call
 from sys import argv
 import datetime
 
+LOCK_EXPIRE = 60 * 10  # Lock expires in 10 minutes
+
 logger = get_task_logger(__name__)
+
+@contextmanager
+def memcache_lock(lock_id, oid):
+    timeout_at = monotonic() + LOCK_EXPIRE - 3
+
+    """ cache.add fails if the key already exists. """
+    status = cache.add(lock_id, oid, LOCK_EXPIRE)
+
+    try:
+        yield status
+    finally:
+        """
+        memcache delete is very slow, but we have to use it to take
+        advantage of using add() for atomic locking
+        """
+        if monotonic() < timeout_at:
+            """
+            Do not release the lock if we exceeded the timeout to lessen the
+            chance of releasing an expired lock owned by someone else.
+            """
+            cache.delete(lock_id)
+
+@task(bind=True)
+def flight_api_pull(self, feed_url):
+    # The cache key consists of the task name and the MD5 digest
+    # of the feed URL.
+    feed_url_hexdigest = md5(feed_url).hexdigest()
+    lock_id = '{0}-lock-{1}'.format(self.name, feed_url_hexdigest)
+    logger.debug('Importing feed: %s', feed_url)
+    with memcache_lock(lock_id, self.app.oid) as acquired:
+        if acquired:
+            return Feed.objects.import_feed(feed_url).url
+    logger.debug(
+        'Feed %s is already being imported by another worker', feed_url)
 
 """ Celery task to periodically pull API in the midnight."""
 #@periodic_task(run_every=crontab(minute="*/15"))
@@ -25,8 +65,7 @@ logger = get_task_logger(__name__)
 #@periodic_task(run_every=timedelta(seconds=1))
 #@periodic_task(run_every=timedelta(seconds=5))
 @periodic_task(run_every=timedelta(minutes=10))
-def flight_api_pull():
-    """
+def flight_api_pull_():
     flights = get_public_flight_api()
 
     for flight in flights:
@@ -34,7 +73,6 @@ def flight_api_pull():
             get_input_then_save(ArrivalFlight, flight)
         if flight[API_KEY.DIRECTION] == API_KEY.DEPARTURE:
             get_input_then_save(DepartureFlight, flight)
-    """
 
     # Update all flights status.
     update_all_flights_status()
