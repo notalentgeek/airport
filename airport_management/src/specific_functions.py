@@ -12,6 +12,8 @@ def create_pagination_return_page_and_number_of_pages(
     returned_page=1 # All objects in pagination page (after being splitted).
 ):
     paginator = Paginator(model.objects.all().order_by(order_field), amount)
+    if returned_page == KEY.LAST:
+        returned_page = paginator.num_pages
     dictionary = {}
     dictionary[KEY.NUMBER_OF_PAGES] = paginator.num_pages
     dictionary[KEY.OBJECTS] = paginator.page(returned_page).object_list

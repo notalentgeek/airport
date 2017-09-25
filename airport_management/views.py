@@ -20,6 +20,8 @@ def index(request):
 
     """
     Create arrival flight table pagination and departure flight pagination.
+    Return the last page of the pagination. The last pagination is the latest
+    flights added to the database.
     """
     for flight_table_pagination_parameters in\
         flight_table_paginations_parameters:
@@ -27,7 +29,8 @@ def index(request):
             create_pagination_return_page_and_number_of_pages(
                 flight_table_pagination_parameters[1],
                 MODAL_FIELD.SCHEDULED_DATETIME,
-                VALUE.PAGINATION_OBJECTS_COUNT_PER_PAGE
+                VALUE.PAGINATION_OBJECTS_COUNT_PER_PAGE,
+                KEY.LAST
             )
 
     """
