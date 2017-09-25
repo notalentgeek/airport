@@ -206,9 +206,10 @@ STRING = namedtuple(
     "\
         AIRPORT_MANAGER_GROUP \
         APPLICATION_NAME \
-        ARRIVAL_FLIGHT_JSON_FIXTURES \
+        ATC_JSON_FIXTURE \
+        ARRIVAL_FLIGHT_JSON_FIXTURE \
         ARRIVAL_TABLE_TITLE \
-        DEPARTURE_FLIGHT_JSON_FIXTURES \
+        DEPARTURE_FLIGHT_JSON_FIXTURE \
         DEPARTURE_TABLE_TITLE \
         FIXTURES \
         FLIGHT_AIRPORT_KEY \
@@ -228,9 +229,10 @@ STRING = namedtuple(
 STRING = STRING(
     AIRPORT_MANAGER_GROUP="airport_manager_group",
     APPLICATION_NAME="airport_management",
-    ARRIVAL_FLIGHT_JSON_FIXTURES="arrival_flight.json",
+    ATC_JSON_FIXTURE="atc.json",
+    ARRIVAL_FLIGHT_JSON_FIXTURE="arrival_flight.json",
     ARRIVAL_TABLE_TITLE="arrival table",
-    DEPARTURE_FLIGHT_JSON_FIXTURES="departure_flight.json",
+    DEPARTURE_FLIGHT_JSON_FIXTURE="departure_flight.json",
     DEPARTURE_TABLE_TITLE="departure table",
     FIXTURES="fixtures",
     FLIGHT_AIRPORT_KEY="airport: ",

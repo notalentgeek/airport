@@ -156,23 +156,30 @@ def create_backup_fixtures():
     """ Path to manage.py. """
     fixtures_directory = normcase_normpath(PATH.APPLICATION_FIXTURES)
 
-    """ Path to arrival flight fixtures. """
+    """ Path to arrival flight fixture. """
     arrival_fixture_path = join(fixtures_directory,
-        STRING.ARRIVAL_FLIGHT_JSON_FIXTURES)
+        STRING.ARRIVAL_FLIGHT_JSON_FIXTURE)
     arrival_fixture_path = join(file_executed_location,
         arrival_fixture_path)
 
-    """ Path to departure flight fixtures. """
+    """ Path to departure flight fixture. """
     departure_fixture_path = join(fixtures_directory,
-        STRING.DEPARTURE_FLIGHT_JSON_FIXTURES)
+        STRING.DEPARTURE_FLIGHT_JSON_FIXTURE)
     departure_fixture_path = join(file_executed_location,
         departure_fixture_path)
+
+    """ Path to Air Traffic Controller fixture. """
+    atc_fixture_path = join(fixtures_directory,STRING.ATC_JSON_FIXTURE)
+    atc_fixture_path = join(file_executed_location, atc_fixture_path)
 
     """ Create the fixtures back from database. """
     call(["python3 -B {} dumpdata airport_management.ArrivalFlight --indent \
         4 > {}".format(manage_py_path, arrival_fixture_path)], shell=True)
     call(["python3 -B {} dumpdata airport_management.DepartureFlight \
         --indent 4 > {}".format(manage_py_path, departure_fixture_path)],
+        shell=True)
+    call(["python3 -B {} dumpdata airport_management.AirTrafficController \
+        --indent 4 > {}".format(manage_py_path, atc_fixture_path)],
         shell=True)
 
 """ Function to get an element from the primary key (`pk`), but if there is
