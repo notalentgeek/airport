@@ -1,3 +1,9 @@
+"""
+Celery task file.
+
+PENDING: A lot of closures should be made here.
+"""
+
 from .models import ArrivalFlight, DepartureFlight
 from .src.consts import API_KEY, PATH, STRING
 from .src.flight_api_puller import get_public_flight_api
@@ -20,8 +26,9 @@ import datetime
 
 LOCK_EXPIRE = 60 * 10  # Lock expires in 10 minutes
 
-logger = get_task_logger(__name__)
+logger = get_task_logger(__name__) # Celery inside operation.
 
+""" Prevent task to overlap to each other. """
 @contextmanager
 def memcache_lock(lock_id, oid):
     timeout_at = monotonic() + LOCK_EXPIRE - 3
@@ -45,13 +52,13 @@ def memcache_lock(lock_id, oid):
 
 """ Celery task to periodically pull API in the midnight."""
 #@periodic_task(run_every=crontab(minute="*/15"))
-#@periodic_task(run_every=crontab(minute=0, hour="0"))
+#@periodic_task(run_every=timedelta(minutes=10))
 #@periodic_task(run_every=timedelta(minutes=15))
 #@periodic_task(run_every=timedelta(minutes=2))
 #@periodic_task(run_every=timedelta(minutes=5))
 #@periodic_task(run_every=timedelta(seconds=1))
 #@periodic_task(run_every=timedelta(seconds=5))
-@periodic_task(run_every=timedelta(minutes=10))
+@periodic_task(run_every=crontab(minute=0, hour="0"))
 def flight_api_pull():
     """
     The cache key consists of the task name and the MD5 digest of the feed

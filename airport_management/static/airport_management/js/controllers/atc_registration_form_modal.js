@@ -33,6 +33,7 @@ var atc_registration_form_modal = function (angularjs_app) {
       ANGULARJS_CONTROLLER.ATC_REGISTRATION_FORM,
       function ($http, $scope) {
         $scope.disable_atc_register_button = true;
+        $scope.disable_atc_register_temporary_value = undefined;
 
         $scope.check_atc_code_existence = function () {
           $scope.disable_atc_register_button =
@@ -52,7 +53,7 @@ var atc_registration_form_modal = function (angularjs_app) {
         // Callback function after HTTP request fulfilled.
         $scope.disable_atc_register_button_callback = function (value) {
           if (value !== null && value !== undefined) {
-            $scope.disable_atc_register_button = value;
+            $scope.disable_atc_register_temporary_value = value;
           }
 
           var ng_models_is_valid = (
@@ -65,8 +66,17 @@ var atc_registration_form_modal = function (angularjs_app) {
           If `value` is not `null` then it means this callback function was
           triggered from the HTTP request.
           */
-          if (ng_models_is_valid && !$scope.disable_atc_register_button) {
-            $scope.disable_atc_register_button = false;
+          if (ng_models_is_valid) {
+            if (
+              $scope.disable_atc_register_temporary_value ||
+              $scope.disable_atc_register_temporary_value === null ||
+              $scope.disable_atc_register_temporary_value === undefined
+            ) {
+              $scope.disable_atc_register_button = true;
+            }
+            else {
+              $scope.disable_atc_register_button = false;
+            }
           }
           else {
             $scope.disable_atc_register_button = true;
@@ -75,9 +85,10 @@ var atc_registration_form_modal = function (angularjs_app) {
 
         // Reset ATC form.
         $scope.reset_atc_registration_form = function () {
-          $scope.atc_registration_form.atc_code_input = "";
-          $scope.atc_registration_form.atc_first_name_input = "";
-          $scope.atc_registration_form.atc_last_name_input = "";
+          $scope.disable_atc_register_button = true;
+          $scope.atc_code_input = "";
+          $scope.atc_first_name_input = "";
+          $scope.atc_last_name_input = "";
         };
       }
     );
