@@ -33175,7 +33175,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "BAW",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33189,7 +33189,7 @@
         "scheduled_datetime": "2017-09-25T13:15:00Z",
         "carrier": "BAW",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33273,7 +33273,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "BEE",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33385,7 +33385,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "CKK",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33567,7 +33567,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "ETD",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33693,7 +33693,7 @@
         "scheduled_datetime": "2017-09-25T12:40:00Z",
         "carrier": "KZR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33763,7 +33763,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "DLH",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33875,7 +33875,7 @@
         "scheduled_datetime": "2017-09-25T12:10:00Z",
         "carrier": "SWR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33945,7 +33945,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "MSR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -33987,7 +33987,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": null,
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34021,6 +34021,20 @@
 },
 {
     "model": "airport_management.arrivalflight",
+    "pk": 122719007218840054,
+    "fields": {
+        "flight_code": "OOAMR",
+        "airport": "LUX",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T16:00:00Z",
+        "carrier": "OOA",
+        "lane": null,
+        "status": null,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
     "pk": 122719007219216884,
     "fields": {
         "flight_code": "OR092",
@@ -34029,7 +34043,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "TFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34043,7 +34057,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "TFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34225,7 +34239,7 @@
         "scheduled_datetime": "2017-09-25T12:40:00Z",
         "carrier": "TFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34281,7 +34295,7 @@
         "scheduled_datetime": "2017-09-25T12:10:00Z",
         "carrier": "TFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34393,7 +34407,7 @@
         "scheduled_datetime": "2017-09-25T12:21:00Z",
         "carrier": "PHH",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34455,6 +34469,20 @@
 },
 {
     "model": "airport_management.arrivalflight",
+    "pk": 122719007230768368,
+    "fields": {
+        "flight_code": "RU177",
+        "airport": "FRA",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T17:10:00Z",
+        "carrier": "ABW",
+        "lane": null,
+        "status": null,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
     "pk": 122719007230784272,
     "fields": {
         "flight_code": "RU704",
@@ -34477,7 +34505,7 @@
         "scheduled_datetime": "2017-09-25T12:15:00Z",
         "carrier": "SAS",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34575,7 +34603,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "SRK",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34589,7 +34617,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "TAP",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34749,6 +34777,34 @@
 },
 {
     "model": "airport_management.arrivalflight",
+    "pk": 122719007261025478,
+    "fields": {
+        "flight_code": "ZXP02",
+        "airport": "AMS",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T13:05:56Z",
+        "carrier": "ZXP",
+        "lane": null,
+        "status": false,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
+    "pk": 122719007261025482,
+    "fields": {
+        "flight_code": "ZXP04",
+        "airport": "AMS",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T13:08:51Z",
+        "carrier": "ZXP",
+        "lane": null,
+        "status": false,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
     "pk": 122719007261025486,
     "fields": {
         "flight_code": "ZXP06",
@@ -34813,7 +34869,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "OHY",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34897,7 +34953,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -34995,7 +35051,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -35009,7 +35065,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -35275,7 +35331,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -35317,7 +35373,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -35779,7 +35835,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -35989,7 +36045,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -36185,7 +36241,7 @@
         "scheduled_datetime": "2017-09-25T12:15:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -36633,7 +36689,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -36717,7 +36773,7 @@
         "scheduled_datetime": "2017-09-25T13:00:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -36773,7 +36829,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -36843,7 +36899,7 @@
         "scheduled_datetime": "2017-09-25T12:40:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -36941,7 +36997,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AFR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -37011,7 +37067,7 @@
         "scheduled_datetime": "2017-09-25T12:40:00Z",
         "carrier": "AMX",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -37389,7 +37445,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AMX",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -37515,7 +37571,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "AMX",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -37529,7 +37585,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AMX",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -37557,7 +37613,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AMX",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -37963,7 +38019,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AZA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -38173,7 +38229,7 @@
         "scheduled_datetime": "2017-09-25T12:15:00Z",
         "carrier": "AZA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -38425,7 +38481,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "AZA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -38747,7 +38803,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "BEE",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -38775,7 +38831,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "BEE",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -38901,7 +38957,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "BTI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -38957,7 +39013,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "BTI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -39139,7 +39195,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "CAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -39195,7 +39251,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -39271,6 +39327,20 @@
 },
 {
     "model": "airport_management.arrivalflight",
+    "pk": 122719007624662528,
+    "fields": {
+        "flight_code": "CLX779",
+        "airport": "IAH",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T13:35:00Z",
+        "carrier": "CLX",
+        "lane": null,
+        "status": null,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
     "pk": 122719007624665410,
     "fields": {
         "flight_code": "CLX897",
@@ -39307,7 +39377,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "CND",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -39447,7 +39517,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "CSN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -39657,7 +39727,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "CSN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -39699,7 +39769,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "CSN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -39825,7 +39895,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "CSN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -40189,7 +40259,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "CSN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -40203,7 +40273,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CSN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -40525,7 +40595,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CSN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41337,7 +41407,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41365,7 +41435,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41393,7 +41463,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41477,7 +41547,7 @@
         "scheduled_datetime": "2017-09-25T12:55:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41505,7 +41575,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41519,7 +41589,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41645,7 +41715,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -41687,7 +41757,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -42009,7 +42079,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -42387,7 +42457,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -42527,7 +42597,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -42639,7 +42709,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -42905,7 +42975,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -42933,7 +43003,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43031,7 +43101,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43073,7 +43143,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43297,7 +43367,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43437,7 +43507,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43549,7 +43619,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43563,7 +43633,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43619,7 +43689,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43703,7 +43773,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43801,7 +43871,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43843,7 +43913,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43941,7 +44011,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43955,7 +44025,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43983,7 +44053,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -43997,7 +44067,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -44305,7 +44375,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -44333,7 +44403,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "DAL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -44781,7 +44851,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "ETD",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -45341,7 +45411,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "ETD",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -45523,7 +45593,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "RYR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -45635,7 +45705,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -45691,7 +45761,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -45775,7 +45845,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -45859,7 +45929,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -45901,7 +45971,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -46027,7 +46097,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -46055,7 +46125,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -46153,7 +46223,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -46237,7 +46307,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "GIA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -46307,7 +46377,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "GLO",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47105,7 +47175,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47343,7 +47413,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47399,7 +47469,7 @@
         "scheduled_datetime": "2017-09-25T13:15:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47469,7 +47539,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47609,7 +47679,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47665,7 +47735,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47777,7 +47847,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47805,7 +47875,7 @@
         "scheduled_datetime": "2017-09-25T13:00:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47819,7 +47889,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47833,7 +47903,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "TRA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -47875,7 +47945,7 @@
         "scheduled_datetime": "2017-09-25T13:05:00Z",
         "carrier": "IBE",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -48029,7 +48099,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "IBE",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -48687,7 +48757,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -48827,7 +48897,7 @@
         "scheduled_datetime": "2017-09-25T12:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -48855,7 +48925,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -49051,7 +49121,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -49065,7 +49135,7 @@
         "scheduled_datetime": "2017-09-25T13:00:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -49177,7 +49247,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -49359,7 +49429,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -49625,7 +49695,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -49877,7 +49947,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50143,7 +50213,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50227,7 +50297,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50339,7 +50409,7 @@
         "scheduled_datetime": "2017-09-25T12:15:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50395,7 +50465,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50493,7 +50563,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50703,7 +50773,7 @@
         "scheduled_datetime": "2017-09-25T12:55:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50731,7 +50801,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50801,7 +50871,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -50857,7 +50927,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -51193,7 +51263,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -51501,7 +51571,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -51781,7 +51851,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -51851,7 +51921,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -51907,7 +51977,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -51991,7 +52061,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -52047,7 +52117,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -52061,7 +52131,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -52103,7 +52173,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -52159,7 +52229,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -52229,7 +52299,7 @@
         "scheduled_datetime": "2017-09-25T12:00:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -52677,7 +52747,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -52845,7 +52915,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53153,7 +53223,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53265,7 +53335,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53307,7 +53377,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53349,7 +53419,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53419,7 +53489,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53601,7 +53671,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53643,7 +53713,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53769,7 +53839,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53825,7 +53895,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -53979,7 +54049,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -54091,7 +54161,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "KLM",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -55351,7 +55421,7 @@
         "scheduled_datetime": "2017-09-25T12:15:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -55407,7 +55477,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -55589,7 +55659,7 @@
         "scheduled_datetime": "2017-09-25T12:20:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -56177,7 +56247,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -56247,7 +56317,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -56303,7 +56373,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -56373,7 +56443,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -56429,7 +56499,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -56863,7 +56933,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "KQA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57129,7 +57199,7 @@
         "scheduled_datetime": "2017-09-25T13:15:00Z",
         "carrier": "DLH",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57297,7 +57367,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57311,7 +57381,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57395,7 +57465,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57437,7 +57507,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57465,7 +57535,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57507,7 +57577,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57535,7 +57605,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57549,7 +57619,7 @@
         "scheduled_datetime": "2017-09-25T12:30:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57577,7 +57647,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57745,7 +57815,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57885,7 +57955,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -57899,7 +57969,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "CXA",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -58739,7 +58809,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "MAS",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -58935,7 +59005,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -58963,7 +59033,7 @@
         "scheduled_datetime": "2017-09-25T13:10:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -58977,7 +59047,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59047,7 +59117,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59075,7 +59145,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59117,7 +59187,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59215,7 +59285,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59299,7 +59369,7 @@
         "scheduled_datetime": "2017-09-25T12:05:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59341,7 +59411,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59453,7 +59523,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "MAU",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -59971,7 +60041,7 @@
         "scheduled_datetime": "2017-09-25T13:15:00Z",
         "carrier": "NJE",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -60041,7 +60111,7 @@
         "scheduled_datetime": "2017-09-25T12:00:00Z",
         "carrier": "TFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -60055,7 +60125,7 @@
         "scheduled_datetime": "2017-09-25T11:55:00Z",
         "carrier": "CTN",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -60069,7 +60139,7 @@
         "scheduled_datetime": "2017-09-25T12:10:00Z",
         "carrier": "PGT",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -60237,7 +60307,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "QTR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -60475,7 +60545,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -60559,7 +60629,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -60699,7 +60769,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "AFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -61133,7 +61203,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -61203,7 +61273,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "AFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -61413,7 +61483,7 @@
         "scheduled_datetime": "2017-09-25T12:15:00Z",
         "carrier": "AFL",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -62435,7 +62505,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "VLG",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -62519,7 +62589,7 @@
         "scheduled_datetime": "2017-09-25T13:05:00Z",
         "carrier": "VLG",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -62841,7 +62911,7 @@
         "scheduled_datetime": "2017-09-25T12:10:00Z",
         "carrier": "YZR",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -62854,6 +62924,34 @@
         "day": "Monday",
         "scheduled_datetime": "2017-09-25T05:30:00Z",
         "carrier": "YZR",
+        "lane": null,
+        "status": false,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
+    "pk": 122719010858634414,
+    "fields": {
+        "flight_code": "ZXP021",
+        "airport": "AMS",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T13:05:00Z",
+        "carrier": "ZXP",
+        "lane": null,
+        "status": false,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
+    "pk": 122719010858634562,
+    "fields": {
+        "flight_code": "ZXP041",
+        "airport": "AMS",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T13:08:00Z",
+        "carrier": "ZXP",
         "lane": null,
         "status": false,
         "online_atcs": []
@@ -63023,7 +63121,7 @@
         "scheduled_datetime": "2017-09-25T11:50:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -63345,7 +63443,7 @@
         "scheduled_datetime": "2017-09-25T11:45:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -63527,7 +63625,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -63821,7 +63919,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -63975,7 +64073,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -64045,7 +64143,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -64171,7 +64269,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -64339,7 +64437,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -64619,7 +64717,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -64829,7 +64927,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -64899,7 +64997,7 @@
         "scheduled_datetime": "2017-09-25T11:40:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -65025,7 +65123,7 @@
         "scheduled_datetime": "2017-09-25T11:35:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -65319,7 +65417,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -65333,7 +65431,7 @@
         "scheduled_datetime": "2017-09-25T12:40:00Z",
         "carrier": "JAI",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -65451,6 +65549,20 @@
 },
 {
     "model": "airport_management.arrivalflight",
+    "pk": 122719017914903872,
+    "fields": {
+        "flight_code": "BCS811P",
+        "airport": "LEJ",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T18:00:00Z",
+        "carrier": "BCS",
+        "lane": null,
+        "status": null,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
     "pk": 122719018349706796,
     "fields": {
         "flight_code": "BFX805W",
@@ -65557,7 +65669,7 @@
         "scheduled_datetime": "2017-09-25T12:45:00Z",
         "carrier": "EZY",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -65795,7 +65907,7 @@
         "scheduled_datetime": "2017-09-25T12:15:00Z",
         "carrier": "EZY",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -66103,7 +66215,7 @@
         "scheduled_datetime": "2017-09-25T12:25:00Z",
         "carrier": "EZY",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -66229,7 +66341,7 @@
         "scheduled_datetime": "2017-09-25T12:40:00Z",
         "carrier": "EZY",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -66299,7 +66411,7 @@
         "scheduled_datetime": "2017-09-25T13:20:00Z",
         "carrier": "EZY",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -66411,7 +66523,7 @@
         "scheduled_datetime": "2017-09-25T12:55:00Z",
         "carrier": "LLX",
         "lane": null,
-        "status": null,
+        "status": false,
         "online_atcs": []
     }
 },
@@ -66440,6 +66552,20 @@
         "carrier": "LLX",
         "lane": null,
         "status": false,
+        "online_atcs": []
+    }
+},
+{
+    "model": "airport_management.arrivalflight",
+    "pk": 122719099718300168,
+    "fields": {
+        "flight_code": "RAM8780",
+        "airport": "CMN",
+        "day": "Monday",
+        "scheduled_datetime": "2017-09-25T13:30:00Z",
+        "carrier": "RAM",
+        "lane": null,
+        "status": null,
         "online_atcs": []
     }
 },

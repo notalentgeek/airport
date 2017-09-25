@@ -43,19 +43,6 @@ def memcache_lock(lock_id, oid):
             """
             cache.delete(lock_id)
 
-@task(bind=True)
-def flight_api_pull(self, feed_url):
-    # The cache key consists of the task name and the MD5 digest
-    # of the feed URL.
-    feed_url_hexdigest = md5(feed_url).hexdigest()
-    lock_id = '{0}-lock-{1}'.format(self.name, feed_url_hexdigest)
-    logger.debug('Importing feed: %s', feed_url)
-    with memcache_lock(lock_id, self.app.oid) as acquired:
-        if acquired:
-            return Feed.objects.import_feed(feed_url).url
-    logger.debug(
-        'Feed %s is already being imported by another worker', feed_url)
-
 """ Celery task to periodically pull API in the midnight."""
 #@periodic_task(run_every=crontab(minute="*/15"))
 #@periodic_task(run_every=crontab(minute=0, hour="0"))
@@ -65,6 +52,18 @@ def flight_api_pull(self, feed_url):
 #@periodic_task(run_every=timedelta(seconds=1))
 #@periodic_task(run_every=timedelta(seconds=5))
 @periodic_task(run_every=timedelta(minutes=10))
+def flight_api_pull():
+    """
+    The cache key consists of the task name and the MD5 digest of the feed
+    URL.
+    """
+    lock_id = "flight-api-pull-lock-id"
+    lock_oid = "flight-api-pull-lock-oid"
+    with memcache_lock(lock_id, lock_oid) as acquired:
+        if acquired:
+            return flight_api_pull_()
+    logger.debug("task is already ran")
+
 def flight_api_pull_():
     flights = get_public_flight_api()
 
