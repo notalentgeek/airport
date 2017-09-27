@@ -1,0 +1,49 @@
+#flight-online-atc-form-arrivaldeparture,
+#flight-online-atc-form-flight-id,
+#flight-online-atc-form-flight-online-atcs-id {
+  display: none;
+}
+#flight-online-atcs-form-modal .modal-body {
+  max-height: 50vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#flight-online-atcs-form-modal .modal-footer {
+  display: flex;
+  flex-direction: row;
+}
+#flight-online-atcs-form-modal .modal-footer>input {
+  flex: 1;
+  margin: 0;
+}
+#flight-online-atcs-form-modal .modal-header {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  background-color: #5CB85C;
+  border-bottom:1px solid #EEEEEE;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding:9px 15px;
+}
+#flight-online-atcs-form-modal .td-with-checkbox {
+  padding: 2.5px;
+}
+#flight-online-atcs-form-modal .td-with-checkbox>input {
+  height: 30px;
+  width: 30px;
+}
+#flight-online-atcs-form-modal .td-without-checkbox {
+  padding: 2.5px;
+  position: absolute;
+  width: 80%;
+}
+#flight-online-atcs-form-modal .td-without-checkbox>div {
+  max-width: 100%;
+  overflow: hidden;
+  padding: 7.5px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

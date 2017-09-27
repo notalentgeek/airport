@@ -1,4 +1,6 @@
-from ..consts import STRING
+""" List of all decorator functions. """
+
+from .consts import STRING
 
 """
 This function was meant for view that can only be accessed by certain group.

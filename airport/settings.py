@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+=r0)qt$7a(y%k*r876=3^c9!nzqgk3_qx$#pyff3q7(wv4(i-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Amsterdam'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -117,21 +117,36 @@ USE_L10N = True
 USE_TZ = True
 
 
+""" Adjusted variables. """
+ALLOWED_HOSTS = ["*"]
+DEBUG = False
+TIME_ZONE = "Europe/Amsterdam"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_URL = "/static/"
 
-# Import Celery tasks.
-CELERY_IMPORTS = ("airport_management.tasks",)
-# Celery.
+""" Deployment configurations. """
+CONN_MAX_AGE = None
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+""" Celery and RabbitMQ configurations for Django. """
+
+""" Variable for RabbitMQ. """
+BROKER_URL = "amqp://admin:asdasdasd@localhost:5672/adminvhost"
+
+""" Variables for CeleryBeat. """
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+CELERY_RESULT_BACKEND = "djcelery.backends.database:DatabaseBackend"
+
+""" Celery. """
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Europe/Amsterdam"
-# CeleryBeat.
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
-# RabbitMQ.
-BROKER_URL = "amqp://admin:asdasdasd@localhost:5672/adminvhost"
+""" Import Celery tasks. """
+CELERY_IMPORTS = ("airport_management.tasks",)

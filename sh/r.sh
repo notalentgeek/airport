@@ -10,6 +10,10 @@ echo "set the base directory into ${BASEDIR}"
 rm "${BASEDIR}/../db.sqlite3"
 echo "deleted the sqlite3 database at ${BASEDIR}/../db.sqlite3" &&
 
+# Delete the root Python cache.
+rm -R "${BASEDIR}/../__pycache__"
+echo "deleted the python's cache at ${BASEDIR}/../__pycache__" &&
+
 # Delete the main project Python's cache.
 rm -R "${BASEDIR}/../airport/__pycache__"
 echo "deleted the python's cache at ${BASEDIR}/../airport/__pycache__" &&

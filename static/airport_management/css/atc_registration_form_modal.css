@@ -1,0 +1,39 @@
+@media not screen and (max-width: 767px) {
+  #atc-registration-button{
+    margin-left: 0;
+    width: 150px;
+  }
+  #atc-reset-button {
+    margin-right: 0;
+    width: 150px;
+  }
+}
+@media screen and (max-width: 767px) {
+  #atc-reset-button {
+    margin-right: 0;
+    width: 50%;
+  }
+  #atc-registration-button{
+    margin-left: 0;
+    width: 50%;
+  }
+}
+/*
+This is meant to remove shadow margin. See this StackOverflow discussion for
+further reference, https://stackoverflow.com/questions/24036212/no-margin-or-padding-but-still-space-between-div-elements.
+*/
+#atc-registration-form-modal .modal-footer {
+  font-size: 0;
+  padding:9px 15px;
+}
+#atc-registration-form-modal .modal-header {
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  background-color: #5CB85C;
+  border-bottom:1px solid #EEEEEE;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding:9px 15px;
+}

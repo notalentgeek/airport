@@ -1,0 +1,19 @@
+@media not screen and (max-width: 767px) {
+  body, html {
+    height:100%;
+    width:100%;
+  }
+}
+#main-container {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  padding-bottom: 10px;
+}
+#main-content-container {
+  flex: 1;
+}
+/* For debug purpose only. */
+div {
+  border: 1px none red;
+}

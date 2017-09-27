@@ -1,0 +1,6 @@
+celery==3.1.25
+django-angular==1.1.2
+django-celery==3.2.1
+django==1.11.4
+gunicorn==19.7.1
+pytz==2017.2
