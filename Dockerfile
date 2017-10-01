@@ -1,7 +1,11 @@
 FROM python:3-onbuild
 
-COPY start.sh /start.sh
+COPY ./ /
 EXPOSE 8000
-RUN python3 manage.py collectstatic --noinput
 
-CMD ["/start.sh"]
+RUN chmod +x start_celerybeat.sh
+RUN chmod +x start_celeryd.sh
+RUN chmod +x start_web.sh
+
+RUN pip install -r requirements.txt
+RUN python manage.py collectstatic --noinput

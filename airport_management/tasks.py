@@ -50,15 +50,11 @@ def memcache_lock(lock_id, oid):
             """
             cache.delete(lock_id)
 
-""" Celery task to periodically pull API in the midnight."""
-#@periodic_task(run_every=crontab(minute="*/15"))
-#@periodic_task(run_every=timedelta(minutes=10))
-#@periodic_task(run_every=timedelta(minutes=15))
-#@periodic_task(run_every=timedelta(minutes=2))
-#@periodic_task(run_every=timedelta(minutes=5))
+"""
+Celery task to periodically pull API in the midnight. Use this periodic
+function to debug only, otherwise use the `flight_api_pull_()` for production.
+"""
 #@periodic_task(run_every=timedelta(seconds=1))
-#@periodic_task(run_every=timedelta(seconds=5))
-@periodic_task(run_every=crontab(minute=0, hour="0"))
 def flight_api_pull():
     """
     The cache key consists of the task name and the MD5 digest of the feed
@@ -71,6 +67,8 @@ def flight_api_pull():
             return flight_api_pull_()
     logger.debug("task is already ran")
 
+
+@periodic_task(run_every=crontab(minute=0, hour="0,18"))
 def flight_api_pull_():
     flights = get_public_flight_api()
 
@@ -91,11 +89,14 @@ Task to periodically marked which flights has properly arrived/departed. The
 parameters are to have both ATCs and a lane set when the actual arriving/
 departing time passed.
 """
-@periodic_task(run_every=timedelta(minutes=1))
+@periodic_task(run_every=crontab(minute="*/1"))
 def check_this_minute_flights_status():
     tz = timezone(STRING.TIMEZONE)
     now = tz.localize(datetime.datetime.now())
     now_plus_1_min = now + timedelta(minutes=1)
+
+    logger.info(now)
+    logger.info(now_plus_1_min)
 
     """ PENDING: Please make some closures for this function. """
 

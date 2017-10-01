@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -119,7 +119,7 @@ USE_TZ = True
 
 """ Adjusted variables. """
 ALLOWED_HOSTS = ["*"]
-DEBUG = False
+DEBUG = True
 TIME_ZONE = "Europe/Amsterdam"
 
 # Static files (CSS, JavaScript, Images)
@@ -130,13 +130,32 @@ STATIC_URL = "/static/"
 
 """ Deployment configurations. """
 CONN_MAX_AGE = None
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+
+""" Set these to false for non-HTTP server. """
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 
 """ Celery and RabbitMQ configurations for Django. """
 
 """ Variable for RabbitMQ. """
 BROKER_URL = "amqp://admin:asdasdasd@localhost:5672/adminvhost"
+#BROKER_URL = os.environ.get("BROKER_URL", "")
+#BROKER_URL = "amqp://admin:asdasdasd@localhost:5672/"
+
+"""
+RABBIT_HOSTNAME = os.environ.get("RABBIT_PORT_5672_TCP", "rabbit")
+
+if RABBIT_HOSTNAME.startswith("tcp://"):  
+    RABBIT_HOSTNAME = RABBIT_HOSTNAME.split("//")[1]
+
+BROKER_URL = os.environ.get("BROKER_URL", "")
+if not BROKER_URL:  
+    BROKER_URL = "amqp://{user}:{password}@{hostname}/{vhost}/".format(
+        user=os.environ.get("RABBIT_ENV_USER", "admin"),
+        password=os.environ.get("RABBIT_ENV_RABBITMQ_PASS", "asdasdasd"),
+        hostname=RABBIT_HOSTNAME,
+        vhost=os.environ.get("RABBIT_ENV_VHOST", ""))
+"""
 
 """ Variables for CeleryBeat. """
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"

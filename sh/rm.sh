@@ -18,5 +18,3 @@ chmod +x "${BASEDIR}/f.sh" &&
 "${BASEDIR}/mm.sh" &&
 # Load fixtures.
 "${BASEDIR}/f.sh"
-
-$SHELL
