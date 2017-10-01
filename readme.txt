@@ -59,14 +59,16 @@
         * Run `docker-compose build`.
         * Run `docker-compose up -d`.
         * Run `docker-compose up`.
-* This is personal my run file to make sure `docker-compose` ran good. However, this completely stop running container and deletes all images in the machine.
+* This is personal my run file to make sure `docker-compose` ran good. However, this completely stop running container and deletes all images in the machine. Execute this from project's root.
 
 ```markdown
+sudo rm celerybeat.pid
+sudo ./automation/r.sh
+./automation/rm.sh
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)
 docker-compose stop
-sudo rm celerybeat.pid
 yes | docker-compose rm
 yes | docker-compose rm nginx
 yes | docker-compose rm web
@@ -74,3 +76,5 @@ docker-compose build
 docker-compose up -d
 docker-compose up
 ```
+
+* ./automation/rm.sh is used to reset all database and clean directories (deleting .pyc, ...) before putting fixtures back to database.

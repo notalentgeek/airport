@@ -95,7 +95,7 @@ Comment the decorator if you just want to pull flights API.
 """
 @periodic_task(run_every=timedelta(minutes=1))
 def check_this_minute_flights_status():
-    tz = timezone(STRING.TIMEZONE)
+    #tz = timezone(STRING.TIMEZONE)
     #now = datetime.datetime.now()
     now = datetime.datetime.now(utc)
     now_plus_1_min = now + timedelta(minutes=1)
@@ -110,6 +110,10 @@ def check_this_minute_flights_status():
         .filter(scheduled_datetime__lte=now_plus_1_min)
     departure_filter = DepartureFlight.objects.filter(status__isnull=True)\
         .filter(scheduled_datetime__lte=now_plus_1_min)
+
+    logger.info(arrival_filter)
+    logger.info(departure_filter)
+    logger.info(now)
 
     """
     Arrival and departure time filter based on conditions (lane and online
@@ -233,7 +237,7 @@ def input_to_model_for_arrivaldeparture_flight(arrivaldeparture_flight,
     return arrivaldeparture_flight
 
 def update_all_flights_status():
-    tz = timezone(STRING.TIMEZONE)
+    #tz = timezone(STRING.TIMEZONE)
     #now = datetime.datetime.now()
     now = datetime.datetime.now(utc)
 

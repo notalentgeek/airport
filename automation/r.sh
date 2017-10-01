@@ -27,7 +27,15 @@ echo "deleted the python's cache at\
     ${BASEDIR}/../airport_management/__pycache__" &&
 rm -R "${BASEDIR}/../airport_management/src/__pycache__"
 echo "deleted the python's cache at\
-    ${BASEDIR}/../airport_management/src/__pycache__"
+    ${BASEDIR}/../airport_management/src/__pycache__" &&
+
+# Delete virtual environment directory.
+rm -R "${BASEDIR}/../venv"
+echo "deleted virtual environment folder ${BASEDIR}/../venv" &&
+
+# Delete Celerybeat PID.
+rm -R "${BASEDIR}/../celerybeat.pid"
+echo "deleted celerybeat.pid ${BASEDIR}/../celerybeat.pid" &&
 
 # Delete delete all Python compiled files. This is the better way.
 find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf

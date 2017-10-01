@@ -8,7 +8,6 @@ services:
     volumes:
       - ./:/app
       - ./nginx:/etc/nginx/conf.d
-      - ./static:/app/static
       - ./timezone:/etc/timezone
     depends_on:
       - web
@@ -28,7 +27,6 @@ services:
     container_name: django_airport
     volumes:
       - ./:/app
-      - ./static:/app/static
       - ./timezone:/etc/timezone
     expose:
       - "8080"
@@ -48,6 +46,7 @@ services:
       - rabbit
       - web
     depends_on:
+      - celeryd
       - rabbit
       - web
   celeryd:

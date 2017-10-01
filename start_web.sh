@@ -43,7 +43,7 @@ export PYTHONPATH=$PYTHONPATH:$BASEDIR
 test -d $SOCKFILEDIR || mkdir -p $SOCKFILEDIR
 
 # Start fresh!
-./sh/rm.sh
+./automation/rm.sh
 
 # Start Gunicorn!
 # Programs meant to be run under supervisor should not daemonize themselves
