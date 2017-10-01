@@ -1,6 +1,5 @@
 from datetime import timedelta
 from django.db import models
-from django.utils.timezone import localtime
 
 # Create your models here.
 class Lane(models.Model):
@@ -80,7 +79,7 @@ class ArrivalFlight(ArrivalDepartureFlight):
         return "{} from {} airport, {}".format(
             self.flight_code,
             self.airport,
-            localtime(self.scheduled_datetime)
+            self.scheduled_datetime
         )
 
 class DepartureFlight(ArrivalDepartureFlight):
@@ -88,7 +87,7 @@ class DepartureFlight(ArrivalDepartureFlight):
         return "{} to {} airport, {}".format(
             self.flight_code,
             self.airport,
-            localtime(self.scheduled_datetime)
+            self.scheduled_datetime
         )
 
 

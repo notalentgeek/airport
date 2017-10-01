@@ -42,6 +42,9 @@ export PYTHONPATH=$PYTHONPATH:$BASEDIR
 # Create run directory if they does not exists.
 test -d $SOCKFILEDIR || mkdir -p $SOCKFILEDIR
 
+# Start fresh!
+./sh/rm.sh
+
 # Start Gunicorn!
 # Programs meant to be run under supervisor should not daemonize themselves
 # (do not use --daemon).
@@ -51,9 +54,6 @@ test -d $SOCKFILEDIR || mkdir -p $SOCKFILEDIR
 #    --bind=unix:$SOCKFILE \
 #    --name $NAME \
 #    --workers $NUM_WORKERS
-
-# Start fresh!
-./sh/rm.sh
 
 # For non-virtual environment.
 exec gunicorn ${DJANGO_WSGI_MODULE}:application \

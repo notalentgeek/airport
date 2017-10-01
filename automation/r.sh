@@ -28,3 +28,6 @@ echo "deleted the python's cache at\
 rm -R "${BASEDIR}/../airport_management/src/__pycache__"
 echo "deleted the python's cache at\
     ${BASEDIR}/../airport_management/src/__pycache__"
+
+# Delete delete all Python compiled files. This is the better way.
+find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf

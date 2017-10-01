@@ -9,7 +9,7 @@ services:
       - ./:/app
       - ./nginx:/etc/nginx/conf.d
       - ./static:/app/static
-      - ./timezone:/etc/localzone
+      - ./timezone:/etc/timezone
     depends_on:
       - web
   rabbit:
@@ -29,7 +29,7 @@ services:
     volumes:
       - ./:/app
       - ./static:/app/static
-      - ./timezone:/etc/localzone
+      - ./timezone:/etc/timezone
     expose:
       - "8080"
     links:
@@ -43,7 +43,7 @@ services:
     command: /app/start_celerybeat.sh
     volumes:
       - ./:/app
-      - ./timezone:/etc/localzone
+      - ./timezone:/etc/timezone
     links:
       - rabbit
       - web
@@ -57,7 +57,7 @@ services:
     command: /app/start_celeryd.sh
     volumes:
       - ./:/app
-      - ./timezone:/etc/localzone
+      - ./timezone:/etc/timezone
     links:
       - rabbit
       - web

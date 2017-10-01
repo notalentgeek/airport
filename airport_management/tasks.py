@@ -19,7 +19,7 @@ from django.db.models import Q
 from hashlib import md5
 from os import remove
 from os.path import dirname, join, normcase, normpath, realpath
-from pytz import timezone
+from pytz import timezone, utc
 from subprocess import call
 from sys import argv
 import datetime
@@ -53,8 +53,10 @@ def memcache_lock(lock_id, oid):
 """
 Celery task to periodically pull API in the midnight. Use this periodic
 function to debug only, otherwise use the `flight_api_pull_()` for production.
+
+Un-commment the decorator if you just want to pull the flights API.
 """
-#@periodic_task(run_every=timedelta(seconds=1))
+#@periodic_task(run_every=timedelta(minutes=1))
 def flight_api_pull():
     """
     The cache key consists of the task name and the MD5 digest of the feed
@@ -67,8 +69,8 @@ def flight_api_pull():
             return flight_api_pull_()
     logger.debug("task is already ran")
 
-
-@periodic_task(run_every=crontab(minute=0, hour="0,18"))
+""" Comment the decorator if you just want to pull the flights API. """
+@periodic_task(run_every=crontab(minute=0, hour=0))
 def flight_api_pull_():
     flights = get_public_flight_api()
 
@@ -88,15 +90,15 @@ def flight_api_pull_():
 Task to periodically marked which flights has properly arrived/departed. The
 parameters are to have both ATCs and a lane set when the actual arriving/
 departing time passed.
+
+Comment the decorator if you just want to pull flights API.
 """
-@periodic_task(run_every=crontab(minute="*/1"))
+@periodic_task(run_every=timedelta(minutes=1))
 def check_this_minute_flights_status():
     tz = timezone(STRING.TIMEZONE)
-    now = tz.localize(datetime.datetime.now())
+    #now = datetime.datetime.now()
+    now = datetime.datetime.now(utc)
     now_plus_1_min = now + timedelta(minutes=1)
-
-    logger.info(now)
-    logger.info(now_plus_1_min)
 
     """ PENDING: Please make some closures for this function. """
 
@@ -104,10 +106,10 @@ def check_this_minute_flights_status():
     Arrival and departure time filter based on the time and if "proper" flag
     is already set.
     """
-    arrival_filter = ArrivalFlight.objects.filter(status__isnull=True,
-        scheduled_datetime__lt=now_plus_1_min)
-    departure_filter = DepartureFlight.objects.filter(status__isnull=True,
-        scheduled_datetime__lt=now_plus_1_min)
+    arrival_filter = ArrivalFlight.objects.filter(status__isnull=True)\
+        .filter(scheduled_datetime__lte=now_plus_1_min)
+    departure_filter = DepartureFlight.objects.filter(status__isnull=True)\
+        .filter(scheduled_datetime__lte=now_plus_1_min)
 
     """
     Arrival and departure time filter based on conditions (lane and online
@@ -135,8 +137,12 @@ def check_this_minute_flights_status():
     departure_filter_not_proper.update(status=False)
     departure_filter_proper.update(status=True)
 
-""" Backup to fixtures every 10 minutes. """
-@periodic_task(run_every=timedelta(minutes=10))
+"""
+Backup to fixtures every 10 minutes.
+
+Comment the decorator if you only want to pull the flight API.
+"""
+periodic_task(run_every=timedelta(minutes=10))
 def create_backup_fixtures_():
     create_backup_fixtures()
 
@@ -228,7 +234,8 @@ def input_to_model_for_arrivaldeparture_flight(arrivaldeparture_flight,
 
 def update_all_flights_status():
     tz = timezone(STRING.TIMEZONE)
-    now = tz.localize(datetime.datetime.now())
+    #now = datetime.datetime.now()
+    now = datetime.datetime.now(utc)
 
     """ Get all past flight which has blank `status`. """
     not_proper_arrival = ArrivalFlight.objects.filter(
