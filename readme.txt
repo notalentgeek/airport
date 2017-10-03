@@ -3,13 +3,12 @@
 * This is personal my run commands to make sure `docker-compose` ran good. HOWEVER, this completely stop running container and deletes all images in the machine. Execute this from project's root. I would suggest to look for instruction further below.
 
 ```markdown
-sudo rm celerybeat.pid
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)
 sudo ./utility_scripts/remove_and_reset.sh
-docker-compose stop
 ./utility_scripts/utility.sh
+docker-compose stop
 yes | docker-compose rm
 yes | docker-compose rm nginx
 yes | docker-compose rm web
@@ -17,6 +16,25 @@ docker-compose build
 docker-compose up -d
 docker-compose up
 ```
+
+* Similar run commands but for in DigitalOcean.
+
+```markdown
+cd /home/airport/airport
+sudo docker stop $(docker ps -a -q)
+sudo docker rm $(docker ps -a -q)
+sudo docker rmi -f $(docker images -a -q)
+sudo ./utility_scripts/remove_and_reset.sh
+sudo ./utility_scripts/utility.sh
+sudo docker-compose stop &&
+yes | sudo docker-compose rm &&
+yes | sudo docker-compose rm nginx &&
+yes | sudo docker-compose rm web &&
+sudo docker-compose build &&
+sudo docker-compose up -d &&
+sudo docker-compose up
+```
+
 * __Generally__, ./utility_scripts/utility.sh needs to be ran before `docker-compose build`.
 * You can either use local `runserver`, local Gunicorn/NGINX, or with contained in Docker.
 * Make sure NGINX and RabbitMQ installed.
