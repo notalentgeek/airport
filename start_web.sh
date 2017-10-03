@@ -19,13 +19,6 @@ fi
 
 if [ "$BASEDIR" = "/" ]
 then
-    SQLITE="db.sqlite3"
-else
-    SQLITE=${BASEDIR}"/db.sqlite3"
-fi
-
-if [ "$BASEDIR" = "/" ]
-then
     VENV_BIN="venv/bin"
     SOCKFILE="run/gunicorn.sock"
 else
@@ -49,8 +42,13 @@ export PYTHONPATH=$PYTHONPATH:$BASEDIR
 # Create run directory if they does not exists.
 test -d $SOCKFILEDIR || mkdir -p $SOCKFILEDIR
 
-# Start fresh!
-./automation/rm.sh
+# Set the static files.
+
+# In container.
+python $BASEDIR/manage.py collectstatic --noinput
+
+# In host.
+#python3 $BASEDIR/manage.py collectstatic --noinput
 
 # Start Gunicorn!
 # Programs meant to be run under supervisor should not daemonize themselves

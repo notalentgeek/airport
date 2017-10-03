@@ -3,9 +3,9 @@
     "model": "airport_management.airtrafficcontroller",
     "pk": 1,
     "fields": {
-        "code": "asd",
-        "first_name": "asd",
-        "last_name": "asd"
+        "code": "test_atc",
+        "first_name": "test_atc",
+        "last_name": "test_atc"
     }
 }
 ]

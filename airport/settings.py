@@ -73,25 +73,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'airport.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join("/app", 'db.sqlite3'),
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -128,6 +109,31 @@ USE_TZ = True
 """ Adjusted variables. """
 ALLOWED_HOSTS = ["*"]
 DEBUG = False
+
+# Database
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+
+""" Path to database in Docker container. """
+PATH_TO_DOCKER_DB = os.path.join("/home/airport/mount_point/", 'db.sqlite3')
+
+"""
+Check if database in Docker container exists. If not refer to relative
+database in project folder.
+"""
+if os.path.isfile(PATH_TO_DOCKER_DB):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': PATH_TO_DOCKER_DB,
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

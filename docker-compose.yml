@@ -1,54 +1,54 @@
 version: "3"  
-services:  
+services:
   nginx:
-    image: nginx:latest
     container_name: nginx_airport
+    depends_on:
+      - web
+    image: nginx:latest
     ports:
       - "8080:8080"
     volumes:
-      - ./:/app
-      - ./nginx:/etc/nginx/conf.d
+      - ./:/home/airport/mount_point/
+      - ./nginx_configuration/docker_nginx_configuration:/etc/nginx/conf.d
       - ./timezone:/etc/timezone
-    depends_on:
-      - web
   rabbit:
-      image: rabbitmq:latest
-      environment:
-          - RABBITMQ_DEFAULT_USER=admin
-          - RABBITMQ_DEFAULT_PASS=asdasdasd
-      ports:
-          - "5672:5672"
-          - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=asdasdasd
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
   web:
     build:
-      context: .
+      context: ./
       dockerfile: Dockerfile
-    command: /app/start_web.sh
+    command: /home/airport/mount_point/start_web.sh
     container_name: django_airport
-    volumes:
-      - ./:/app
-      - ./timezone:/etc/timezone
     expose:
       - "8080"
+    volumes:
+      - ./:/home/airport/mount_point/
+      - ./timezone:/etc/timezone
   celerybeat:
     build:
-      context: .
+      context: ./
       dockerfile: Dockerfile
-    command: /app/start_celerybeat.sh
-    volumes:
-      - ./:/app
-      - ./timezone:/etc/timezone
+    command: /home/airport/mount_point/start_celerybeat.sh
     depends_on:
       - celeryd
       - web
+    volumes:
+      - ./:/home/airport/mount_point/
+      - ./timezone:/etc/timezone
   celeryd:
     build:
-      context: .
+      context: ./
       dockerfile: Dockerfile
-    command: /app/start_celeryd.sh
-    volumes:
-      - ./:/app
-      - ./timezone:/etc/timezone
+    command: /home/airport/mount_point/start_celeryd.sh
     depends_on:
       - rabbit
       - web
+    volumes:
+      - ./:/home/airport/mount_point/
+      - ./timezone:/etc/timezone

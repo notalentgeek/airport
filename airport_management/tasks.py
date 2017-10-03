@@ -111,10 +111,6 @@ def check_this_minute_flights_status():
     departure_filter = DepartureFlight.objects.filter(status__isnull=True)\
         .filter(scheduled_datetime__lte=now_plus_1_min)
 
-    logger.info(arrival_filter)
-    logger.info(departure_filter)
-    logger.info(now)
-
     """
     Arrival and departure time filter based on conditions (lane and online
     ATCs exist).

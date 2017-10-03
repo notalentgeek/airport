@@ -1,3 +1,23 @@
+# How to run this application:
+
+* This is personal my run commands to make sure `docker-compose` ran good. HOWEVER, this completely stop running container and deletes all images in the machine. Execute this from project's root. I would suggest to look for instruction further below.
+
+```markdown
+sudo rm celerybeat.pid
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rmi -f $(docker images -a -q)
+sudo ./utility_scripts/remove_and_reset.sh
+docker-compose stop
+./utility_scripts/utility.sh
+yes | docker-compose rm
+yes | docker-compose rm nginx
+yes | docker-compose rm web
+docker-compose build
+docker-compose up -d
+docker-compose up
+```
+* __Generally__, ./utility_scripts/utility.sh needs to be ran before `docker-compose build`.
 * You can either use local `runserver`, local Gunicorn/NGINX, or with contained in Docker.
 * Make sure NGINX and RabbitMQ installed.
 * Copy paste ./host_nginx/nginx.conf to /etc/nginx/nginx.conf (perhaps, create backup first and then copy with super user privilege).
@@ -30,6 +50,13 @@
         * Un-comment `create_backup_fixtures_()`'s decorator.
         * Un-comment `flight_api_pull()`'s decorator.
         * Comment `flight_api_pull_()`'s decorator.
+* Go to start_web.sh.
+    * If this is ran on host/local machine.
+        * Comment `python manage.py collectstatic --noinput`.
+        * Un-comment `python3 manage.py collectstatic --noinput`.
+    * If this is ran in container.
+        * Comment `python3 manage.py collectstatic --noinput`.
+        * Un-comment `python manage.py collectstatic --noinput`.
 * To run.
     * With virtual environment.
         * Make sure `virtualenv` is installed.
@@ -59,22 +86,21 @@
         * Run `docker-compose build`.
         * Run `docker-compose up -d`.
         * Run `docker-compose up`.
-* This is personal my run file to make sure `docker-compose` ran good. However, this completely stop running container and deletes all images in the machine. Execute this from project's root.
 
-```markdown
-sudo ./automation/r.sh
-./automation/rm.sh
-sudo rm celerybeat.pid
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
-docker rmi -f $(docker images -a -q)
-docker-compose stop
-yes | docker-compose rm
-yes | docker-compose rm nginx
-yes | docker-compose rm web
-docker-compose build
-docker-compose up -d
-docker-compose up
-```
+# Basic troubleshooting:
 
-* ./automation/rm.sh is used to reset all database and clean directories (deleting .pyc, ...) before putting fixtures back to database.
+* If there are missing static files (CSS, JS, images, ...) in production or when `DEBUG=False` try to run `python3 manage.py collectstatic --noinput` to migrate back the assets.
+* Make sure to migrate first before initiating the container. There is no way to launch Celery after migration finished. Hence it is better to run the migration before initiating the container. `./utility_scripts/utility.sh` can be used to clear the project from unnecessary files.
+* Port used for this application: 5672 for RabbitMQ, 8080 for NGINX, for 15672 for RabbitMQ interface.
+* Sometimes celerybeat.pid exists in project root. This file is a result of celerybeat process being force killed. This file needs to be deleted in order for the celerybeat to run.
+
+# Utilities:
+
+* ./utility_scripts/utility.sh can be used to clean directories (deleting .pyc, ...), reset all database, reset NGINX logs, before then putting fixtures back to database.
+
+# To-do List:
+
+* A lot of closures needs to be made in the tasks.py.
+* For some reason there are files created from the container owned by root, this should not happen.
+* In ideal case scenario, docker-compose.yml should be able to be put with some arguments. However AFAIK, you can only put arguments in the Dockerfile.
+* Unit testing.
