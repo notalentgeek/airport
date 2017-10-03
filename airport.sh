@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Start the web application when system starts.
+# Start the web application when system starts. This file needs to corresponds
+# with airport.service.
 
 cd /airport
 docker stop $(docker ps -a -q)
