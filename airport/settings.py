@@ -76,10 +76,18 @@ WSGI_APPLICATION = 'airport.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join("/app", 'db.sqlite3'),
     }
 }
 
@@ -128,7 +136,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
 
 """ Deployment configurations. """
-CONN_MAX_AGE = None
+CONN_MAX_AGE = 0
 
 """ Set these to false for non-HTTPS server. """
 CSRF_COOKIE_SECURE = False

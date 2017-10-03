@@ -62,9 +62,9 @@
 * This is personal my run file to make sure `docker-compose` ran good. However, this completely stop running container and deletes all images in the machine. Execute this from project's root.
 
 ```markdown
-sudo rm celerybeat.pid
 sudo ./automation/r.sh
 ./automation/rm.sh
+sudo rm celerybeat.pid
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)

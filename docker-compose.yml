@@ -30,10 +30,6 @@ services:
       - ./timezone:/etc/timezone
     expose:
       - "8080"
-    links:
-        - rabbit
-    depends_on:
-        - rabbit
   celerybeat:
     build:
       context: .
@@ -42,12 +38,8 @@ services:
     volumes:
       - ./:/app
       - ./timezone:/etc/timezone
-    links:
-      - rabbit
-      - web
     depends_on:
       - celeryd
-      - rabbit
       - web
   celeryd:
     build:
@@ -57,9 +49,6 @@ services:
     volumes:
       - ./:/app
       - ./timezone:/etc/timezone
-    links:
-      - rabbit
-      - web
     depends_on:
       - rabbit
       - web

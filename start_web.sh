@@ -10,11 +10,18 @@ DJANGO_WSGI_MODULE=airport.wsgi
 NAME="airport"
 NUM_WORKERS=3
 
-if [ "$BASEDIR" = "/" ]
+if [ "$SCRIPT" = "/" ]
 then
     BASEDIR=""
 else
     BASEDIR=$(dirname "$SCRIPT")
+fi
+
+if [ "$BASEDIR" = "/" ]
+then
+    SQLITE="db.sqlite3"
+else
+    SQLITE=${BASEDIR}"/db.sqlite3"
 fi
 
 if [ "$BASEDIR" = "/" ]

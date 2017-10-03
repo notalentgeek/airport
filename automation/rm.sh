@@ -18,3 +18,13 @@ chmod +x "${BASEDIR}/f.sh" &&
 "${BASEDIR}/mm.sh" &&
 # Load fixtures.
 "${BASEDIR}/f.sh"
+
+# PENDING: Put this into separate files.
+
+# Replace `"lane": false` and `"lane": true` into `"lane": null`.
+find "${BASEDIR}/../airport_management/fixtures/airport_management" -type f \
+    -print0 | xargs -0 sed -i \
+    's/"lane": false/"lane": null/g'
+find "${BASEDIR}/../airport_management/fixtures/airport_management" -type f \
+    -print0 | xargs -0 sed -i \
+    's/"lane": true/"lane": null/g'
