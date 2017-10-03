@@ -22,7 +22,7 @@ docker-compose up
 ```markdown
 apt-get install python3-pip
 git clone https://github.com/notalentgeek/airport.git --depth 1
-cp /airport/airport.service /etc/systemd/system
+cp airport/airport.service /etc/systemd/system
 systemctl enable airport.service
 reboot
 ```
