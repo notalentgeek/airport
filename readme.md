@@ -17,22 +17,14 @@ docker-compose up -d
 docker-compose up
 ```
 
-* Similar run commands but for in DigitalOcean.
+* Similar run commands but for in DigitalOcean directly from root (I know it is not good XD).
 
 ```markdown
-cd /home/airport/airport
-sudo docker stop $(docker ps -a -q)
-sudo docker rm $(docker ps -a -q)
-sudo docker rmi -f $(docker images -a -q)
-sudo ./utility_scripts/remove_and_reset.sh
-sudo ./utility_scripts/utility.sh
-sudo docker-compose stop &&
-yes | sudo docker-compose rm &&
-yes | sudo docker-compose rm nginx &&
-yes | sudo docker-compose rm web &&
-sudo docker-compose build &&
-sudo docker-compose up -d &&
-sudo docker-compose up
+apt-get install python3-pip
+git clone https://github.com/notalentgeek/airport.git --depth 1
+cp /airport/airport.service /etc/systemd/system
+systemctl enable airport.service
+reboot
 ```
 
 * __Generally__, ./utility_scripts/utility.sh needs to be ran before `docker-compose build`.
