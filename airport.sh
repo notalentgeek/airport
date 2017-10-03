@@ -2,7 +2,7 @@
 
 # Start the web application when system starts.
 
-cd /home/airport/airport
+cd /airport
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)
