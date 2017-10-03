@@ -24,11 +24,14 @@ git clone https://github.com/notalentgeek/airport.git --depth 1
 cp airport/airport.service /etc/systemd/system
 systemctl enable airport.service
 apt-get install python3-pip
+export LC_ALL=C
 pip3 install -r airport/requirements.txt
 reboot
 ```
 
-* __Generally__, ./utility_scripts/utility.sh needs to be ran before `docker-compose build`.
+* `export LC_ALL=C` is used to set locale to proceed with `pip3` installation. This will not be necessary if a user is registered.
+
+## __Generally__, ./utility_scripts/utility.sh needs to be ran before `docker-compose build`.
 * You can either use local `runserver`, local Gunicorn/NGINX, or with contained in Docker.
 * Make sure NGINX and RabbitMQ installed.
 * Copy paste ./host_nginx/nginx.conf to /etc/nginx/nginx.conf (perhaps, create backup first and then copy with super user privilege).
