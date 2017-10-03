@@ -119,6 +119,7 @@ sudo docker-compose up
 # To-do List:
 
 * A lot of closures needs to be made in the tasks.py.
+* Change ATC and lane entry to AJAX like request instead to prevent full page reload.
 * For some reason there are files created from the container owned by root, this should not happen.
 * In ideal case scenario, docker-compose.yml should be able to be put with some arguments. However AFAIK, you can only put arguments in the Dockerfile.
 * Unit testing.

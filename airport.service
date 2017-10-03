@@ -1,0 +1,10 @@
+[Unit]
+Description=Unit for starting a basic Django app 
+
+[Service]
+Restart=on-failure
+WorkingDirectory=/airport
+ExecStart=/airport/airport.sh
+
+[Install]
+WantedBy=multi-user.target
