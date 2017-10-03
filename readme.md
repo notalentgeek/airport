@@ -20,12 +20,13 @@ docker-compose up
 * Similar run commands but for in DigitalOcean directly from root (I know it is not good XD).
 
 ```markdown
+cd /root
 git clone https://github.com/notalentgeek/airport.git --depth 1
-cp airport/airport.service /etc/systemd/system
+cp /root/airport/airport.service /etc/systemd/system
 systemctl enable airport.service
 apt-get install python3-pip
 export LC_ALL=C
-pip3 install -r airport/requirements.txt
+pip3 install -r /root/airport/requirements.txt
 reboot
 ```
 

@@ -3,7 +3,7 @@
 # Start the web application when system starts. This file needs to corresponds
 # with airport.service.
 
-cd /airport
+cd /root/airport
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)

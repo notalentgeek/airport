@@ -2,11 +2,11 @@
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=/airport/airport.sh
+ExecStart=/root/airport/airport.sh
 Restart=on-failure
-WorkingDirectory=/airport
+WorkingDirectory=/root/airport
 
 [Unit]
 After=network.target network-online.target
-Description=Unit for starting a basic Django app
+Description=unit for starting airport application
 Wants=network-online.target
