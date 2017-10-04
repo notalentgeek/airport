@@ -5,14 +5,10 @@ so that they can be re-used and referenced later.
 """
 
 
+from .date_and_time import get_day_from_datetime
 from datetime import datetime, timedelta
 from pytz import timezone
 import requests, sys
-
-if __name__ == "__main__":
-    from date_and_time import get_day_from_datetime
-else:
-    from .date_and_time import get_day_from_datetime
 
 # Function to call Schipol flight API. This API comes in with pagination.
 def get_public_flight_api():

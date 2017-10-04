@@ -4,7 +4,7 @@ Celery task file.
 PENDING: A lot of closures should be made here.
 """
 
-from .models import ArrivalFlight, DepartureFlight
+from .models import ArrivalFlight, CeleryWorker, DepartureFlight
 from .src.consts import API_KEY, PATH, STRING
 from .src.flight_api_puller import get_public_flight_api
 from celery.decorators import periodic_task
@@ -28,7 +28,13 @@ LOCK_EXPIRE = 60 * 10  # Lock expires in 10 minutes
 
 logger = get_task_logger(__name__) # Celery inside operation.
 
-""" Prevent task to overlap to each other. """
+"""
+Prevent task to overlap to each other.
+
+PENDING: I am not using this function anymore, instead I am using value from
+database. Unless task executed are all larger than per-minute basis, using
+database to manage Celery queue should not be a problem.
+"""
 @contextmanager
 def memcache_lock(lock_id, oid):
     timeout_at = monotonic() + LOCK_EXPIRE - 3
@@ -54,9 +60,11 @@ def memcache_lock(lock_id, oid):
 Celery task to periodically pull API in the midnight. Use this periodic
 function to debug only, otherwise use the `flight_api_pull_()` for production.
 
-Un-commment the decorator if you just want to pull the flights API.
+Un-comment the decorator if you just want to pull the flights API.
+
+PENDING: This function is not actually used anymore.
 """
-#@periodic_task(run_every=timedelta(minutes=1))
+#@periodic_task(run_every=crontab(minute=1))
 def flight_api_pull():
     """
     The cache key consists of the task name and the MD5 digest of the feed
@@ -70,21 +78,34 @@ def flight_api_pull():
     logger.debug("task is already ran")
 
 """ Comment the decorator if you just want to pull the flights API. """
-@periodic_task(run_every=crontab(minute=0, hour=0))
+#@periodic_task(run_every=crontab(minute=0, hour=0))
+@periodic_task(run_every=timedelta(minutes=1))
 def flight_api_pull_():
-    flights = get_public_flight_api()
+    flight_api_pull_is_on_going = CeleryWorker.objects.get(pk=1)\
+        .flight_api_pull_is_on_going
 
-    for flight in flights:
-        if flight[API_KEY.DIRECTION] == API_KEY.ARRIVAL:
-            get_input_then_save(ArrivalFlight, flight)
-        if flight[API_KEY.DIRECTION] == API_KEY.DEPARTURE:
-            get_input_then_save(DepartureFlight, flight)
+    if not flight_api_pull_is_on_going:
+        obj = CeleryWorker.objects.get(pk=1)
+        obj.flight_api_pull_is_on_going = True
+        obj.save()
 
-    # Update all flights status.
-    update_all_flights_status()
+        flights = get_public_flight_api()
 
-    # Create backup fixtures.
-    create_backup_fixtures()
+        for flight in flights:
+            if flight[API_KEY.DIRECTION] == API_KEY.ARRIVAL:
+                get_input_then_save(ArrivalFlight, flight)
+            if flight[API_KEY.DIRECTION] == API_KEY.DEPARTURE:
+                get_input_then_save(DepartureFlight, flight)
+
+        # Update all flights status.
+        update_all_flights_status()
+
+        # Create backup fixtures.
+        create_backup_fixtures()
+
+        obj = CeleryWorker.objects.get(pk=1)
+        obj.flight_api_pull_is_on_going = False
+        obj.save()
 
 """
 Task to periodically marked which flights has properly arrived/departed. The
@@ -95,62 +116,82 @@ Comment the decorator if you just want to pull flights API.
 """
 @periodic_task(run_every=timedelta(minutes=1))
 def check_this_minute_flights_status():
-    #tz = timezone(STRING.TIMEZONE)
-    #now = datetime.datetime.now()
-    now = datetime.datetime.now(utc)
-    now_plus_1_min = now + timedelta(minutes=1)
+    backup_to_fixture_is_on_going = CeleryWorker.objects.get(pk=1)\
+        .backup_to_fixture_is_on_going
+    flight_api_pull_is_on_going = CeleryWorker.objects.get(pk=1)\
+        .flight_api_pull_is_on_going
+    need_backup_to_fixtures = CeleryWorker.objects.get(pk=1)\
+        .need_backup_to_fixtures
 
-    """ PENDING: Please make some closures for this function. """
+    if not backup_to_fixture_is_on_going and\
+        not flight_api_pull_is_on_going:
+        #tz = timezone(STRING.TIMEZONE)
+        #now = datetime.datetime.now()
+        now = datetime.datetime.now(utc)
+        now_plus_1_min = now + timedelta(minutes=1)
 
-    """
-    Arrival and departure time filter based on the time and if "proper" flag
-    is already set.
-    """
-    arrival_filter = ArrivalFlight.objects.filter(status__isnull=True)\
-        .filter(scheduled_datetime__lte=now_plus_1_min)
-    departure_filter = DepartureFlight.objects.filter(status__isnull=True)\
-        .filter(scheduled_datetime__lte=now_plus_1_min)
+        """ PENDING: Please make some closures for this function. """
 
-    """
-    Arrival and departure time filter based on conditions (lane and online
-    ATCs exist).
-    """
-    arrival_filter_not_proper = arrival_filter.filter(
-        Q(lane__isnull=True) |
-        Q(online_atcs__isnull=True)
-    )
-    arrival_filter_proper = arrival_filter.filter(
-        Q(lane__isnull=False) &
-        Q(online_atcs__isnull=False)
-    )
-    departure_filter_not_proper = departure_filter.filter(
-        Q(lane__isnull=True) |
-        Q(online_atcs__isnull=True)
-    )
-    departure_filter_proper = departure_filter.filter(
-        Q(lane__isnull=False) &
-        Q(online_atcs__isnull=False)
-    )
+        """
+        Arrival and departure time filter based on the time and if "proper"
+        flag is already set.
+        """
+        arrival_filter = ArrivalFlight.objects.filter(status__isnull=True)\
+            .filter(scheduled_datetime__lte=now_plus_1_min)
+        departure_filter = DepartureFlight.objects\
+            .filter(status__isnull=True)\
+            .filter(scheduled_datetime__lte=now_plus_1_min)
 
-    arrival_filter_not_proper.update(status=False)
-    arrival_filter_proper.update(status=True)
-    departure_filter_not_proper.update(status=False)
-    departure_filter_proper.update(status=True)
+        """
+        Arrival and departure time filter based on conditions (lane and online
+        ATCs exist).
+        """
+        arrival_filter_not_proper = arrival_filter.filter(
+            Q(lane__isnull=True) |
+            Q(online_atcs__isnull=True)
+        )
+        arrival_filter_proper = arrival_filter.filter(
+            Q(lane__isnull=False) &
+            Q(online_atcs__isnull=False)
+        )
+        departure_filter_not_proper = departure_filter.filter(
+            Q(lane__isnull=True) |
+            Q(online_atcs__isnull=True)
+        )
+        departure_filter_proper = departure_filter.filter(
+            Q(lane__isnull=False) &
+            Q(online_atcs__isnull=False)
+        )
+
+        arrival_filter_not_proper.update(status=False)
+        arrival_filter_proper.update(status=True)
+        departure_filter_not_proper.update(status=False)
+        departure_filter_proper.update(status=True)
+
+        if need_backup_to_fixtures:
+            create_backup_fixtures()
+
+            obj = CeleryWorker.objects.get(pk=1)
+            obj.need_backup_to_fixtures = False
+            obj.save()
 
 """
 Backup to fixtures every 10 minutes.
 
 Comment the decorator if you only want to pull the flight API.
 """
-periodic_task(run_every=timedelta(minutes=10))
-def create_backup_fixtures_():
-    create_backup_fixtures()
-
-def normcase_normpath(path):
-    return normcase(normpath(path))
+@periodic_task(run_every=timedelta(minutes=10))
+def set_need_backup_to_fixtures():
+    obj = CeleryWorker.objects.get(pk=1)
+    obj.need_backup_to_fixtures = True
+    obj.save()
 
 """ Create/update fixtures everytime API saved into database. """
 def create_backup_fixtures():
+    obj = CeleryWorker.objects.get(pk=1)
+    obj.backup_to_fixture_is_on_going = True
+    obj.save()
+
     """ Path to the root of this Django project (not this Django application).
     This can be done because the location of manage.py that is always in the
     root of a Django project. """
@@ -159,6 +200,8 @@ def create_backup_fixtures():
     """ Path to manage.py. """
     manage_py_path = join(file_executed_location, STRING.MANAGE_PY)
     manage_py_path = normcase_normpath(manage_py_path)
+
+    print(manage_py_path)
 
     """ Path to manage.py. """
     fixtures_directory = normcase_normpath(PATH.APPLICATION_FIXTURES)
@@ -188,6 +231,10 @@ def create_backup_fixtures():
     call(["python3 -B {} dumpdata airport_management.AirTrafficController \
         --indent 4 > {}".format(manage_py_path, atc_fixture_path)],
         shell=True)
+
+    obj = CeleryWorker.objects.get(pk=1)
+    obj.backup_to_fixture_is_on_going = False
+    obj.save()
 
 """ Function to get an element from the primary key (`pk`), but if there is
 none, create a new instance of its modal.
@@ -231,6 +278,9 @@ def input_to_model_for_arrivaldeparture_flight(arrivaldeparture_flight,
         arrivaldeparture_flight.carrier = flight_data["carrier"]
 
     return arrivaldeparture_flight
+
+def normcase_normpath(path):
+    return normcase(normpath(path))
 
 def update_all_flights_status():
     #tz = timezone(STRING.TIMEZONE)

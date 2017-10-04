@@ -12,14 +12,18 @@ echo "loaded administration fixture" &&
 # Load lanes fixture.
 python3 -B ${BASEDIR}/../manage.py loaddata airport_management/lanes.json &&
 echo "loaded lanes fixture" &&
+# Load celery worker fixture.
+python3 -B ${BASEDIR}/../manage.py\
+    loaddata airport_management/celery_worker.json &&
+echo "loaded celery worker fixture" &&
 # Load ATC fixture this fixture may not exists.
-python3 -B ${BASEDIR}/../manage.py loaddata airport_management/atc.json ||
+python3 -B ${BASEDIR}/../manage.py loaddata airport_management/atc.json
 echo "loaded atc fixture" &&
 # Load arrival fixture this fixture may not exists.
 python3 -B ${BASEDIR}/../manage.py\
-    loaddata airport_management/arrival_flight.json ||
+    loaddata airport_management/arrival_flight.json
 echo "loaded arrival fixture" &&
 # Load departure fixture this fixture may not exists.
 python3 -B ${BASEDIR}/../manage.py\
-    loaddata airport_management/departure_flight.json ||
+    loaddata airport_management/departure_flight.json
 echo "loaded departure fixture"

@@ -112,3 +112,8 @@ class AirTrafficController(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
+
+class CeleryWorker(models.Model):
+    flight_api_pull_is_on_going = models.BooleanField(default=False)
+    backup_to_fixture_is_on_going = models.BooleanField(default=False)
+    need_backup_to_fixtures = models.BooleanField(default=False)

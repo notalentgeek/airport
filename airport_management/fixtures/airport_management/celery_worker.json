@@ -1,0 +1,11 @@
+[
+  {
+    "model": "airport_management.celeryworker",
+    "pk": 1,
+    "fields": {
+      "flight_api_pull_is_on_going": false,
+      "backup_to_fixture_is_on_going": false,
+      "need_backup_to_fixtures": false
+    }
+  }
+]
