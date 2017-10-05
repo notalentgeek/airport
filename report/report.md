@@ -1,5 +1,9 @@
 # API and Database Models
 
+![./schema.png](schema.png)
+
+[./schema.dia](schema.dia)
+
 This airport application for incoming and outcoming flights from/to Schipol. The flights data is taken everyday at midnight from Schipol airport API. The API data provided from the Schipol API has rich variation keys, but their values in incomplete. Sometimes there are keys that just blank or null. Furthermore, there are little to no information on what each keys describes. Despite the two sole main issues, I chose to use this API because it is free and provides the most number of pulls out of other options there are available.
 
 The main models are the `ArrivalDepartureFlight` model, which then inherited further to `ArrivalFlight` and `DepartureFlight` models. Initially they have unique fields like destined/origin airport and scheduled time for arrival and departure. However, I realize that the API only provides data from the Schipol airport side. Which means one other airport is always Schipol and the API does not provide time for flight's operation with the other airport. So in then end both `ArrivalFlight` and `DepartureFlight` come from `ArrivalDepartureFlight` without any unique field, just each stored in different tables.
@@ -33,3 +37,19 @@ At this point, if data is not exist (deleted via admin control panel) it will re
 ![./structure.png](structure.png)
 
 [./structure.dia](structure.dia)
+
+The diagram shows all process and static files used to run this application.
+
+The main "protagonist" here is Django, the all-in-one, "batteries included" solution for full-stack web developer. Django basically provides all routings and simple interface to database (SQLite). Django also connected to Celery, which will be discussed in later paragraph, that is meant to manage task with respect to real-life timing (year, month, ...).
+
+Django has a `collectstatic` command to put every necessary static files to one folder for easier access for NGINX.
+
+Celery is a Python task scheduler, to execute Python function based on real-life time. To work, Celery needs a message broker and by default it sets to use RabbitMQ.
+
+Message broker is a process to translate message from one protocol to another. RabbitMQ here is used to get timing from the host OS task scheduler: like `cron` in UNIX or whatever it is in Windows. With connection to `cron` RabbitMQ can let Celery to have timings on when to execute tasks.
+
+For this application there are three tasks: to pull API, to check existing flight data, and to save database to fixtures (static JSON file). They are scheduled at daily, per-minute, and every ten minutes, respectively.
+
+Both NGINX and Gunicorn are a HTTP server that serve different purposes. NGINX is used to serve static files and to route interactive HTTP requests to Gunicorn. Gunicorn is used to handle dynamic HTTP request to a running Django process. Hence, some says, the whole process is faster, because one server is used to handle static files, whereas requests, which take longer to execute, will be handled with different server (Gunicorn).
+
+NGINX is the last process in the operating system before requests and responds go to the Internet.
