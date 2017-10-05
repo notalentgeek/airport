@@ -78,8 +78,8 @@ def flight_api_pull():
     logger.debug("task is already ran")
 
 """ Comment the decorator if you just want to pull the flights API. """
-#@periodic_task(run_every=crontab(minute=0, hour=0))
-@periodic_task(run_every=timedelta(minutes=1))
+#@periodic_task(run_every=timedelta(minutes=1))
+@periodic_task(run_every=crontab(hour=0, minute=1))
 def flight_api_pull_():
     flight_api_pull_is_on_going = CeleryWorker.objects.get(pk=1)\
         .flight_api_pull_is_on_going
