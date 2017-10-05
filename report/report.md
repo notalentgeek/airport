@@ -18,7 +18,7 @@ The other model is the `AirTrafficController`, often referred as "ATC" in some c
 
 The last model I created is called `CeleryWorker`. It is used to queue task in Celery task queue. This is necessary to prevent database locked because this project currently using SQLite as database, where multiple connection should not happen.
 
-# Details of the Requirements.
+# Details of the Requirements
 
 An ATC and lane need to be attached to a arrival or departure flight before their scheduled operation time happen. Otherwise the flight status will be `false`. Additionally, the client user interface will tell the airport manager if a flight lacks of ATC or lane (or both).
 
@@ -52,7 +52,7 @@ Both NGINX and Gunicorn are a HTTP server that serve different purposes. NGINX i
 
 NGINX is the last process in the operating system before requests and responds go to the Internet.
 
-# Key Directories and Files.
+# Key Directories and Files
 
 * ./Dockerfile as an init file for Docker container.
 * ./airport_management/fixtures/airport_management/css for JSON version of the database.
