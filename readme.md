@@ -1,3 +1,8 @@
+# Accessing
+
+* Application: [http://.../airport_management](http://.../airport_management).
+* Admin Control Panel: [http://.../admin](http://.../admin) for this example you can use username: admin and password: asdasdasd.
+
 # How to run this application:
 
 * This is personal my run commands to make sure `docker-compose` ran good. HOWEVER, this completely stop running container and deletes all images in the machine. Execute this from project's root. I would suggest to look for instruction further below.
@@ -119,4 +124,5 @@ reboot
 * Change ATC and lane entry to AJAX like request instead to prevent full page reload.
 * For some reason there are files created from the container owned by root, this should not happen.
 * In ideal case scenario, docker-compose.yml should be able to be put with some arguments. However AFAIK, you can only put arguments in the Dockerfile.
+* Make the add ATCs and add lane requests done through AJAX. Adding the data one-by-one and then web-page refresh is extremely annoying.
 * Unit testing.
