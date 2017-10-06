@@ -118,6 +118,11 @@ reboot
 
 * ./utility_scripts/utility.sh can be used to clean directories (deleting .pyc, ...), reset all database, reset NGINX logs, before then putting fixtures back to database.
 
+# Known bugs:
+
+* Celery does not update task schedule despite `...schedule updated` in `celeryd`. This is another bug, referred by this ticket[https://github.com/celery/django-celery-beat/issues/7](https://github.com/celery/django-celery-beat/issues/7).
+* `celerybeat` stuck with error message, `...task not taking effect...`, [https://github.com/celery/django-celery-beat/issues/7](https://github.com/celery/django-celery-beat/issues/7). Some say, upgrading to Celery 4.x solve the problem. However, Django Celery only works Celery 3.1.25.
+
 # To-do List:
 
 * A lot of closures needs to be made in the tasks.py.
