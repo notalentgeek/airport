@@ -9,6 +9,7 @@
 .coverage
 .installed.cfg
 .tox/
+.vscode
 __pycache__/
 bin/
 build/
