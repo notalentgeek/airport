@@ -1,3 +1,7 @@
+# Changelog
+
+* In start_celeryd.sh, `python manage.py celeryd --loglevel=DEBUG --verbosity=2` is changed into `python manage.py celeryd`. This solves the issue of `celerybeat` stopping mid server run. As it is mentioned in the Celery documentation and terminal, `--loglevel=DEBUG` will, for sure, cause a memory leak. Hence, using `--loglevel=DEBUG` is not suitable in production run.
+
 # Accessing
 
 * Application: [http://.../airport_management](http://.../airport_management).

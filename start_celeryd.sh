@@ -8,4 +8,4 @@
 sleep 20
 
 cd /home/airport/mount_point/
-python manage.py celeryd --loglevel=DEBUG --verbosity=2
+python manage.py celeryd
