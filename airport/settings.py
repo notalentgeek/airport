@@ -108,7 +108,7 @@ USE_TZ = True
 
 """ Adjusted variables. """
 ALLOWED_HOSTS = ["*"]
-DEBUG = True
+DEBUG = False
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -153,11 +153,12 @@ SESSION_COOKIE_SECURE = False
 """ Variables for RabbitMQ. """
 
 """ Go with this `BROKER_URL` if the project ran with `runserver`. """
-BROKER_URL = "amqp://admin:asdasdasd@localhost:5672/adminvhost"
+#BROKER_URL = "amqp://admin:asdasdasd@localhost:5672/adminvhost"
 
 """
 Other wise un-comment these lines if this project ran with
 `DEBUG=False`.
+"""
 RABBIT_HOSTNAME = os.environ.get("RABBIT_PORT_5672_TCP", "rabbit")
 
 if RABBIT_HOSTNAME.startswith("tcp://"):
@@ -170,7 +171,6 @@ if not BROKER_URL:
         password=os.environ.get("RABBIT_ENV_RABBITMQ_PASS", "asdasdasd"),
         hostname=RABBIT_HOSTNAME,
         vhost=os.environ.get("RABBIT_ENV_VHOST", ""))
-"""
 
 """ Variables for CeleryBeat. """
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
