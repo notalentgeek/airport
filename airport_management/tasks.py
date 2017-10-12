@@ -117,13 +117,21 @@ Comment the decorator if you just want to pull flights API.
 def check_this_minute_flights_status():
     backup_to_fixture_is_on_going = CeleryWorker.objects.get(pk=1)\
         .backup_to_fixture_is_on_going
+    check_this_minute_flights_status = CeleryWorker.objects.get(pk=1)\
+        .check_this_minute_flights_status
     flight_api_pull_is_on_going = CeleryWorker.objects.get(pk=1)\
         .flight_api_pull_is_on_going
     need_backup_to_fixtures = CeleryWorker.objects.get(pk=1)\
         .need_backup_to_fixtures
 
-    if not backup_to_fixture_is_on_going and\
+    if not backup_to_fixture_is_on_going and \
+        not check_this_minute_flights_status and \
         not flight_api_pull_is_on_going:
+        # Set this task to not overlap with this task (if it is executed twice).
+        obj = CeleryWorker.objects.get(pk=1)
+        obj.check_this_minute_flights_status = True
+        obj.save()
+
         #tz = timezone(STRING.TIMEZONE)
         #now = datetime.datetime.now()
         now = datetime.datetime.now(utc)
@@ -174,12 +182,16 @@ def check_this_minute_flights_status():
             obj.need_backup_to_fixtures = False
             obj.save()
 
+        obj = CeleryWorker.objects.get(pk=1)
+        obj.check_this_minute_flights_status = False
+        obj.save()
+
 """
 Backup to fixtures every 10 minutes.
 
 Comment the decorator if you only want to pull the flight API.
 """
-@periodic_task(run_every=timedelta(minutes=10))
+@periodic_task(run_every=crontab(minute="*/10"))
 def set_need_backup_to_fixtures():
     obj = CeleryWorker.objects.get(pk=1)
     obj.need_backup_to_fixtures = True
